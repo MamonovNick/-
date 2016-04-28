@@ -47,9 +47,12 @@ Partial Class G_coins
         Me.Catalog = New System.Windows.Forms.Button()
         Me.Addition = New System.Windows.Forms.Button()
         Me.Coins_guide = New System.Windows.Forms.Button()
+        Me.ПоследниеВведённыеМонетыBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.МонетыDataSet = New Монеты.МонетыDataSet()
         Me.МонетыDataSet1 = New Монеты.МонетыDataSet()
         Me.МонетыBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DA = New Монеты.МонетыDataSetTableAdapters.DA()
+        Me.DA2 = New Монеты.МонетыDataSetTableAdapters.DA2()
         Me.StatusStrip1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -58,6 +61,8 @@ Partial Class G_coins
         CType(Me.BindingNavigator1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.BindingNavigator1.SuspendLayout()
         Me.FlowLayoutPanel1.SuspendLayout()
+        CType(Me.ПоследниеВведённыеМонетыBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.МонетыDataSet1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.МонетыBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -153,7 +158,7 @@ Partial Class G_coins
         Me.BindingNavigator1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2, Me.BindingNavigatorAddNewItem, Me.BindingNavigatorDeleteItem})
         Me.BindingNavigator1.Location = New System.Drawing.Point(0, 428)
         Me.BindingNavigator1.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
-        Me.BindingNavigator1.MoveLastItem = Me.BindingNavigatorMoveLastItem
+        Me.BindingNavigator1.MoveLastItem = Me.BindingNavigatorMoveNextItem
         Me.BindingNavigator1.MoveNextItem = Me.BindingNavigatorMoveNextItem
         Me.BindingNavigator1.MovePreviousItem = Me.BindingNavigatorMovePreviousItem
         Me.BindingNavigator1.Name = "BindingNavigator1"
@@ -298,6 +303,16 @@ Partial Class G_coins
         Me.Coins_guide.Text = "Справочник монет"
         Me.Coins_guide.UseVisualStyleBackColor = True
         '
+        'ПоследниеВведённыеМонетыBindingSource
+        '
+        Me.ПоследниеВведённыеМонетыBindingSource.DataMember = "Последние введённые монеты"
+        Me.ПоследниеВведённыеМонетыBindingSource.DataSource = Me.МонетыDataSet
+        '
+        'МонетыDataSet
+        '
+        Me.МонетыDataSet.DataSetName = "МонетыDataSet"
+        Me.МонетыDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
         'МонетыDataSet1
         '
         Me.МонетыDataSet1.DataSetName = "МонетыDataSet"
@@ -311,6 +326,10 @@ Partial Class G_coins
         'DA
         '
         Me.DA.ClearBeforeFill = True
+        '
+        'DA2
+        '
+        Me.DA2.ClearBeforeFill = True
         '
         'G_coins
         '
@@ -333,6 +352,8 @@ Partial Class G_coins
         Me.BindingNavigator1.ResumeLayout(False)
         Me.BindingNavigator1.PerformLayout()
         Me.FlowLayoutPanel1.ResumeLayout(False)
+        CType(Me.ПоследниеВведённыеМонетыBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.МонетыDataSet1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.МонетыBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -347,7 +368,6 @@ Partial Class G_coins
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents BindingNavigator1 As BindingNavigator
-    Friend WithEvents BindingNavigatorAddNewItem As ToolStripButton
     Friend WithEvents BindingNavigatorCountItem As ToolStripLabel
     Friend WithEvents BindingNavigatorDeleteItem As ToolStripButton
     Friend WithEvents BindingNavigatorMoveFirstItem As ToolStripButton
@@ -366,4 +386,8 @@ Partial Class G_coins
     Friend WithEvents МонетыDataSet1 As МонетыDataSet
     Friend WithEvents МонетыBindingSource As BindingSource
     Friend WithEvents DA As МонетыDataSetTableAdapters.DA
+    Friend WithEvents МонетыDataSet As МонетыDataSet
+    Friend WithEvents ПоследниеВведённыеМонетыBindingSource As BindingSource
+    Friend WithEvents DA2 As МонетыDataSetTableAdapters.DA2
+    Friend WithEvents BindingNavigatorAddNewItem As ToolStripButton
 End Class

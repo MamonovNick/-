@@ -53,6 +53,8 @@ Partial Class G_coins
         Me.МонетыBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DA = New Монеты.МонетыDataSetTableAdapters.DA()
         Me.DA2 = New Монеты.МонетыDataSetTableAdapters.DA2()
+        Me.КаталожныеНомераИностранныхBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Каталожные_номера_иностранныхTableAdapter = New Монеты.МонетыDataSetTableAdapters.Каталожные_номера_иностранныхTableAdapter()
         Me.StatusStrip1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -65,15 +67,16 @@ Partial Class G_coins
         CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.МонетыDataSet1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.МонетыBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.КаталожныеНомераИностранныхBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'StatusStrip1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 487)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 541)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1073, 25)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1138, 25)
         Me.StatusStrip1.TabIndex = 0
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -90,7 +93,7 @@ Partial Class G_coins
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 211.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 212.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.PictureBox1, 4, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.PictureBox2, 4, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.DataGridView1, 0, 1)
@@ -107,7 +110,7 @@ Partial Class G_coins
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1073, 487)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1138, 541)
         Me.TableLayoutPanel1.TabIndex = 1
         '
         'PictureBox1
@@ -115,9 +118,9 @@ Partial Class G_coins
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PictureBox1.Image = Global.Монеты.My.Resources.Resource1.АверсФон
         Me.PictureBox1.InitialImage = Global.Монеты.My.Resources.Resource1.АверсФон
-        Me.PictureBox1.Location = New System.Drawing.Point(865, 18)
+        Me.PictureBox1.Location = New System.Drawing.Point(929, 18)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(205, 204)
+        Me.PictureBox1.Size = New System.Drawing.Size(206, 204)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
@@ -127,9 +130,9 @@ Partial Class G_coins
         Me.PictureBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PictureBox2.Image = Global.Монеты.My.Resources.Resource1.АверсФон
         Me.PictureBox2.InitialImage = CType(resources.GetObject("PictureBox2.InitialImage"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(865, 228)
+        Me.PictureBox2.Location = New System.Drawing.Point(929, 231)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(205, 204)
+        Me.PictureBox2.Size = New System.Drawing.Size(206, 204)
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox2.TabIndex = 1
         Me.PictureBox2.TabStop = False
@@ -145,7 +148,7 @@ Partial Class G_coins
         Me.TableLayoutPanel1.SetRowSpan(Me.DataGridView1, 4)
         Me.DataGridView1.RowTemplate.Height = 24
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(816, 407)
+        Me.DataGridView1.Size = New System.Drawing.Size(880, 459)
         Me.DataGridView1.TabIndex = 2
         '
         'BindingNavigator1
@@ -156,14 +159,14 @@ Partial Class G_coins
         Me.BindingNavigator1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.BindingNavigator1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.BindingNavigator1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2, Me.BindingNavigatorAddNewItem, Me.BindingNavigatorDeleteItem})
-        Me.BindingNavigator1.Location = New System.Drawing.Point(0, 428)
+        Me.BindingNavigator1.Location = New System.Drawing.Point(0, 480)
         Me.BindingNavigator1.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
         Me.BindingNavigator1.MoveLastItem = Me.BindingNavigatorMoveNextItem
         Me.BindingNavigator1.MoveNextItem = Me.BindingNavigatorMoveNextItem
         Me.BindingNavigator1.MovePreviousItem = Me.BindingNavigatorMovePreviousItem
         Me.BindingNavigator1.Name = "BindingNavigator1"
         Me.BindingNavigator1.PositionItem = Me.BindingNavigatorPositionItem
-        Me.BindingNavigator1.Size = New System.Drawing.Size(411, 35)
+        Me.BindingNavigator1.Size = New System.Drawing.Size(443, 35)
         Me.BindingNavigator1.TabIndex = 3
         Me.BindingNavigator1.Text = "BindingNavigator1"
         '
@@ -262,14 +265,14 @@ Partial Class G_coins
         Me.FlowLayoutPanel1.Controls.Add(Me.Coins_guide)
         Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(414, 431)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(446, 483)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(656, 29)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(689, 29)
         Me.FlowLayoutPanel1.TabIndex = 4
         '
         'Tr_sets
         '
-        Me.Tr_sets.Location = New System.Drawing.Point(519, 3)
+        Me.Tr_sets.Location = New System.Drawing.Point(552, 3)
         Me.Tr_sets.Name = "Tr_sets"
         Me.Tr_sets.Size = New System.Drawing.Size(134, 23)
         Me.Tr_sets.TabIndex = 0
@@ -278,7 +281,7 @@ Partial Class G_coins
         '
         'Catalog
         '
-        Me.Catalog.Location = New System.Drawing.Point(357, 3)
+        Me.Catalog.Location = New System.Drawing.Point(390, 3)
         Me.Catalog.Name = "Catalog"
         Me.Catalog.Size = New System.Drawing.Size(156, 23)
         Me.Catalog.TabIndex = 1
@@ -287,7 +290,7 @@ Partial Class G_coins
         '
         'Addition
         '
-        Me.Addition.Location = New System.Drawing.Point(183, 3)
+        Me.Addition.Location = New System.Drawing.Point(216, 3)
         Me.Addition.Name = "Addition"
         Me.Addition.Size = New System.Drawing.Size(168, 23)
         Me.Addition.TabIndex = 2
@@ -296,7 +299,7 @@ Partial Class G_coins
         '
         'Coins_guide
         '
-        Me.Coins_guide.Location = New System.Drawing.Point(36, 3)
+        Me.Coins_guide.Location = New System.Drawing.Point(69, 3)
         Me.Coins_guide.Name = "Coins_guide"
         Me.Coins_guide.Size = New System.Drawing.Size(141, 23)
         Me.Coins_guide.TabIndex = 3
@@ -331,11 +334,20 @@ Partial Class G_coins
         '
         Me.DA2.ClearBeforeFill = True
         '
+        'КаталожныеНомераИностранныхBindingSource
+        '
+        Me.КаталожныеНомераИностранныхBindingSource.DataMember = "Каталожные номера иностранных"
+        Me.КаталожныеНомераИностранныхBindingSource.DataSource = Me.МонетыDataSet
+        '
+        'Каталожные_номера_иностранныхTableAdapter
+        '
+        Me.Каталожные_номера_иностранныхTableAdapter.ClearBeforeFill = True
+        '
         'G_coins
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1073, 512)
+        Me.ClientSize = New System.Drawing.Size(1138, 566)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -356,6 +368,7 @@ Partial Class G_coins
         CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.МонетыDataSet1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.МонетыBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.КаталожныеНомераИностранныхBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -390,4 +403,6 @@ Partial Class G_coins
     Friend WithEvents ПоследниеВведённыеМонетыBindingSource As BindingSource
     Friend WithEvents DA2 As МонетыDataSetTableAdapters.DA2
     Friend WithEvents BindingNavigatorAddNewItem As ToolStripButton
+    Friend WithEvents КаталожныеНомераИностранныхBindingSource As BindingSource
+    Friend WithEvents Каталожные_номера_иностранныхTableAdapter As МонетыDataSetTableAdapters.Каталожные_номера_иностранныхTableAdapter
 End Class

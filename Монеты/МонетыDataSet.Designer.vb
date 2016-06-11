@@ -113,6 +113,8 @@ Partial Public Class МонетыDataSet
     
     Private relationМонеты_Список_валют As Global.System.Data.DataRelation
     
+    Private relationМонеты_Состав_наборов As Global.System.Data.DataRelation
+    
     Private _schemaSerializationMode As Global.System.Data.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1121,6 +1123,7 @@ Partial Public Class МонетыDataSet
         Me._relationМонеты__для_ввода__Каталожные_номера_иностранных = Me.Relations("Монеты (для ввода)_Каталожные номера иностранных")
         Me.relationКаталожные_номера_иностранных_Монеты_до_замены_кат_номеров = Me.Relations("Каталожные номера иностранных_Монеты до замены кат номеров")
         Me.relationМонеты_Список_валют = Me.Relations("Монеты_Список валют")
+        Me.relationМонеты_Состав_наборов = Me.Relations("Монеты_Состав наборов")
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1219,6 +1222,8 @@ Partial Public Class МонетыDataSet
         Me.Relations.Add(Me.relationКаталожные_номера_иностранных_Монеты_до_замены_кат_номеров)
         Me.relationМонеты_Список_валют = New Global.System.Data.DataRelation("Монеты_Список валют", New Global.System.Data.DataColumn() {Me.tableМонеты.ВалютаColumn}, New Global.System.Data.DataColumn() {Me.tableСписок_валют.ВалютаColumn}, false)
         Me.Relations.Add(Me.relationМонеты_Список_валют)
+        Me.relationМонеты_Состав_наборов = New Global.System.Data.DataRelation("Монеты_Состав наборов", New Global.System.Data.DataColumn() {Me.tableМонеты.Каталожный_номерColumn}, New Global.System.Data.DataColumn() {Me.tableСостав_наборов.КатНомерНабораColumn}, false)
+        Me.Relations.Add(Me.relationМонеты_Состав_наборов)
     End Sub
     
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -8500,9 +8505,12 @@ Partial Public Class МонетыDataSet
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddСостав_наборовRow(ByVal КатНомерНабора As String, ByVal КатНомерМонеты As String) As Состав_наборовRow
+        Public Overloads Function AddСостав_наборовRow(ByVal parentМонетыRowByМонеты_Состав_наборов As МонетыRow, ByVal КатНомерМонеты As String) As Состав_наборовRow
             Dim rowСостав_наборовRow As Состав_наборовRow = CType(Me.NewRow,Состав_наборовRow)
-            Dim columnValuesArray() As Object = New Object() {КатНомерНабора, КатНомерМонеты}
+            Dim columnValuesArray() As Object = New Object() {Nothing, КатНомерМонеты}
+            If (Not (parentМонетыRowByМонеты_Состав_наборов) Is Nothing) Then
+                columnValuesArray(0) = parentМонетыRowByМонеты_Состав_наборов(1)
+            End If
             rowСостав_наборовRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowСостав_наборовRow)
             Return rowСостав_наборовRow
@@ -16063,6 +16071,16 @@ Partial Public Class МонетыDataSet
                 Return CType(MyBase.GetChildRows(Me.Table.ChildRelations("Монеты_Список валют")),Список_валютRow())
             End If
         End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function GetСостав_наборовRows() As Состав_наборовRow()
+            If (Me.Table.ChildRelations("Монеты_Состав наборов") Is Nothing) Then
+                Return New Состав_наборовRow(-1) {}
+            Else
+                Return CType(MyBase.GetChildRows(Me.Table.ChildRelations("Монеты_Состав наборов")),Состав_наборовRow())
+            End If
+        End Function
     End Class
     
     '''<summary>
@@ -18638,6 +18656,17 @@ Partial Public Class МонетыDataSet
             End Get
             Set
                 Me(Me.tableСостав_наборов.КатНомерМонетыColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property МонетыRow() As МонетыRow
+            Get
+                Return CType(Me.GetParentRow(Me.Table.ParentRelations("Монеты_Состав наборов")),МонетыRow)
+            End Get
+            Set
+                Me.SetParentRow(value, Me.Table.ParentRelations("Монеты_Состав наборов"))
             End Set
         End Property
         

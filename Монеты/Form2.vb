@@ -54,12 +54,37 @@ Public Class G_coins
         End Try
     End Sub
 
+    Private Function GetCol2_DataGridViewColumn() As DataGridViewColumn
+        Dim comboColumn As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
+        'this.GetCol2Table() - возвращает второй источник данных для ComboBox (см. ниже)
+        comboColumn.DataSource = GetCol2Table()
+        comboColumn.DataPropertyName = "Валюта"
+        comboColumn.DisplayMember = "Валюта"
+        comboColumn.ValueMember = "Валюта"
+        Return comboColumn
+    End Function
+
+    Private Function GetCol2Table() As DataTable
+        Dim ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
+        Dim Con As New OleDb.OleDbConnection(ConnString) ' Переменная для подключения базы
+        Dim SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
+        Dim DA As OleDb.OleDbDataAdapter ' Адаптер для заполнения таблицы после запроса
+        Dim table As DataTable = New DataTable()
+        SqlCom = New OleDb.OleDbCommand("SELECT [Список валют].[Валюта] FROM [Список валют] ORDER BY [Список валют].[Валюта]", Con) ' Указываем строку запроса и привязываем к соединению
+        DA = New OleDb.OleDbDataAdapter(SqlCom) 'Через адаптер получаем результаты запроса
+        DA.Fill(table) ' Заполняем таблицу результатми
+        Return table
+    End Function
+
     Private Sub G_coins_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ActiveTable = 0
         DA.Fill(МонетыDataSet1.Монеты) ' Заполняем таблицу результатми
         bs1.DataSource = МонетыDataSet1.Монеты 'Привязываем BindingSourse к источнику данных
         BindingNavigator1.BindingSource = bs1 'Привязываем навигатор к источнику данных
         DataGridView1.DataSource = bs1 ' Привязываем Грид к источнику данных
+        Dim oldColIndex As Int32 = DataGridView1.Columns("Валюта").Index
+        DataGridView1.Columns.RemoveAt(oldColIndex)
+        DataGridView1.Columns.Insert(oldColIndex, GetCol2_DataGridViewColumn())
         AdjustColumnOrder() 'Изменяем порядок строк
         DataGridView1.CurrentCell = DataGridView1.Rows(DataGridView1.RowCount - 2).Cells(1) 'Выделяем последнюю строку
         DataGridView1_SelectionChanged(sender, e)
@@ -77,6 +102,7 @@ Public Class G_coins
         DataGridView1_SelectionChanged(sender, e)
         DataGridView1.ReadOnly = False
         BindingNavigator1.AddNewItem = BindingNavigatorAddNewItem
+        BindingNavigator1.DeleteItem = BindingNavigatorDeleteItem
     End Sub
 
     Private Sub Addition_Click(sender As Object, e As EventArgs) Handles Addition.Click
@@ -88,9 +114,27 @@ Public Class G_coins
         DataGridView1.DataSource = bs1 ' Привязываем Грид к источнику данных
         DataGridView1.ReadOnly = True
         BindingNavigator1.AddNewItem = Nothing
+        BindingNavigator1.DeleteItem = Nothing
     End Sub
 
     Private Sub G_coins_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         Update_table()
+    End Sub
+
+    Private Sub Catalog_Click(sender As Object, e As EventArgs) Handles Catalog.Click
+        Update_table()
+        ActiveTable = 2
+        Каталожные_номера_иностранныхTableAdapter.Fill(МонетыDataSet.Каталожные_номера_иностранных)
+        bs1.DataSource = МонетыDataSet.Каталожные_номера_иностранных 'Привязываем BindingSourse к источнику данных
+        BindingNavigator1.BindingSource = bs1 'Привязываем навигатор к источнику данных
+        DataGridView1.DataSource = bs1 ' Привязываем Грид к источнику данных
+        DataGridView1.ReadOnly = True
+        BindingNavigator1.AddNewItem = Nothing
+        BindingNavigator1.DeleteItem = Nothing
+    End Sub
+
+    Private Sub Tr_sets_Click(sender As Object, e As EventArgs) Handles Tr_sets.Click
+        Me.Visible = False
+        Form3.Show()
     End Sub
 End Class

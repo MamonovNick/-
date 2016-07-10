@@ -30,8 +30,9 @@ Partial Class Form3
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
@@ -48,6 +49,10 @@ Partial Class Form3
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.МонетыDataSet1 = New Монеты.МонетыDataSet()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -56,6 +61,8 @@ Partial Class Form3
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        Me.FlowLayoutPanel2.SuspendLayout()
+        CType(Me.МонетыDataSet1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
@@ -78,6 +85,7 @@ Partial Class Form3
         Me.TableLayoutPanel1.Controls.Add(Me.DataGridView1, 1, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.FlowLayoutPanel1, 1, 8)
         Me.TableLayoutPanel1.Controls.Add(Me.Panel1, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.FlowLayoutPanel2, 5, 8)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -90,7 +98,7 @@ Partial Class Form3
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 210.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(1227, 722)
         Me.TableLayoutPanel1.TabIndex = 0
@@ -105,7 +113,6 @@ Partial Class Form3
         Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox2.TabIndex = 1
         Me.PictureBox2.TabStop = False
-        Me.PictureBox2.Visible = False
         '
         'PictureBox3
         '
@@ -139,7 +146,6 @@ Partial Class Form3
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
-        Me.PictureBox1.Visible = False
         '
         'DataGridView1
         '
@@ -153,36 +159,48 @@ Partial Class Form3
         Me.DataGridView1.ReadOnly = True
         Me.TableLayoutPanel1.SetRowSpan(Me.DataGridView1, 4)
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(973, 423)
+        Me.DataGridView1.Size = New System.Drawing.Size(973, 420)
         Me.DataGridView1.TabIndex = 4
         '
         'FlowLayoutPanel1
         '
-        Me.FlowLayoutPanel1.Controls.Add(Me.Button1)
-        Me.FlowLayoutPanel1.Controls.Add(Me.Button2)
+        Me.TableLayoutPanel1.SetColumnSpan(Me.FlowLayoutPanel1, 3)
+        Me.FlowLayoutPanel1.Controls.Add(Me.ComboBox2)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Button3)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Button4)
         Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(15, 678)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(15, 675)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(394, 29)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(626, 32)
         Me.FlowLayoutPanel1.TabIndex = 5
         '
-        'Button1
+        'ComboBox2
         '
-        Me.Button1.Location = New System.Drawing.Point(3, 3)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(166, 23)
-        Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Собрать новый набор"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.ComboBox2.DropDownWidth = 350
+        Me.ComboBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ComboBox2.FormattingEnabled = True
+        Me.ComboBox2.Location = New System.Drawing.Point(3, 3)
+        Me.ComboBox2.Name = "ComboBox2"
+        Me.ComboBox2.Size = New System.Drawing.Size(204, 24)
+        Me.ComboBox2.TabIndex = 2
         '
-        'Button2
+        'Button3
         '
-        Me.Button2.Location = New System.Drawing.Point(175, 3)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(184, 23)
-        Me.Button2.TabIndex = 1
-        Me.Button2.Text = "Проверка расхождений"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.Button3.Location = New System.Drawing.Point(213, 3)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(166, 23)
+        Me.Button3.TabIndex = 3
+        Me.Button3.Text = "Добавить монету"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'Button4
+        '
+        Me.Button4.Location = New System.Drawing.Point(385, 3)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(206, 23)
+        Me.Button4.TabIndex = 4
+        Me.Button4.Text = "Удалить монету из таблицы"
+        Me.Button4.UseVisualStyleBackColor = True
         '
         'Panel1
         '
@@ -349,6 +367,41 @@ Partial Class Form3
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Металл:"
         '
+        'FlowLayoutPanel2
+        '
+        Me.TableLayoutPanel1.SetColumnSpan(Me.FlowLayoutPanel2, 4)
+        Me.FlowLayoutPanel2.Controls.Add(Me.Button1)
+        Me.FlowLayoutPanel2.Controls.Add(Me.Button2)
+        Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FlowLayoutPanel2.Location = New System.Drawing.Point(667, 675)
+        Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
+        Me.FlowLayoutPanel2.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.FlowLayoutPanel2.Size = New System.Drawing.Size(545, 32)
+        Me.FlowLayoutPanel2.TabIndex = 7
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(376, 3)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(166, 23)
+        Me.Button1.TabIndex = 2
+        Me.Button1.Text = "Собрать новый набор"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(195, 3)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(175, 23)
+        Me.Button2.TabIndex = 1
+        Me.Button2.Text = "Проверка расхождений"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'МонетыDataSet1
+        '
+        Me.МонетыDataSet1.DataSetName = "МонетыDataSet"
+        Me.МонетыDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
         'Form3
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -367,6 +420,8 @@ Partial Class Form3
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.FlowLayoutPanel2.ResumeLayout(False)
+        CType(Me.МонетыDataSet1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -378,7 +433,6 @@ Partial Class Form3
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
-    Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label
@@ -396,4 +450,10 @@ Partial Class Form3
     Friend WithEvents Label11 As Label
     Friend WithEvents Label10 As Label
     Friend WithEvents Label9 As Label
+    Friend WithEvents МонетыDataSet1 As МонетыDataSet
+    Friend WithEvents ComboBox2 As ComboBox
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Button4 As Button
+    Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel
+    Friend WithEvents Button1 As Button
 End Class

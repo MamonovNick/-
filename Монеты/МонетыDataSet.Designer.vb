@@ -8544,7 +8544,9 @@ Partial Public Class МонетыDataSet
             MyBase.Columns.Add(Me.columnКатНомерНабора)
             Me.columnКатНомерМонеты = New Global.System.Data.DataColumn("КатНомерМонеты", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnКатНомерМонеты)
+            Me.columnКатНомерНабора.AllowDBNull = false
             Me.columnКатНомерНабора.MaxLength = 9
+            Me.columnКатНомерМонеты.AllowDBNull = false
             Me.columnКатНомерМонеты.MaxLength = 9
         End Sub
         
@@ -18633,11 +18635,7 @@ Partial Public Class МонетыDataSet
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property КатНомерНабора() As String
             Get
-                Try 
-                    Return CType(Me(Me.tableСостав_наборов.КатНомерНабораColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("Значение для столбца 'КатНомерНабора' в таблице 'Состав наборов' равно DBNull.", e)
-                End Try
+                Return CType(Me(Me.tableСостав_наборов.КатНомерНабораColumn),String)
             End Get
             Set
                 Me(Me.tableСостав_наборов.КатНомерНабораColumn) = value
@@ -18648,11 +18646,7 @@ Partial Public Class МонетыDataSet
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property КатНомерМонеты() As String
             Get
-                Try 
-                    Return CType(Me(Me.tableСостав_наборов.КатНомерМонетыColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("Значение для столбца 'КатНомерМонеты' в таблице 'Состав наборов' равно DBNull.", e)
-                End Try
+                Return CType(Me(Me.tableСостав_наборов.КатНомерМонетыColumn),String)
             End Get
             Set
                 Me(Me.tableСостав_наборов.КатНомерМонетыColumn) = value
@@ -18669,30 +18663,6 @@ Partial Public Class МонетыDataSet
                 Me.SetParentRow(value, Me.Table.ParentRelations("Монеты_Состав наборов"))
             End Set
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsКатНомерНабораNull() As Boolean
-            Return Me.IsNull(Me.tableСостав_наборов.КатНомерНабораColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetКатНомерНабораNull()
-            Me(Me.tableСостав_наборов.КатНомерНабораColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsКатНомерМонетыNull() As Boolean
-            Return Me.IsNull(Me.tableСостав_наборов.КатНомерМонетыColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetКатНомерМонетыNull()
-            Me(Me.tableСостав_наборов.КатНомерМонетыColumn) = Global.System.Convert.DBNull
-        End Sub
     End Class
     
     '''<summary>
@@ -29898,7 +29868,7 @@ Namespace МонетыDataSetTableAdapters
             Me._commandCollection = New Global.System.Data.OleDb.OleDbCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.OleDb.OleDbCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "SELECT КатНомерНабора, КатНомерМонеты FROM [Состав наборов]"
+            Me._commandCollection(0).CommandText = "SELECT КатНомерНабора, КатНомерМонеты"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM     [Состав наборов]"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
         End Sub
         

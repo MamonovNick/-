@@ -6210,6 +6210,12 @@ Partial Public Class МонетыDataSet
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function FindByВидУчастникаНаименование(ByVal ВидУчастника As String, ByVal Наименование As String) As ПодразделенияRow
+            Return CType(Me.Rows.Find(New Object() {ВидУчастника, Наименование}),ПодразделенияRow)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Overrides Function Clone() As Global.System.Data.DataTable
             Dim cln As ПодразделенияDataTable = CType(MyBase.Clone,ПодразделенияDataTable)
             cln.InitVars
@@ -6245,8 +6251,10 @@ Partial Public Class МонетыDataSet
             MyBase.Columns.Add(Me.columnКоэффициент)
             Me.columnАктивный = New Global.System.Data.DataColumn("Активный", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnАктивный)
-            Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnВидУчастника, Me.columnНаименование}, false))
+            Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnВидУчастника, Me.columnНаименование}, true))
+            Me.columnВидУчастника.AllowDBNull = false
             Me.columnВидУчастника.MaxLength = 15
+            Me.columnНаименование.AllowDBNull = false
             Me.columnНаименование.MaxLength = 41
             Me.columnНомер.MaxLength = 4
         End Sub
@@ -17652,11 +17660,7 @@ Partial Public Class МонетыDataSet
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property ВидУчастника() As String
             Get
-                Try 
-                    Return CType(Me(Me.tableПодразделения.ВидУчастникаColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("Значение для столбца 'ВидУчастника' в таблице 'Подразделения' равно DBNull.", e)
-                End Try
+                Return CType(Me(Me.tableПодразделения.ВидУчастникаColumn),String)
             End Get
             Set
                 Me(Me.tableПодразделения.ВидУчастникаColumn) = value
@@ -17667,11 +17671,7 @@ Partial Public Class МонетыDataSet
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property Наименование() As String
             Get
-                Try 
-                    Return CType(Me(Me.tableПодразделения.НаименованиеColumn),String)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("Значение для столбца 'Наименование' в таблице 'Подразделения' равно DBNull.", e)
-                End Try
+                Return CType(Me(Me.tableПодразделения.НаименованиеColumn),String)
             End Get
             Set
                 Me(Me.tableПодразделения.НаименованиеColumn) = value
@@ -17722,30 +17722,6 @@ Partial Public Class МонетыDataSet
                 Me(Me.tableПодразделения.АктивныйColumn) = value
             End Set
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsВидУчастникаNull() As Boolean
-            Return Me.IsNull(Me.tableПодразделения.ВидУчастникаColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetВидУчастникаNull()
-            Me(Me.tableПодразделения.ВидУчастникаColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsНаименованиеNull() As Boolean
-            Return Me.IsNull(Me.tableПодразделения.НаименованиеColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetНаименованиеNull()
-            Me(Me.tableПодразделения.НаименованиеColumn) = Global.System.Convert.DBNull
-        End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -27721,7 +27697,7 @@ Namespace МонетыDataSetTableAdapters
      Global.System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner"& _ 
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"),  _
      Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-    Partial Public Class ПодразделенияTableAdapter
+    Partial Public Class SecDA
         Inherits Global.System.ComponentModel.Component
         
         Private WithEvents _adapter As Global.System.Data.OleDb.OleDbDataAdapter
@@ -27845,6 +27821,13 @@ Namespace МонетыDataSetTableAdapters
             tableMapping.ColumnMappings.Add("Коэффициент", "Коэффициент")
             tableMapping.ColumnMappings.Add("Активный", "Активный")
             Me._adapter.TableMappings.Add(tableMapping)
+            Me._adapter.DeleteCommand = New Global.System.Data.OleDb.OleDbCommand()
+            Me._adapter.DeleteCommand.Connection = Me.Connection
+            Me._adapter.DeleteCommand.CommandText = "DELETE FROM Подразделения"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"WHERE  (ВидУчастника = Parameter1) AND (Наименование ="& _ 
+                " Parameter2)"
+            Me._adapter.DeleteCommand.CommandType = Global.System.Data.CommandType.Text
+            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Parameter1", Global.System.Data.OleDb.OleDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "ВидУчастника", Global.System.Data.DataRowVersion.Current, false, Nothing))
+            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Parameter2", Global.System.Data.OleDb.OleDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Наименование", Global.System.Data.DataRowVersion.Current, false, Nothing))
             Me._adapter.InsertCommand = New Global.System.Data.OleDb.OleDbCommand()
             Me._adapter.InsertCommand.Connection = Me.Connection
             Me._adapter.InsertCommand.CommandText = "INSERT INTO `Подразделения` (`ВидУчастника`, `Наименование`, `Номер`, `Коэффициен"& _ 
@@ -27855,117 +27838,215 @@ Namespace МонетыDataSetTableAdapters
             Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Номер", Global.System.Data.OleDb.OleDbType.VarWChar, 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Номер", Global.System.Data.DataRowVersion.Current, false, Nothing))
             Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Коэффициент", Global.System.Data.OleDb.OleDbType.[Single], 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Коэффициент", Global.System.Data.DataRowVersion.Current, false, Nothing))
             Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Активный", Global.System.Data.OleDb.OleDbType.[Boolean], 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Активный", Global.System.Data.DataRowVersion.Current, false, Nothing))
+            Me._adapter.UpdateCommand = New Global.System.Data.OleDb.OleDbCommand()
+            Me._adapter.UpdateCommand.Connection = Me.Connection
+            Me._adapter.UpdateCommand.CommandText = "UPDATE Подразделения" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "SET          ВидУчастника = Parameter1, Наименование = Para" &
+                "meter2, Номер = Parameter3, Коэффициент = Parameter4, Активный = Parameter5" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHE" &
+                "RE  (ВидУчастника = Parameter6) AND (Наименование = Parameter7)"
+            Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.Text
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Parameter1", Global.System.Data.OleDb.OleDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, CType(0, Byte), CType(0, Byte), "ВидУчастника", Global.System.Data.DataRowVersion.Current, False, Nothing))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Parameter2", Global.System.Data.OleDb.OleDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, CType(0, Byte), CType(0, Byte), "Наименование", Global.System.Data.DataRowVersion.Current, False, Nothing))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Parameter3", Global.System.Data.OleDb.OleDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, CType(0, Byte), CType(0, Byte), "Номер", Global.System.Data.DataRowVersion.Current, False, Nothing))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Parameter4", Global.System.Data.OleDb.OleDbType.[Single], 0, Global.System.Data.ParameterDirection.Input, CType(0, Byte), CType(0, Byte), "Коэффициент", Global.System.Data.DataRowVersion.Current, False, Nothing))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Parameter5", Global.System.Data.OleDb.OleDbType.[Boolean], 0, Global.System.Data.ParameterDirection.Input, CType(0, Byte), CType(0, Byte), "Активный", Global.System.Data.DataRowVersion.Current, False, Nothing))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Parameter6", Global.System.Data.OleDb.OleDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, CType(0, Byte), CType(0, Byte), "ВидУчастника", Global.System.Data.DataRowVersion.Original, False, Nothing))
+            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Parameter7", Global.System.Data.OleDb.OleDbType.VarChar, 0, Global.System.Data.ParameterDirection.Input, CType(0, Byte), CType(0, Byte), "Наименование", Global.System.Data.DataRowVersion.Original, False, Nothing))
         End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>
         Private Sub InitConnection()
             Me._connection = New Global.System.Data.OleDb.OleDbConnection()
             Me._connection.ConnectionString = Global.Монеты.My.MySettings.Default.МонетыConnectionString
         End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>
         Private Sub InitCommandCollection()
             Me._commandCollection = New Global.System.Data.OleDb.OleDbCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.OleDb.OleDbCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "SELECT ВидУчастника, Наименование, Номер, Коэффициент, Активный FROM Подразделени"& _ 
+            Me._commandCollection(0).CommandText = "SELECT ВидУчастника, Наименование, Номер, Коэффициент, Активный FROM Подразделени" &
                 "я"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
         End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, true)>  _
-        Public Overloads Overridable Function Fill(ByVal dataTable As МонетыDataSet.ПодразделенияDataTable) As Integer
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, True)>
+        Public Overridable Overloads Function Fill(ByVal dataTable As МонетыDataSet.ПодразделенияDataTable) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            If (Me.ClearBeforeFill = true) Then
-                dataTable.Clear
+            If (Me.ClearBeforeFill = True) Then
+                dataTable.Clear()
             End If
             Dim returnValue As Integer = Me.Adapter.Fill(dataTable)
             Return returnValue
         End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetData() As МонетыDataSet.ПодразделенияDataTable
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], True)>
+        Public Overridable Overloads Function GetData() As МонетыDataSet.ПодразделенияDataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
             Dim dataTable As МонетыDataSet.ПодразделенияDataTable = New МонетыDataSet.ПодразделенияDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
         End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataTable As МонетыDataSet.ПодразделенияDataTable) As Integer
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>
+        Public Overridable Overloads Function Update(ByVal dataTable As МонетыDataSet.ПодразделенияDataTable) As Integer
             Return Me.Adapter.Update(dataTable)
         End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataSet As МонетыDataSet) As Integer
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>
+        Public Overridable Overloads Function Update(ByVal dataSet As МонетыDataSet) As Integer
             Return Me.Adapter.Update(dataSet, "Подразделения")
         End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataRow As Global.System.Data.DataRow) As Integer
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>
+        Public Overridable Overloads Function Update(ByVal dataRow As Global.System.Data.DataRow) As Integer
             Return Me.Adapter.Update(New Global.System.Data.DataRow() {dataRow})
         End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataRows() As Global.System.Data.DataRow) As Integer
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>
+        Public Overridable Overloads Function Update(ByVal dataRows() As Global.System.Data.DataRow) As Integer
             Return Me.Adapter.Update(dataRows)
         End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)>  _
-        Public Overloads Overridable Function Insert(ByVal ВидУчастника As String, ByVal Наименование As String, ByVal Номер As String, ByVal Коэффициент As Global.System.Nullable(Of Single), ByVal Активный As Boolean) As Integer
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, True)>
+        Public Overridable Overloads Function Delete(ByVal Parameter1 As String, ByVal Parameter2 As String) As Integer
+            If (Parameter1 Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("Parameter1")
+            Else
+                Me.Adapter.DeleteCommand.Parameters(0).Value = CType(Parameter1, String)
+            End If
+            If (Parameter2 Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("Parameter2")
+            Else
+                Me.Adapter.DeleteCommand.Parameters(1).Value = CType(Parameter2, String)
+            End If
+            Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.DeleteCommand.Connection.State
+            If ((Me.Adapter.DeleteCommand.Connection.State And Global.System.Data.ConnectionState.Open) _
+                        <> Global.System.Data.ConnectionState.Open) Then
+                Me.Adapter.DeleteCommand.Connection.Open()
+            End If
+            Try
+                Dim returnValue As Integer = Me.Adapter.DeleteCommand.ExecuteNonQuery
+                Return returnValue
+            Finally
+                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
+                    Me.Adapter.DeleteCommand.Connection.Close()
+                End If
+            End Try
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, True)>
+        Public Overridable Overloads Function Insert(ByVal ВидУчастника As String, ByVal Наименование As String, ByVal Номер As String, ByVal Коэффициент As Global.System.Nullable(Of Single), ByVal Активный As Boolean) As Integer
             If (ВидУчастника Is Nothing) Then
                 Me.Adapter.InsertCommand.Parameters(0).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.InsertCommand.Parameters(0).Value = CType(ВидУчастника,String)
+                Me.Adapter.InsertCommand.Parameters(0).Value = CType(ВидУчастника, String)
             End If
             If (Наименование Is Nothing) Then
                 Me.Adapter.InsertCommand.Parameters(1).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.InsertCommand.Parameters(1).Value = CType(Наименование,String)
+                Me.Adapter.InsertCommand.Parameters(1).Value = CType(Наименование, String)
             End If
             If (Номер Is Nothing) Then
                 Me.Adapter.InsertCommand.Parameters(2).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.InsertCommand.Parameters(2).Value = CType(Номер,String)
+                Me.Adapter.InsertCommand.Parameters(2).Value = CType(Номер, String)
             End If
-            If (Коэффициент.HasValue = true) Then
-                Me.Adapter.InsertCommand.Parameters(3).Value = CType(Коэффициент.Value,Single)
+            If (Коэффициент.HasValue = True) Then
+                Me.Adapter.InsertCommand.Parameters(3).Value = CType(Коэффициент.Value, Single)
             Else
                 Me.Adapter.InsertCommand.Parameters(3).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.InsertCommand.Parameters(4).Value = CType(Активный,Boolean)
+            Me.Adapter.InsertCommand.Parameters(4).Value = CType(Активный, Boolean)
             Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.InsertCommand.Connection.State
-            If ((Me.Adapter.InsertCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
+            If ((Me.Adapter.InsertCommand.Connection.State And Global.System.Data.ConnectionState.Open) _
                         <> Global.System.Data.ConnectionState.Open) Then
-                Me.Adapter.InsertCommand.Connection.Open
+                Me.Adapter.InsertCommand.Connection.Open()
             End If
-            Try 
+            Try
                 Dim returnValue As Integer = Me.Adapter.InsertCommand.ExecuteNonQuery
                 Return returnValue
             Finally
                 If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
-                    Me.Adapter.InsertCommand.Connection.Close
+                    Me.Adapter.InsertCommand.Connection.Close()
                 End If
             End Try
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, True)>
+        Public Overridable Overloads Function Update(ByVal Parameter1 As String, ByVal Parameter2 As String, ByVal Parameter3 As String, ByVal Parameter4 As Single, ByVal Parameter5 As Boolean, ByVal Parameter6 As String, ByVal Parameter7 As String) As Integer
+            If (Parameter1 Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("Parameter1")
+            Else
+                Me.Adapter.UpdateCommand.Parameters(0).Value = CType(Parameter1, String)
+            End If
+            If (Parameter2 Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("Parameter2")
+            Else
+                Me.Adapter.UpdateCommand.Parameters(1).Value = CType(Parameter2, String)
+            End If
+            If (Parameter3 Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("Parameter3")
+            Else
+                Me.Adapter.UpdateCommand.Parameters(2).Value = CType(Parameter3, String)
+            End If
+            Me.Adapter.UpdateCommand.Parameters(3).Value = CType(Parameter4, Single)
+            Me.Adapter.UpdateCommand.Parameters(4).Value = CType(Parameter5, Boolean)
+            If (Parameter6 Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("Parameter6")
+            Else
+                Me.Adapter.UpdateCommand.Parameters(5).Value = CType(Parameter6, String)
+            End If
+            If (Parameter7 Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("Parameter7")
+            Else
+                Me.Adapter.UpdateCommand.Parameters(6).Value = CType(Parameter7, String)
+            End If
+            Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.UpdateCommand.Connection.State
+            If ((Me.Adapter.UpdateCommand.Connection.State And Global.System.Data.ConnectionState.Open) _
+                        <> Global.System.Data.ConnectionState.Open) Then
+                Me.Adapter.UpdateCommand.Connection.Open()
+            End If
+            Try
+                Dim returnValue As Integer = Me.Adapter.UpdateCommand.ExecuteNonQuery
+                Return returnValue
+            Finally
+                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
+                    Me.Adapter.UpdateCommand.Connection.Close()
+                End If
+            End Try
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, True)>
+        Public Overridable Overloads Function Update(ByVal Parameter3 As String, ByVal Parameter4 As Single, ByVal Parameter5 As Boolean, ByVal Parameter6 As String, ByVal Parameter7 As String) As Integer
+            Return Me.Update(Parameter6, Parameter7, Parameter3, Parameter4, Parameter5, Parameter6, Parameter7)
         End Function
     End Class
     
@@ -33690,7 +33771,7 @@ Namespace МонетыDataSetTableAdapters
         
         Private _перемещение_между_хранилищамиTableAdapter As Перемещение_между_хранилищамиTableAdapter
         
-        Private _подразделенияTableAdapter As ПодразделенияTableAdapter
+        Private _secDA As SecDA
         
         Private _приобретение_монет_ТБ_в_ЦБTableAdapter As Приобретение_монет_ТБ_в_ЦБTableAdapter
         
@@ -33908,12 +33989,12 @@ Namespace МонетыDataSetTableAdapters
          Global.System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso"& _ 
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3"& _ 
             "a", "System.Drawing.Design.UITypeEditor")>  _
-        Public Property ПодразделенияTableAdapter() As ПодразделенияTableAdapter
+        Public Property SecDA() As SecDA
             Get
-                Return Me._подразделенияTableAdapter
+                Return Me._secDA
             End Get
             Set
-                Me._подразделенияTableAdapter = value
+                Me._secDA = value
             End Set
         End Property
         
@@ -34180,9 +34261,9 @@ Namespace МонетыDataSetTableAdapters
                             AndAlso (Not (Me._перемещение_между_хранилищамиTableAdapter.Connection) Is Nothing)) Then
                     Return Me._перемещение_между_хранилищамиTableAdapter.Connection
                 End If
-                If ((Not (Me._подразделенияTableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._подразделенияTableAdapter.Connection) Is Nothing)) Then
-                    Return Me._подразделенияTableAdapter.Connection
+                If ((Not (Me._secDA) Is Nothing)  _
+                            AndAlso (Not (Me._secDA.Connection) Is Nothing)) Then
+                    Return Me._secDA.Connection
                 End If
                 If ((Not (Me._приобретение_монет_ТБ_в_ЦБTableAdapter) Is Nothing)  _
                             AndAlso (Not (Me._приобретение_монет_ТБ_в_ЦБTableAdapter.Connection) Is Nothing)) Then
@@ -34289,7 +34370,7 @@ Namespace МонетыDataSetTableAdapters
                 If (Not (Me._перемещение_между_хранилищамиTableAdapter) Is Nothing) Then
                     count = (count + 1)
                 End If
-                If (Not (Me._подразделенияTableAdapter) Is Nothing) Then
+                If (Not (Me._secDA) Is Nothing) Then
                     count = (count + 1)
                 End If
                 If (Not (Me._приобретение_монет_ТБ_в_ЦБTableAdapter) Is Nothing) Then
@@ -34516,12 +34597,12 @@ Namespace МонетыDataSetTableAdapters
                     allChangedRows.AddRange(updatedRows)
                 End If
             End If
-            If (Not (Me._подразделенияTableAdapter) Is Nothing) Then
+            If (Not (Me._secDA) Is Nothing) Then
                 Dim updatedRows() As Global.System.Data.DataRow = dataSet.Подразделения.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
                 updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
                 If ((Not (updatedRows) Is Nothing)  _
                             AndAlso (0 < updatedRows.Length)) Then
-                    result = (result + Me._подразделенияTableAdapter.Update(updatedRows))
+                    result = (result + Me._secDA.Update(updatedRows))
                     allChangedRows.AddRange(updatedRows)
                 End If
             End If
@@ -34750,11 +34831,11 @@ Namespace МонетыDataSetTableAdapters
                     allAddedRows.AddRange(addedRows)
                 End If
             End If
-            If (Not (Me._подразделенияTableAdapter) Is Nothing) Then
+            If (Not (Me._secDA) Is Nothing) Then
                 Dim addedRows() As Global.System.Data.DataRow = dataSet.Подразделения.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
                 If ((Not (addedRows) Is Nothing)  _
                             AndAlso (0 < addedRows.Length)) Then
-                    result = (result + Me._подразделенияTableAdapter.Update(addedRows))
+                    result = (result + Me._secDA.Update(addedRows))
                     allAddedRows.AddRange(addedRows)
                 End If
             End If
@@ -34880,11 +34961,11 @@ Namespace МонетыDataSetTableAdapters
                     allChangedRows.AddRange(deletedRows)
                 End If
             End If
-            If (Not (Me._подразделенияTableAdapter) Is Nothing) Then
+            If (Not (Me._secDA) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.Подразделения.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
                 If ((Not (deletedRows) Is Nothing)  _
                             AndAlso (0 < deletedRows.Length)) Then
-                    result = (result + Me._подразделенияTableAdapter.Update(deletedRows))
+                    result = (result + Me._secDA.Update(deletedRows))
                     allChangedRows.AddRange(deletedRows)
                 End If
             End If
@@ -35141,8 +35222,8 @@ Namespace МонетыDataSetTableAdapters
                 Throw New Global.System.ArgumentException("Все адаптеры таблицы, управляемые диспетчером адаптера таблицы TableAdapterManage"& _ 
                         "r, должны использовать одинаковую строку подключения.")
             End If
-            If ((Not (Me._подразделенияTableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._подразделенияTableAdapter.Connection) = false)) Then
+            If ((Not (Me._secDA) Is Nothing)  _
+                        AndAlso (Me.MatchTableAdapterConnection(Me._secDA.Connection) = false)) Then
                 Throw New Global.System.ArgumentException("Все адаптеры таблицы, управляемые диспетчером адаптера таблицы TableAdapterManage"& _ 
                         "r, должны использовать одинаковую строку подключения.")
             End If
@@ -35356,13 +35437,13 @@ Namespace МонетыDataSetTableAdapters
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._перемещение_между_хранилищамиTableAdapter.Adapter)
                     End If
                 End If
-                If (Not (Me._подразделенияTableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._подразделенияTableAdapter, Me._подразделенияTableAdapter.Connection)
-                    Me._подразделенияTableAdapter.Connection = CType(workConnection,Global.System.Data.OleDb.OleDbConnection)
-                    Me._подразделенияTableAdapter.Transaction = CType(workTransaction,Global.System.Data.OleDb.OleDbTransaction)
-                    If Me._подразделенияTableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._подразделенияTableAdapter.Adapter.AcceptChangesDuringUpdate = false
-                        adaptersWithAcceptChangesDuringUpdate.Add(Me._подразделенияTableAdapter.Adapter)
+                If (Not (Me._secDA) Is Nothing) Then
+                    revertConnections.Add(Me._secDA, Me._secDA.Connection)
+                    Me._secDA.Connection = CType(workConnection,Global.System.Data.OleDb.OleDbConnection)
+                    Me._secDA.Transaction = CType(workTransaction,Global.System.Data.OleDb.OleDbTransaction)
+                    If Me._secDA.Adapter.AcceptChangesDuringUpdate Then
+                        Me._secDA.Adapter.AcceptChangesDuringUpdate = false
+                        adaptersWithAcceptChangesDuringUpdate.Add(Me._secDA.Adapter)
                     End If
                 End If
                 If (Not (Me._приобретение_монет_ТБ_в_ЦБTableAdapter) Is Nothing) Then
@@ -35599,9 +35680,9 @@ Namespace МонетыDataSetTableAdapters
                     Me._перемещение_между_хранилищамиTableAdapter.Connection = CType(revertConnections(Me._перемещение_между_хранилищамиTableAdapter),Global.System.Data.OleDb.OleDbConnection)
                     Me._перемещение_между_хранилищамиTableAdapter.Transaction = Nothing
                 End If
-                If (Not (Me._подразделенияTableAdapter) Is Nothing) Then
-                    Me._подразделенияTableAdapter.Connection = CType(revertConnections(Me._подразделенияTableAdapter),Global.System.Data.OleDb.OleDbConnection)
-                    Me._подразделенияTableAdapter.Transaction = Nothing
+                If (Not (Me._secDA) Is Nothing) Then
+                    Me._secDA.Connection = CType(revertConnections(Me._secDA),Global.System.Data.OleDb.OleDbConnection)
+                    Me._secDA.Transaction = Nothing
                 End If
                 If (Not (Me._приобретение_монет_ТБ_в_ЦБTableAdapter) Is Nothing) Then
                     Me._приобретение_монет_ТБ_в_ЦБTableAdapter.Connection = CType(revertConnections(Me._приобретение_монет_ТБ_в_ЦБTableAdapter),Global.System.Data.OleDb.OleDbConnection)

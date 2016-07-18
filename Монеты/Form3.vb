@@ -251,7 +251,27 @@ FROM [Проверка наполнения наборов]", Con)
             ComboBox1_SelectionChangeCommitted(sender, e)
         Else
             ' создание нового набора
-            Dialog1.Show()
+            If Dialog1.ShowDialog() = DialogResult.OK Then
+
+                Update_table()
+                tbt.Clear()
+                tbt.Rows.Add(Class1.GetCat(),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(1),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(2),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(8),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(6),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(3),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(9),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(4),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(5),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(7),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(10),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(11),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(12),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(13),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(14),
+                     tableForCmb2.Rows(ComboBox2.SelectedIndex)(15))
+            End If
         End If
     End Sub
 End Class

@@ -15,7 +15,11 @@
         'Only for debugging
         'For tech only 
         'Need to be deleted in release ver
-        Form4.Show()
-        Form4.Activate()
+        'Form5.Show()
+        'Form5.Activate()
+    End Sub
+
+    Private Sub КонтрагентыToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles КонтрагентыToolStripMenuItem.Click
+        Form5.Show()
     End Sub
 End Class

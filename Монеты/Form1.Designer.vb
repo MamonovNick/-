@@ -115,7 +115,7 @@ Partial Class MainForm
         'НастройкиToolStripMenuItem
         '
         Me.НастройкиToolStripMenuItem.Name = "НастройкиToolStripMenuItem"
-        Me.НастройкиToolStripMenuItem.Size = New System.Drawing.Size(159, 26)
+        Me.НастройкиToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
         Me.НастройкиToolStripMenuItem.Text = "Настройки"
         '
         'СправкаToolStripMenuItem

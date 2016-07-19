@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class MainForm
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class MainForm
     'Примечание: следующая процедура является обязательной для конструктора форм Windows Forms
     'Для ее изменения используйте конструктор форм Windows Form.  
     'Не изменяйте ее в редакторе исходного кода.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
@@ -46,7 +46,7 @@ Partial Class MainForm
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ОсновнаяToolStripMenuItem, Me.СправочникиToolStripMenuItem, Me.СервисToolStripMenuItem, Me.СправкаToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(373, 28)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1131, 28)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -115,7 +115,7 @@ Partial Class MainForm
         'НастройкиToolStripMenuItem
         '
         Me.НастройкиToolStripMenuItem.Name = "НастройкиToolStripMenuItem"
-        Me.НастройкиToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
+        Me.НастройкиToolStripMenuItem.Size = New System.Drawing.Size(159, 26)
         Me.НастройкиToolStripMenuItem.Text = "Настройки"
         '
         'СправкаToolStripMenuItem
@@ -128,14 +128,14 @@ Partial Class MainForm
         'ОПрограммеToolStripMenuItem
         '
         Me.ОПрограммеToolStripMenuItem.Name = "ОПрограммеToolStripMenuItem"
-        Me.ОПрограммеToolStripMenuItem.Size = New System.Drawing.Size(179, 26)
+        Me.ОПрограммеToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
         Me.ОПрограммеToolStripMenuItem.Text = "О программе"
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(373, 513)
+        Me.ClientSize = New System.Drawing.Size(1131, 555)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1

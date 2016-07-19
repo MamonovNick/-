@@ -26,4 +26,8 @@
     Private Sub ВидыВалютToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ВидыВалютToolStripMenuItem.Click
         Form6.Show()
     End Sub
+
+    Private Sub ОПрограммеToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ОПрограммеToolStripMenuItem.Click
+        AboutBox1.Show()
+    End Sub
 End Class

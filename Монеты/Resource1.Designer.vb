@@ -73,5 +73,15 @@ Namespace My.Resources
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        '''</summary>
+        Friend Shared ReadOnly Property Фон() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Фон", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
     End Class
 End Namespace

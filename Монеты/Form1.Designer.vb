@@ -37,7 +37,29 @@ Partial Class MainForm
         Me.НастройкиToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.СправкаToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ОПрограммеToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton10 = New System.Windows.Forms.ToolStripButton()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton8 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton9 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton11 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton12 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.MenuStrip1.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
+        Me.ToolStrip1.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ToolStrip2.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -128,14 +150,227 @@ Partial Class MainForm
         'ОПрограммеToolStripMenuItem
         '
         Me.ОПрограммеToolStripMenuItem.Name = "ОПрограммеToolStripMenuItem"
-        Me.ОПрограммеToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
+        Me.ОПрограммеToolStripMenuItem.Size = New System.Drawing.Size(179, 26)
         Me.ОПрограммеToolStripMenuItem.Text = "О программе"
+        '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 533)
+        Me.StatusStrip1.Name = "StatusStrip1"
+        Me.StatusStrip1.Size = New System.Drawing.Size(1131, 22)
+        Me.StatusStrip1.TabIndex = 1
+        Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.ColumnCount = 4
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 218.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 5.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 5.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.ToolStrip1, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.DataGridView1, 2, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.ToolStrip2, 0, 0)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 28)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 5
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1131, 505)
+        Me.TableLayoutPanel1.TabIndex = 2
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ToolStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripButton6, Me.ToolStripButton10, Me.ToolStripSeparator1})
+        Me.ToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow
+        Me.ToolStrip1.Location = New System.Drawing.Point(0, 28)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.TableLayoutPanel1.SetRowSpan(Me.ToolStrip1, 3)
+        Me.ToolStrip1.Size = New System.Drawing.Size(218, 472)
+        Me.ToolStrip1.TabIndex = 3
+        Me.ToolStrip1.Text = "Меню главного окна"
+        '
+        'ToolStripButton1
+        '
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
+        Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton1.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.Padding = New System.Windows.Forms.Padding(5)
+        Me.ToolStripButton1.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.ToolStripButton1.Size = New System.Drawing.Size(206, 34)
+        Me.ToolStripButton1.Text = "Заявки"
+        Me.ToolStripButton1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'ToolStripButton2
+        '
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
+        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton2.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.ToolStripButton2.Padding = New System.Windows.Forms.Padding(5)
+        Me.ToolStripButton2.Size = New System.Drawing.Size(206, 34)
+        Me.ToolStripButton2.Text = "Операции"
+        Me.ToolStripButton2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'ToolStripButton3
+        '
+        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), System.Drawing.Image)
+        Me.ToolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton3.Margin = New System.Windows.Forms.Padding(25, 1, 0, 2)
+        Me.ToolStripButton3.Name = "ToolStripButton3"
+        Me.ToolStripButton3.Size = New System.Drawing.Size(191, 24)
+        Me.ToolStripButton3.Text = "Внутрисистемные"
+        Me.ToolStripButton3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.ToolStripButton3.Visible = False
+        '
+        'ToolStripButton4
+        '
+        Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton4.Image = CType(resources.GetObject("ToolStripButton4.Image"), System.Drawing.Image)
+        Me.ToolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton4.Margin = New System.Windows.Forms.Padding(25, 1, 0, 2)
+        Me.ToolStripButton4.Name = "ToolStripButton4"
+        Me.ToolStripButton4.Size = New System.Drawing.Size(191, 24)
+        Me.ToolStripButton4.Text = "Внешние"
+        Me.ToolStripButton4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.ToolStripButton4.Visible = False
+        '
+        'ToolStripButton5
+        '
+        Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton5.Image = CType(resources.GetObject("ToolStripButton5.Image"), System.Drawing.Image)
+        Me.ToolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton5.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
+        Me.ToolStripButton5.Name = "ToolStripButton5"
+        Me.ToolStripButton5.Padding = New System.Windows.Forms.Padding(5)
+        Me.ToolStripButton5.Size = New System.Drawing.Size(206, 34)
+        Me.ToolStripButton5.Tag = ""
+        Me.ToolStripButton5.Text = "Перемещение монет"
+        Me.ToolStripButton5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.ToolStripButton5.ToolTipText = "Перемещение монет между хранилищами"
+        '
+        'ToolStripButton6
+        '
+        Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton6.Image = CType(resources.GetObject("ToolStripButton6.Image"), System.Drawing.Image)
+        Me.ToolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton6.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
+        Me.ToolStripButton6.Name = "ToolStripButton6"
+        Me.ToolStripButton6.Padding = New System.Windows.Forms.Padding(5)
+        Me.ToolStripButton6.Size = New System.Drawing.Size(206, 34)
+        Me.ToolStripButton6.Text = "Состояние монет"
+        Me.ToolStripButton6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.ToolStripButton6.ToolTipText = "Изменение состояния монет"
+        '
+        'ToolStripButton10
+        '
+        Me.ToolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton10.Image = CType(resources.GetObject("ToolStripButton10.Image"), System.Drawing.Image)
+        Me.ToolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton10.Margin = New System.Windows.Forms.Padding(10, 1, 0, 2)
+        Me.ToolStripButton10.Name = "ToolStripButton10"
+        Me.ToolStripButton10.Padding = New System.Windows.Forms.Padding(5)
+        Me.ToolStripButton10.Size = New System.Drawing.Size(206, 34)
+        Me.ToolStripButton10.Text = "Покупка в ЦБ терр. банками"
+        Me.ToolStripButton10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.ToolStripButton10.ToolTipText = "Самостоятельная покупка в ЦБ терр. банками"
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView1.Location = New System.Drawing.Point(226, 31)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.RowTemplate.Height = 24
+        Me.DataGridView1.Size = New System.Drawing.Size(897, 366)
+        Me.DataGridView1.TabIndex = 4
+        '
+        'ToolStrip2
+        '
+        Me.TableLayoutPanel1.SetColumnSpan(Me.ToolStrip2, 3)
+        Me.ToolStrip2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ToolStrip2.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton7, Me.ToolStripButton8, Me.ToolStripButton9, Me.ToolStripButton11, Me.ToolStripButton12})
+        Me.ToolStrip2.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStrip2.Name = "ToolStrip2"
+        Me.ToolStrip2.Size = New System.Drawing.Size(1126, 28)
+        Me.ToolStrip2.TabIndex = 5
+        Me.ToolStrip2.Text = "ToolStrip2"
+        '
+        'ToolStripButton7
+        '
+        Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton7.Image = CType(resources.GetObject("ToolStripButton7.Image"), System.Drawing.Image)
+        Me.ToolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton7.Name = "ToolStripButton7"
+        Me.ToolStripButton7.Padding = New System.Windows.Forms.Padding(5)
+        Me.ToolStripButton7.Size = New System.Drawing.Size(131, 25)
+        Me.ToolStripButton7.Text = "Остатки и цены"
+        '
+        'ToolStripButton8
+        '
+        Me.ToolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton8.Image = CType(resources.GetObject("ToolStripButton8.Image"), System.Drawing.Image)
+        Me.ToolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton8.Name = "ToolStripButton8"
+        Me.ToolStripButton8.Padding = New System.Windows.Forms.Padding(5)
+        Me.ToolStripButton8.Size = New System.Drawing.Size(101, 25)
+        Me.ToolStripButton8.Text = "Документы"
+        '
+        'ToolStripButton9
+        '
+        Me.ToolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton9.Image = CType(resources.GetObject("ToolStripButton9.Image"), System.Drawing.Image)
+        Me.ToolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton9.Name = "ToolStripButton9"
+        Me.ToolStripButton9.Padding = New System.Windows.Forms.Padding(5)
+        Me.ToolStripButton9.Size = New System.Drawing.Size(73, 25)
+        Me.ToolStripButton9.Text = "Отчеты"
+        '
+        'ToolStripButton11
+        '
+        Me.ToolStripButton11.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton11.Image = CType(resources.GetObject("ToolStripButton11.Image"), System.Drawing.Image)
+        Me.ToolStripButton11.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton11.Name = "ToolStripButton11"
+        Me.ToolStripButton11.Padding = New System.Windows.Forms.Padding(5)
+        Me.ToolStripButton11.Size = New System.Drawing.Size(148, 25)
+        Me.ToolStripButton11.Text = "Условные доходы"
+        '
+        'ToolStripButton12
+        '
+        Me.ToolStripButton12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButton12.Image = CType(resources.GetObject("ToolStripButton12.Image"), System.Drawing.Image)
+        Me.ToolStripButton12.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton12.Name = "ToolStripButton12"
+        Me.ToolStripButton12.Padding = New System.Windows.Forms.Padding(5)
+        Me.ToolStripButton12.Size = New System.Drawing.Size(184, 25)
+        Me.ToolStripButton12.Text = "Суммы распределения"
+        Me.ToolStripButton12.ToolTipText = "Расчет сумм распределения"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(216, 6)
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1131, 555)
+        Me.Controls.Add(Me.TableLayoutPanel1)
+        Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
@@ -143,6 +378,13 @@ Partial Class MainForm
         Me.Text = "Монеты"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ToolStrip2.ResumeLayout(False)
+        Me.ToolStrip2.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -162,4 +404,22 @@ Partial Class MainForm
     Friend WithEvents ВыходToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents НастройкиToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents ToolStripButton4 As ToolStripButton
+    Friend WithEvents ToolStripButton5 As ToolStripButton
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents ToolStripButton6 As ToolStripButton
+    Friend WithEvents ToolStrip2 As ToolStrip
+    Friend WithEvents ToolStripButton7 As ToolStripButton
+    Friend WithEvents ToolStripButton8 As ToolStripButton
+    Friend WithEvents ToolStripButton9 As ToolStripButton
+    Friend WithEvents ToolStripButton10 As ToolStripButton
+    Friend WithEvents ToolStripButton11 As ToolStripButton
+    Friend WithEvents ToolStripButton12 As ToolStripButton
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
 End Class

@@ -1,4 +1,6 @@
 ﻿Public Class MainForm
+    Private OperationBool As Boolean = False
+
     Private Sub МонетыToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles МонетыToolStripMenuItem.Click
         G_coins.Show()
     End Sub
@@ -15,8 +17,8 @@
         'Only for debugging
         'For tech only 
         'Need to be deleted in release ver
-        'Form6.Show()
-        'Form6.Activate()
+        'Form7.Show()
+        'Form7.Activate()
     End Sub
 
     Private Sub КонтрагентыToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles КонтрагентыToolStripMenuItem.Click
@@ -29,5 +31,16 @@
 
     Private Sub ОПрограммеToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ОПрограммеToolStripMenuItem.Click
         AboutBox1.Show()
+    End Sub
+
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        If OperationBool Then
+            ToolStripButton3.Visible = False
+            ToolStripButton4.Visible = False
+        Else
+            ToolStripButton3.Visible = True
+            ToolStripButton4.Visible = True
+        End If
+        OperationBool = Not OperationBool
     End Sub
 End Class

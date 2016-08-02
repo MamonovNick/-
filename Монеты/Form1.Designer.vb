@@ -47,6 +47,7 @@ Partial Class MainForm
         Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton10 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton()
@@ -54,12 +55,14 @@ Partial Class MainForm
         Me.ToolStripButton9 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton11 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton12 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip2.SuspendLayout()
+        Me.FlowLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -172,6 +175,7 @@ Partial Class MainForm
         Me.TableLayoutPanel1.Controls.Add(Me.ToolStrip1, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.DataGridView1, 2, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.ToolStrip2, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.FlowLayoutPanel1, 2, 3)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 28)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -286,14 +290,20 @@ Partial Class MainForm
         Me.ToolStripButton10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ToolStripButton10.ToolTipText = "Самостоятельная покупка в ЦБ терр. банками"
         '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(216, 6)
+        '
         'DataGridView1
         '
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView1.Location = New System.Drawing.Point(226, 31)
         Me.DataGridView1.Name = "DataGridView1"
+        Me.TableLayoutPanel1.SetRowSpan(Me.DataGridView1, 2)
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(897, 366)
+        Me.DataGridView1.Size = New System.Drawing.Size(897, 406)
         Me.DataGridView1.TabIndex = 4
         '
         'ToolStrip2
@@ -359,10 +369,25 @@ Partial Class MainForm
         Me.ToolStripButton12.Text = "Суммы распределения"
         Me.ToolStripButton12.ToolTipText = "Расчет сумм распределения"
         '
-        'ToolStripSeparator1
+        'FlowLayoutPanel1
         '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(216, 6)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Button1)
+        Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(226, 443)
+        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        Me.FlowLayoutPanel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(897, 54)
+        Me.FlowLayoutPanel1.TabIndex = 6
+        '
+        'Button1
+        '
+        Me.Button1.AutoSize = True
+        Me.Button1.Location = New System.Drawing.Point(768, 3)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(126, 27)
+        Me.Button1.TabIndex = 0
+        Me.Button1.Text = "1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'MainForm
         '
@@ -385,6 +410,8 @@ Partial Class MainForm
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip2.ResumeLayout(False)
         Me.ToolStrip2.PerformLayout()
+        Me.FlowLayoutPanel1.ResumeLayout(False)
+        Me.FlowLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -422,4 +449,6 @@ Partial Class MainForm
     Friend WithEvents ToolStripButton11 As ToolStripButton
     Friend WithEvents ToolStripButton12 As ToolStripButton
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
+    Friend WithEvents Button1 As Button
 End Class

@@ -57,6 +57,9 @@ Partial Class MainForm
         Me.ToolStripButton12 = New System.Windows.Forms.ToolStripButton()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
@@ -308,13 +311,13 @@ Partial Class MainForm
         '
         'ToolStrip2
         '
-        Me.TableLayoutPanel1.SetColumnSpan(Me.ToolStrip2, 3)
+        Me.TableLayoutPanel1.SetColumnSpan(Me.ToolStrip2, 4)
         Me.ToolStrip2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ToolStrip2.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton7, Me.ToolStripButton8, Me.ToolStripButton9, Me.ToolStripButton11, Me.ToolStripButton12})
         Me.ToolStrip2.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip2.Name = "ToolStrip2"
-        Me.ToolStrip2.Size = New System.Drawing.Size(1126, 28)
+        Me.ToolStrip2.Size = New System.Drawing.Size(1131, 28)
         Me.ToolStrip2.TabIndex = 5
         Me.ToolStrip2.Text = "ToolStrip2"
         '
@@ -372,6 +375,9 @@ Partial Class MainForm
         'FlowLayoutPanel1
         '
         Me.FlowLayoutPanel1.Controls.Add(Me.Button1)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Button2)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Button3)
+        Me.FlowLayoutPanel1.Controls.Add(Me.Button4)
         Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(226, 443)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
@@ -388,6 +394,36 @@ Partial Class MainForm
         Me.Button1.TabIndex = 0
         Me.Button1.Text = "1"
         Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.AutoSize = True
+        Me.Button2.Location = New System.Drawing.Point(636, 3)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(126, 27)
+        Me.Button2.TabIndex = 1
+        Me.Button2.Text = "2"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Button3
+        '
+        Me.Button3.AutoSize = True
+        Me.Button3.Location = New System.Drawing.Point(504, 3)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(126, 27)
+        Me.Button3.TabIndex = 2
+        Me.Button3.Text = "3"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'Button4
+        '
+        Me.Button4.AutoSize = True
+        Me.Button4.Location = New System.Drawing.Point(372, 3)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(126, 27)
+        Me.Button4.TabIndex = 3
+        Me.Button4.Text = "4"
+        Me.Button4.UseVisualStyleBackColor = True
         '
         'MainForm
         '
@@ -451,4 +487,7 @@ Partial Class MainForm
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
     Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Button4 As Button
 End Class

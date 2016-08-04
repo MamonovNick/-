@@ -1,4 +1,5 @@
-﻿Imports System
+﻿Imports System.Resources
+Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -31,5 +32,6 @@ Imports System.Runtime.InteropServices
 ' используя "*", как показано ниже:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.030.3658.0")>
+<Assembly: AssemblyVersion("0.040.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: NeutralResourcesLanguage("ru")>

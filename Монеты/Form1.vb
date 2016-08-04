@@ -271,8 +271,16 @@ WHERE ((Дата = Дата_Orig) AND (Номер = Номер_Orig) AND ([Ви�
         DA.Fill(tbt)
         bs1.DataSource = tbt
         DataGridView1.DataSource = bs1
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 3)
 
+        Dim DateColumn As New CalendarColumn()
+        DateColumn.DataPropertyName = "Дата"
+        DateColumn.Name = "Дата"
+
+        Dim oldColIndex As Int32 = DataGridView1.Columns("Дата").Index
+        DataGridView1.Columns.RemoveAt(oldColIndex)
+        DataGridView1.Columns.Insert(oldColIndex, DateColumn)
+
+        TableLayoutPanel1.SetRowSpan(DataGridView1, 3)
     End Sub
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click

@@ -114,6 +114,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="CalendarCell.vb" />
+    <Compile Include="CalendarColumn.vb" />
+    <Compile Include="CalendarEditingControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Class1.vb" />
     <Compile Include="Dialog1.Designer.vb">
       <DependentUpon>Dialog1.vb</DependentUpon>

@@ -1,6 +1,7 @@
 ﻿Class CalendarEditingControl
     Inherits DateTimePicker
     Implements IDataGridViewEditingControl
+
     Private dataGridViewControl As DataGridView
     Private valueIsChanged As Boolean = False
     Private rowIndexNum As Integer

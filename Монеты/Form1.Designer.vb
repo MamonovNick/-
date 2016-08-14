@@ -60,12 +60,23 @@ Partial Class MainForm
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.МонетыDataSet = New Монеты.МонетыDataSet()
+        Me.SecDA = New Монеты.МонетыDataSetTableAdapters.SecDA()
         Me.MenuStrip1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip2.SuspendLayout()
         Me.FlowLayoutPanel1.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -170,15 +181,17 @@ Partial Class MainForm
         '
         'TableLayoutPanel1
         '
-        Me.TableLayoutPanel1.ColumnCount = 4
+        Me.TableLayoutPanel1.ColumnCount = 5
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 218.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 5.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 350.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 5.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 6.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.ToolStrip1, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.DataGridView1, 2, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.ToolStrip2, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.FlowLayoutPanel1, 2, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.FlowLayoutPanel1, 3, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.Panel1, 2, 3)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 28)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -186,7 +199,7 @@ Partial Class MainForm
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(1131, 505)
         Me.TableLayoutPanel1.TabIndex = 2
@@ -301,12 +314,13 @@ Partial Class MainForm
         'DataGridView1
         '
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.TableLayoutPanel1.SetColumnSpan(Me.DataGridView1, 2)
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView1.Location = New System.Drawing.Point(226, 31)
         Me.DataGridView1.Name = "DataGridView1"
         Me.TableLayoutPanel1.SetRowSpan(Me.DataGridView1, 2)
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(897, 406)
+        Me.DataGridView1.Size = New System.Drawing.Size(896, 394)
         Me.DataGridView1.TabIndex = 4
         '
         'ToolStrip2
@@ -317,7 +331,7 @@ Partial Class MainForm
         Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton7, Me.ToolStripButton8, Me.ToolStripButton9, Me.ToolStripButton11, Me.ToolStripButton12})
         Me.ToolStrip2.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip2.Name = "ToolStrip2"
-        Me.ToolStrip2.Size = New System.Drawing.Size(1131, 28)
+        Me.ToolStrip2.Size = New System.Drawing.Size(1125, 28)
         Me.ToolStrip2.TabIndex = 5
         Me.ToolStrip2.Text = "ToolStrip2"
         '
@@ -379,16 +393,16 @@ Partial Class MainForm
         Me.FlowLayoutPanel1.Controls.Add(Me.Button3)
         Me.FlowLayoutPanel1.Controls.Add(Me.Button4)
         Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(226, 443)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(576, 431)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(897, 54)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(546, 66)
         Me.FlowLayoutPanel1.TabIndex = 6
         '
         'Button1
         '
         Me.Button1.AutoSize = True
-        Me.Button1.Location = New System.Drawing.Point(768, 3)
+        Me.Button1.Location = New System.Drawing.Point(417, 3)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(126, 27)
         Me.Button1.TabIndex = 0
@@ -398,7 +412,7 @@ Partial Class MainForm
         'Button2
         '
         Me.Button2.AutoSize = True
-        Me.Button2.Location = New System.Drawing.Point(636, 3)
+        Me.Button2.Location = New System.Drawing.Point(285, 3)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(126, 27)
         Me.Button2.TabIndex = 1
@@ -408,7 +422,7 @@ Partial Class MainForm
         'Button3
         '
         Me.Button3.AutoSize = True
-        Me.Button3.Location = New System.Drawing.Point(504, 3)
+        Me.Button3.Location = New System.Drawing.Point(153, 3)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(126, 27)
         Me.Button3.TabIndex = 2
@@ -418,12 +432,96 @@ Partial Class MainForm
         'Button4
         '
         Me.Button4.AutoSize = True
-        Me.Button4.Location = New System.Drawing.Point(372, 3)
+        Me.Button4.Location = New System.Drawing.Point(21, 3)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(126, 27)
         Me.Button4.TabIndex = 3
         Me.Button4.Text = "4"
         Me.Button4.UseVisualStyleBackColor = True
+        '
+        'Panel1
+        '
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.ComboBox1)
+        Me.Panel1.Controls.Add(Me.CheckBox1)
+        Me.Panel1.Controls.Add(Me.RadioButton2)
+        Me.Panel1.Controls.Add(Me.RadioButton1)
+        Me.Panel1.Controls.Add(Me.DateTimePicker1)
+        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel1.Location = New System.Drawing.Point(226, 431)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(344, 66)
+        Me.Panel1.TabIndex = 7
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Location = New System.Drawing.Point(139, 23)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(142, 24)
+        Me.ComboBox1.TabIndex = 6
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Checked = True
+        Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox1.Location = New System.Drawing.Point(3, 45)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(285, 21)
+        Me.CheckBox1.TabIndex = 5
+        Me.CheckBox1.Text = "Показать только незакрытые позиции"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'RadioButton2
+        '
+        Me.RadioButton2.AutoSize = True
+        Me.RadioButton2.Location = New System.Drawing.Point(62, 23)
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.Size = New System.Drawing.Size(76, 21)
+        Me.RadioButton2.TabIndex = 3
+        Me.RadioButton2.Text = "Только"
+        Me.RadioButton2.UseVisualStyleBackColor = True
+        '
+        'RadioButton1
+        '
+        Me.RadioButton1.AutoSize = True
+        Me.RadioButton1.Checked = True
+        Me.RadioButton1.Location = New System.Drawing.Point(3, 23)
+        Me.RadioButton1.Name = "RadioButton1"
+        Me.RadioButton1.Size = New System.Drawing.Size(53, 21)
+        Me.RadioButton1.TabIndex = 2
+        Me.RadioButton1.TabStop = True
+        Me.RadioButton1.Text = "Все"
+        Me.RadioButton1.UseVisualStyleBackColor = True
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.DateTimePicker1.Location = New System.Drawing.Point(139, 0)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(107, 22)
+        Me.DateTimePicker1.TabIndex = 1
+        Me.DateTimePicker1.Value = New Date(2004, 10, 1, 23, 29, 0, 0)
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(3, 3)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(130, 17)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Показать заявки с"
+        '
+        'МонетыDataSet
+        '
+        Me.МонетыDataSet.DataSetName = "МонетыDataSet"
+        Me.МонетыDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'SecDA
+        '
+        Me.SecDA.ClearBeforeFill = True
         '
         'MainForm
         '
@@ -448,6 +546,9 @@ Partial Class MainForm
         Me.ToolStrip2.PerformLayout()
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.FlowLayoutPanel1.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -490,4 +591,13 @@ Partial Class MainForm
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents Button4 As Button
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents RadioButton1 As RadioButton
+    Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents Label1 As Label
+    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents МонетыDataSet As МонетыDataSet
+    Friend WithEvents SecDA As МонетыDataSetTableAdapters.SecDA
 End Class

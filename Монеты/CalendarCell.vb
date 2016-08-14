@@ -12,9 +12,13 @@
         Dim ctl As CalendarEditingControl = CType(DataGridView.EditingControl, CalendarEditingControl)
         ' Use the default row value when Value property is null.
         If (Me.Value Is Nothing) Then
-            ctl.Value = CType(Me.DefaultNewRowValue, DateTime)
+            ctl.Value = CType(Me.DefaultNewRowValue, Date?)
         Else
-            ctl.Value = CType(Me.Value, DateTime)
+            Try
+                ctl.Value = CType(Me.Value, Date)
+            Catch ex As Exception
+                ctl.Value = CType(Me.DefaultNewRowValue, Date?)
+            End Try
         End If
     End Sub
 

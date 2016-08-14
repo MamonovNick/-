@@ -6,7 +6,9 @@ Imports System.Data.DataException
 Public Class G_coins
     Private Pic_location As String = "D:\Монеты-Access\Фотографии монет\" 'расположение фотографий монет
     Private ActiveTable As Int16 ' Номер активной таблицы
-    Dim bs1 As New BindingSource() 'Переменная bindingsourse
+    Private bs1 As New BindingSource() 'Переменная bindingsourse
+    Private comboColumn As DataGridViewComboBoxColumn
+    Private tableForComboColumn As DataTable
 
     Private Sub Update_table()
         Select Case ActiveTable
@@ -55,10 +57,10 @@ Public Class G_coins
     End Sub
 
     Private Function GetCol2_DataGridViewColumn() As DataGridViewColumn
-        Dim comboColumn As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
-        'this.GetCol2Table() - возвращает второй источник данных для ComboBox (см. ниже)
+        comboColumn = New DataGridViewComboBoxColumn()
         Try
-            comboColumn.DataSource = GetCol2Table()
+            GetCol2Table()
+            comboColumn.DataSource = tableForComboColumn
         Catch ex As Exception
 
         End Try
@@ -66,6 +68,7 @@ Public Class G_coins
         comboColumn.DisplayMember = "Валюта"
         comboColumn.ValueMember = "Валюта"
         comboColumn.Name = "Валюта"
+        comboColumn.SortMode = DataGridViewColumnSortMode.Automatic
         Return comboColumn
     End Function
 
@@ -74,12 +77,13 @@ Public Class G_coins
         Dim Con As New OleDb.OleDbConnection(ConnString) ' Переменная для подключения базы
         Dim SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
         Dim DA As OleDb.OleDbDataAdapter ' Адаптер для заполнения таблицы после запроса
-        Dim table As DataTable = New DataTable()
+        'Dim table As DataTable = New DataTable()
+        tableForComboColumn = New DataTable
         SqlCom = New OleDb.OleDbCommand("SELECT [Список валют].[Валюта] FROM [Список валют] ORDER BY [Список валют].[Валюта]", Con) ' Указываем строку запроса и привязываем к соединению
         DA = New OleDb.OleDbDataAdapter(SqlCom) 'Через адаптер получаем результаты запроса
-        DA.Fill(table) ' Заполняем таблицу результатами
+        DA.Fill(tableForComboColumn) ' Заполняем таблицу результатами
         'table.Rows.Add()
-        Return table
+        'Return table
     End Function
 
     Private Sub G_coins_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -146,5 +150,15 @@ Public Class G_coins
     Private Sub Tr_sets_Click(sender As Object, e As EventArgs) Handles Tr_sets.Click
         Me.Visible = False
         Form3.Show()
+    End Sub
+
+    Private Sub DataGridView1_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DataGridView1.DataError
+        Select Case ActiveTable
+            Case 0
+                If e.ColumnIndex = DataGridView1.Columns("Валюта").Index Then
+                    tableForComboColumn.Rows.Add((МонетыDataSet1.Монеты).Rows(e.RowIndex)(e.ColumnIndex))
+                    'comboColumn.
+                End If
+        End Select
     End Sub
 End Class

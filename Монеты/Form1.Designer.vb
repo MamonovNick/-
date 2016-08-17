@@ -37,7 +37,6 @@ Partial Class MainForm
         Me.НастройкиToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.СправкаToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ОПрограммеToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
@@ -85,7 +84,7 @@ Partial Class MainForm
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ОсновнаяToolStripMenuItem, Me.СправочникиToolStripMenuItem, Me.СервисToolStripMenuItem, Me.СправкаToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1131, 28)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1204, 28)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -170,15 +169,6 @@ Partial Class MainForm
         Me.ОПрограммеToolStripMenuItem.Size = New System.Drawing.Size(179, 26)
         Me.ОПрограммеToolStripMenuItem.Text = "О программе"
         '
-        'StatusStrip1
-        '
-        Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 533)
-        Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1131, 22)
-        Me.StatusStrip1.TabIndex = 1
-        Me.StatusStrip1.Text = "StatusStrip1"
-        '
         'TableLayoutPanel1
         '
         Me.TableLayoutPanel1.ColumnCount = 5
@@ -190,18 +180,19 @@ Partial Class MainForm
         Me.TableLayoutPanel1.Controls.Add(Me.ToolStrip1, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.DataGridView1, 2, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.ToolStrip2, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.FlowLayoutPanel1, 3, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.Panel1, 2, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.FlowLayoutPanel1, 3, 4)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 28)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 5
+        Me.TableLayoutPanel1.RowCount = 6
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1131, 505)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1204, 593)
         Me.TableLayoutPanel1.TabIndex = 2
         '
         'ToolStrip1
@@ -213,7 +204,7 @@ Partial Class MainForm
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 28)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.TableLayoutPanel1.SetRowSpan(Me.ToolStrip1, 3)
-        Me.ToolStrip1.Size = New System.Drawing.Size(218, 472)
+        Me.ToolStrip1.Size = New System.Drawing.Size(218, 515)
         Me.ToolStrip1.TabIndex = 3
         Me.ToolStrip1.Text = "Меню главного окна"
         '
@@ -320,7 +311,7 @@ Partial Class MainForm
         Me.DataGridView1.Name = "DataGridView1"
         Me.TableLayoutPanel1.SetRowSpan(Me.DataGridView1, 2)
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(896, 394)
+        Me.DataGridView1.Size = New System.Drawing.Size(969, 464)
         Me.DataGridView1.TabIndex = 4
         '
         'ToolStrip2
@@ -331,7 +322,7 @@ Partial Class MainForm
         Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton7, Me.ToolStripButton8, Me.ToolStripButton9, Me.ToolStripButton11, Me.ToolStripButton12})
         Me.ToolStrip2.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip2.Name = "ToolStrip2"
-        Me.ToolStrip2.Size = New System.Drawing.Size(1125, 28)
+        Me.ToolStrip2.Size = New System.Drawing.Size(1198, 28)
         Me.ToolStrip2.TabIndex = 5
         Me.ToolStrip2.Text = "ToolStrip2"
         '
@@ -393,16 +384,16 @@ Partial Class MainForm
         Me.FlowLayoutPanel1.Controls.Add(Me.Button3)
         Me.FlowLayoutPanel1.Controls.Add(Me.Button4)
         Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(576, 431)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(576, 546)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(546, 66)
+        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(619, 39)
         Me.FlowLayoutPanel1.TabIndex = 6
         '
         'Button1
         '
         Me.Button1.AutoSize = True
-        Me.Button1.Location = New System.Drawing.Point(417, 3)
+        Me.Button1.Location = New System.Drawing.Point(490, 3)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(126, 27)
         Me.Button1.TabIndex = 0
@@ -412,7 +403,7 @@ Partial Class MainForm
         'Button2
         '
         Me.Button2.AutoSize = True
-        Me.Button2.Location = New System.Drawing.Point(285, 3)
+        Me.Button2.Location = New System.Drawing.Point(358, 3)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(126, 27)
         Me.Button2.TabIndex = 1
@@ -422,7 +413,7 @@ Partial Class MainForm
         'Button3
         '
         Me.Button3.AutoSize = True
-        Me.Button3.Location = New System.Drawing.Point(153, 3)
+        Me.Button3.Location = New System.Drawing.Point(226, 3)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(126, 27)
         Me.Button3.TabIndex = 2
@@ -432,7 +423,7 @@ Partial Class MainForm
         'Button4
         '
         Me.Button4.AutoSize = True
-        Me.Button4.Location = New System.Drawing.Point(21, 3)
+        Me.Button4.Location = New System.Drawing.Point(94, 3)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(126, 27)
         Me.Button4.TabIndex = 3
@@ -449,9 +440,10 @@ Partial Class MainForm
         Me.Panel1.Controls.Add(Me.DateTimePicker1)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(226, 431)
+        Me.Panel1.Location = New System.Drawing.Point(226, 501)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(344, 66)
+        Me.TableLayoutPanel1.SetRowSpan(Me.Panel1, 2)
+        Me.Panel1.Size = New System.Drawing.Size(344, 84)
         Me.Panel1.TabIndex = 7
         '
         'ComboBox1
@@ -527,9 +519,8 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1131, 555)
+        Me.ClientSize = New System.Drawing.Size(1204, 621)
         Me.Controls.Add(Me.TableLayoutPanel1)
-        Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
@@ -568,7 +559,6 @@ Partial Class MainForm
     Friend WithEvents ВыходToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents НастройкиToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
-    Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents ToolStripButton1 As ToolStripButton

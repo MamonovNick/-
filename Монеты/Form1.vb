@@ -67,6 +67,10 @@ ORDER BY Подразделения.ВидУчастника DESC , Подраз
         ToolStripButton5.Checked = False
         ToolStripButton6.Checked = False
         ToolStripButton10.Checked = False
+        If (TabNum = 1) Or (TabNum > 3) Then
+            OperationBool = True
+            ToolStripButton2_Click(Nothing, Nothing)
+        End If
         Button1.Visible = False
         Button2.Visible = False
         Button3.Visible = False
@@ -125,8 +129,6 @@ ORDER BY Подразделения.ВидУчастника DESC , Подраз
             FirstOpen = False
         End If
         TabNum = 4
-        Button1.Visible = True
-        Button1.Text = "Сделать спецификацию"
         Clear_Form()
         ToolStripButton5.Checked = True
         tbt.Reset()
@@ -139,12 +141,21 @@ FROM [Перемещение между хранилищами]", Con)
         DA.Fill(tbt)
         bs1.DataSource = tbt
         DataGridView1.DataSource = bs1
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 2)
+        TableLayoutPanel1.SetRowSpan(DataGridView1, 3)
         DataGridView1.Columns(6).ReadOnly = True
         DataGridView1.Columns(7).ReadOnly = True
         DataGridView1.Columns(8).ReadOnly = True
         DataGridView1.Columns(9).ReadOnly = True
 
+        Button1.Visible = True
+        Button1.Enabled = True
+        Button2.Visible = False
+        Button3.Visible = False
+        Button4.Visible = False
+        Button1.Text = "Сделать спецификацию"
+
+        Panel1.Visible = False
+        FlowLayoutPanel1.Visible = True
     End Sub
 
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -187,6 +198,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
                 DA.Fill(tbt)
                 DataGridView1.DataSource = tbt
                 DataGridView1.ReadOnly = True
+                TableLayoutPanel1.SetRowSpan(DataGridView1, 3)
                 Panel1.Enabled = False
                 Button2.Enabled = False
                 Button3.Enabled = False
@@ -219,7 +231,9 @@ FROM [Изменение состояния]", Con)
         DA.Fill(tbt)
         bs1.DataSource = tbt
         DataGridView1.DataSource = bs1
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 3)
+        TableLayoutPanel1.SetRowSpan(DataGridView1, 4)
+        Panel1.Visible = False
+        FlowLayoutPanel1.Visible = False
         'DataGridView1.Columns(6).ReadOnly = True
         'DataGridView1.Columns(7).ReadOnly = True
         'DataGridView1.Columns(8).ReadOnly = True
@@ -246,7 +260,9 @@ FROM [Приобретение монет ТБ в ЦБ]", Con)
         DA.Fill(tbt)
         bs1.DataSource = tbt
         DataGridView1.DataSource = bs1
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 3)
+        TableLayoutPanel1.SetRowSpan(DataGridView1, 4)
+        Panel1.Visible = False
+        FlowLayoutPanel1.Visible = False
         'DataGridView1.Columns(6).ReadOnly = True
         'DataGridView1.Columns(7).ReadOnly = True
         'DataGridView1.Columns(8).ReadOnly = True
@@ -394,6 +410,7 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
 
         Panel1.Visible = True
         Panel1.Enabled = True
+        FlowLayoutPanel1.Visible = True
 
     End Sub
 
@@ -419,7 +436,7 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'TODO: данная строка кода позволяет загрузить данные в таблицу "МонетыDataSet.Подразделения". При необходимости она может быть перемещена или удалена.
         Me.SecDA.Fill(Me.МонетыDataSet.Подразделения)
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 3)
+        TableLayoutPanel1.SetRowSpan(DataGridView1, 4)
     End Sub
 
     Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker1.ValueChanged

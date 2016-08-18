@@ -155,6 +155,7 @@ FROM [Перемещение между хранилищами]", Con)
         Button1.Text = "Сделать спецификацию"
 
         Panel1.Visible = False
+        Panel2.Visible = False
         FlowLayoutPanel1.Visible = True
     End Sub
 
@@ -200,6 +201,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
                 DataGridView1.ReadOnly = True
                 TableLayoutPanel1.SetRowSpan(DataGridView1, 3)
                 Panel1.Enabled = False
+                Panel2.Visible = False
                 Button2.Enabled = False
                 Button3.Enabled = False
                 Button4.Enabled = False
@@ -233,6 +235,7 @@ FROM [Изменение состояния]", Con)
         DataGridView1.DataSource = bs1
         TableLayoutPanel1.SetRowSpan(DataGridView1, 4)
         Panel1.Visible = False
+        Panel2.Visible = False
         FlowLayoutPanel1.Visible = False
         'DataGridView1.Columns(6).ReadOnly = True
         'DataGridView1.Columns(7).ReadOnly = True
@@ -262,6 +265,7 @@ FROM [Приобретение монет ТБ в ЦБ]", Con)
         DataGridView1.DataSource = bs1
         TableLayoutPanel1.SetRowSpan(DataGridView1, 4)
         Panel1.Visible = False
+        Panel2.Visible = False
         FlowLayoutPanel1.Visible = False
         'DataGridView1.Columns(6).ReadOnly = True
         'DataGridView1.Columns(7).ReadOnly = True
@@ -351,6 +355,7 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
         TabNum = 1 'номер текущей таблицы
         Clear_Form() 'отмена выделения пункта меню
 
+        ComboBox1.Visible = True
         ComboBox1.DisplayMember = "Наименование"
         ComboBox1.DataSource = GetTableForCmb()
         ComboBox1.SelectedIndex = 35
@@ -410,12 +415,237 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
 
         Panel1.Visible = True
         Panel1.Enabled = True
+        Panel2.Visible = False
         FlowLayoutPanel1.Visible = True
 
+        Label1.Text = "Показать заявки с"
+        CheckBox1.Visible = True
+        CheckBox1.Text = "Показать только незакрытые позиции"
+        RadioButton1.Text = "Все"
+        RadioButton2.Text = "Только"
     End Sub
+
+    Private Sub Table2_Make()
+        'внутрисистемные операции
+        If TabNum <> 2 Then
+            Return
+        End If
+        tbt.Reset() 'очищаем таблицу
+        tbt = New DataTable
+        DA = New OleDb.OleDbDataAdapter
+        SqlCom = New OleDb.OleDbCommand("SELECT * 
+FROM Операции 
+WHERE ((Операции.ДатаДенег >= @Дата) AND (Операции.[Вид операции] = " + IIf(RadioButton1.Checked, """Выдача""", """Приём""") + "))
+ORDER BY Операции.ДатаДенег, Операции.МестоХранения, Операции.ВидУчастника, Операции.Отделение, Операции.Спецификация, Операции.Монета", Con)
+        DA.SelectCommand = SqlCom
+        DA.SelectCommand.Parameters.Add("@Дата", OleDb.OleDbType.Date, -1, "Дата")
+        DA.SelectCommand.Parameters(0).Value = DateTimePicker1.Value.Date()
+
+        delCommand = New OleDb.OleDbCommand("DELETE FROM Операции
+WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаДенег = ?) OR ДатаДенег IS NULL) AND ((Отделение = ?) OR Отделение IS NULL) AND (([Каталожный номер] = ?) OR [Каталожный номер] IS NULL) AND ((Количество = ?) OR Количество IS NULL) AND ((Цена = ?) OR Цена IS NULL) AND 
+       ((Спецификация = ?) OR Спецификация IS NULL) AND ((Распоряжение = ?) OR Распоряжение IS NULL) AND ((Заявка = ?) OR Заявка IS NULL) AND ((ВхНДС = ?) OR ВхНДС IS NULL) AND ((Состояние = ?) OR Состояние IS NULL) AND ((Дефекты = ?) OR Дефекты IS NULL) AND 
+       ((Комиссия = ?) OR Комиссия IS NULL) AND ((РасшифрПодр = ?) OR РасшифрПодр IS NULL) AND ((МестоХранения = ?) OR МестоХранения IS NULL) AND (([Вид операции] = ?) OR [Вид операции] IS NULL)", Con)
+        DA.DeleteCommand = delCommand
+        DA.DeleteCommand.Parameters.Add("1", OleDb.OleDbType.Date, -1, "ДатаМонет")
+        DA.DeleteCommand.Parameters.Item(0).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("2", OleDb.OleDbType.Date, -1, "ДатаДенег")
+        DA.DeleteCommand.Parameters.Item(1).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("3", OleDb.OleDbType.VarChar, 41, "Отделение")
+        DA.DeleteCommand.Parameters.Item(2).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("4", OleDb.OleDbType.VarChar, 9, "Каталожный номер")
+        DA.DeleteCommand.Parameters.Item(3).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("5", OleDb.OleDbType.Integer, -1, "Количество")
+        DA.DeleteCommand.Parameters.Item(4).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("6", OleDb.OleDbType.Double, -1, "Цена")
+        DA.DeleteCommand.Parameters.Item(5).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("7", OleDb.OleDbType.VarChar, 7, "Спецификация")
+        DA.DeleteCommand.Parameters.Item(6).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("8", OleDb.OleDbType.SmallInt, -1, "Распоряжение")
+        DA.DeleteCommand.Parameters.Item(7).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("9", OleDb.OleDbType.VarChar, 50, "Заявка")
+        DA.DeleteCommand.Parameters.Item(8).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("10", OleDb.OleDbType.VarChar, 12, "ВхНДС")
+        DA.DeleteCommand.Parameters.Item(9).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("11", OleDb.OleDbType.VarChar, 5, "Состояние")
+        DA.DeleteCommand.Parameters.Item(10).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("12", OleDb.OleDbType.VarChar, 60, "Дефекты")
+        DA.DeleteCommand.Parameters.Item(11).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("13", OleDb.OleDbType.Boolean, -1, "Комиссия")
+        DA.DeleteCommand.Parameters.Item(12).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("14", OleDb.OleDbType.VarChar, 60, "РасшифрПодр")
+        DA.DeleteCommand.Parameters.Item(13).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("15", OleDb.OleDbType.VarChar, 5, "МестоХранения")
+        DA.DeleteCommand.Parameters.Item(14).SourceVersion = DataRowVersion.Original
+        DA.DeleteCommand.Parameters.Add("16", OleDb.OleDbType.VarChar, 10, "Вид операции")
+        DA.DeleteCommand.Parameters.Item(15).SourceVersion = DataRowVersion.Original
+
+        updCommand = New OleDb.OleDbCommand("UPDATE Операции
+SET          ДатаМонет = ?, ДатаДенег = ?, [Вид операции] = ?, ВидУчастника = ?, Отделение = ?, [Каталожный номер] = ?, Монета = ?, Количество = ?, Цена = ?, Спецификация = ?, Распоряжение = ?, Заявка = ?, 
+                  ВхНДС = ?, Состояние = ?, Дефекты = ?, Комиссия = ?, РасшифрПодр = ?, МестоХранения = ?
+WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаДенег = ?) OR ДатаДенег IS NULL) AND ((Отделение = ?) OR Отделение IS NULL) AND (([Каталожный номер] = ?) OR [Каталожный номер] IS NULL) AND ((Количество = ?) OR Количество IS NULL) AND ((Цена = ?) OR Цена IS NULL) AND 
+       ((Спецификация = ?) OR Спецификация IS NULL) AND ((Распоряжение = ?) OR Распоряжение IS NULL) AND ((Заявка = ?) OR Заявка IS NULL) AND ((ВхНДС = ?) OR ВхНДС IS NULL) AND ((Состояние = ?) OR Состояние IS NULL) AND 
+       ((Дефекты = ?) OR Дефекты IS NULL) AND ((Комиссия = ?) OR Комиссия IS NULL) AND ((РасшифрПодр = ?) OR РасшифрПодр IS NULL) AND ((МестоХранения = ?) OR МестоХранения IS NULL) AND (([Вид операции] = ?) OR [Вид операции] IS NULL)", Con)
+        DA.UpdateCommand = updCommand
+        DA.UpdateCommand.Parameters.Add("s1", OleDb.OleDbType.Date, -1, "ДатаМонет")
+        DA.UpdateCommand.Parameters.Add("s2", OleDb.OleDbType.Date, -1, "ДатаДенег")
+        DA.UpdateCommand.Parameters.Add("s3", OleDb.OleDbType.VarChar, 10, "[Вид операции]")
+        DA.UpdateCommand.Parameters.Add("s4", OleDb.OleDbType.VarChar, 15, "ВидУчастника")
+        DA.UpdateCommand.Parameters.Add("s5", OleDb.OleDbType.VarChar, 41, "Отделение")
+        DA.UpdateCommand.Parameters.Add("s6", OleDb.OleDbType.VarChar, 9, "[Каталожный номер]")
+        DA.UpdateCommand.Parameters.Add("s7", OleDb.OleDbType.VarChar, 60, "Монета")
+        DA.UpdateCommand.Parameters.Add("s8", OleDb.OleDbType.Integer, -1, "Количество")
+        DA.UpdateCommand.Parameters.Add("s9", OleDb.OleDbType.Double, -1, "Цена")
+        DA.UpdateCommand.Parameters.Add("s10", OleDb.OleDbType.VarChar, 7, "Спецификация")
+        DA.UpdateCommand.Parameters.Add("s11", OleDb.OleDbType.SmallInt, -1, "Распоряжение")
+        DA.UpdateCommand.Parameters.Add("s12", OleDb.OleDbType.VarChar, 50, "Заявка")
+        DA.UpdateCommand.Parameters.Add("s13", OleDb.OleDbType.VarChar, 12, "ВхНДС")
+        DA.UpdateCommand.Parameters.Add("s14", OleDb.OleDbType.VarChar, 5, "Состояние")
+        DA.UpdateCommand.Parameters.Add("s15", OleDb.OleDbType.VarChar, 60, "Дефекты")
+        DA.UpdateCommand.Parameters.Add("s16", OleDb.OleDbType.Boolean, -1, "Комиссия")
+        DA.UpdateCommand.Parameters.Add("s17", OleDb.OleDbType.VarChar, 60, "РасшифрПодр")
+        DA.UpdateCommand.Parameters.Add("s18", OleDb.OleDbType.VarChar, 5, "МестоХранения")
+
+        DA.UpdateCommand.Parameters.Add("1", OleDb.OleDbType.Date, -1, "ДатаМонет")
+        DA.UpdateCommand.Parameters.Item(18).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("2", OleDb.OleDbType.Date, -1, "ДатаДенег")
+        DA.UpdateCommand.Parameters.Item(19).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("3", OleDb.OleDbType.VarChar, 41, "Отделение")
+        DA.UpdateCommand.Parameters.Item(20).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("4", OleDb.OleDbType.VarChar, 9, "Каталожный номер")
+        DA.UpdateCommand.Parameters.Item(21).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("5", OleDb.OleDbType.Integer, -1, "Количество")
+        DA.UpdateCommand.Parameters.Item(22).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("6", OleDb.OleDbType.Double, -1, "Цена")
+        DA.UpdateCommand.Parameters.Item(23).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("7", OleDb.OleDbType.VarChar, 7, "Спецификация")
+        DA.UpdateCommand.Parameters.Item(24).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("8", OleDb.OleDbType.SmallInt, -1, "Распоряжение")
+        DA.UpdateCommand.Parameters.Item(25).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("9", OleDb.OleDbType.VarChar, 50, "Заявка")
+        DA.UpdateCommand.Parameters.Item(26).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("10", OleDb.OleDbType.VarChar, 12, "ВхНДС")
+        DA.UpdateCommand.Parameters.Item(27).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("11", OleDb.OleDbType.VarChar, 5, "Состояние")
+        DA.UpdateCommand.Parameters.Item(28).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("12", OleDb.OleDbType.VarChar, 60, "Дефекты")
+        DA.UpdateCommand.Parameters.Item(29).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("13", OleDb.OleDbType.Boolean, -1, "Комиссия")
+        DA.UpdateCommand.Parameters.Item(30).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("14", OleDb.OleDbType.VarChar, 60, "РасшифрПодр")
+        DA.UpdateCommand.Parameters.Item(31).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("15", OleDb.OleDbType.VarChar, 5, "МестоХранения")
+        DA.UpdateCommand.Parameters.Item(32).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("16", OleDb.OleDbType.VarChar, 10, "Вид операции")
+        DA.UpdateCommand.Parameters.Item(33).SourceVersion = DataRowVersion.Original
+
+        insCommand = New OleDb.OleDbCommand("INSERT INTO Операции
+                  (ДатаМонет, ДатаДенег, [Вид операции], ВидУчастника, Отделение, [Каталожный номер], Монета, Количество, Цена, Спецификация, Распоряжение, Заявка, ВхНДС, Состояние, Дефекты, Комиссия, 
+                  РасшифрПодр, МестоХранения)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
+        DA.InsertCommand = insCommand
+        DA.InsertCommand.Parameters.Add("s1", OleDb.OleDbType.Date, -1, "ДатаМонет")
+        DA.InsertCommand.Parameters.Add("s2", OleDb.OleDbType.Date, -1, "ДатаДенег")
+        DA.InsertCommand.Parameters.Add("s3", OleDb.OleDbType.VarChar, 10, "[Вид операции]")
+        DA.InsertCommand.Parameters.Add("s4", OleDb.OleDbType.VarChar, 15, "ВидУчастника")
+        DA.InsertCommand.Parameters.Add("s5", OleDb.OleDbType.VarChar, 41, "Отделение")
+        DA.InsertCommand.Parameters.Add("s6", OleDb.OleDbType.VarChar, 9, "[Каталожный номер]")
+        DA.InsertCommand.Parameters.Add("s7", OleDb.OleDbType.VarChar, 60, "Монета")
+        DA.InsertCommand.Parameters.Add("s8", OleDb.OleDbType.Integer, -1, "Количество")
+        DA.InsertCommand.Parameters.Add("s9", OleDb.OleDbType.Double, -1, "Цена")
+        DA.InsertCommand.Parameters.Add("s10", OleDb.OleDbType.VarChar, 7, "Спецификация")
+        DA.InsertCommand.Parameters.Add("s11", OleDb.OleDbType.SmallInt, -1, "Распоряжение")
+        DA.InsertCommand.Parameters.Add("s12", OleDb.OleDbType.VarChar, 50, "Заявка")
+        DA.InsertCommand.Parameters.Add("s13", OleDb.OleDbType.VarChar, 12, "ВхНДС")
+        DA.InsertCommand.Parameters.Add("s14", OleDb.OleDbType.VarChar, 5, "Состояние")
+        DA.InsertCommand.Parameters.Add("s15", OleDb.OleDbType.VarChar, 60, "Дефекты")
+        DA.InsertCommand.Parameters.Add("s16", OleDb.OleDbType.Boolean, -1, "Комиссия")
+        DA.InsertCommand.Parameters.Add("s17", OleDb.OleDbType.VarChar, 60, "РасшифрПодр")
+        DA.InsertCommand.Parameters.Add("s18", OleDb.OleDbType.VarChar, 5, "МестоХранения")
+
+        DA.Fill(tbt)
+        bs1.DataSource = tbt
+        DataGridView1.DataSource = bs1
+    End Sub
+
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
         'tbt2
+        'Обработка пункта меню "Внутрисистемные операции"
+        'Обновление предыдущей таблицы, в случае если она была
+        If Not FirstOpen Then
+            Update_table()
+        Else
+            FirstOpen = False
+        End If
+        PrevTabNum = TabNum
+        TabNum = 2 'номер текущей таблицы
+        Clear_Form() 'отмена выделения пункта меню
+
+        'ComboBox1.DataSource = GetTableForCmb()
+        'ComboBox1.SelectedIndex = 35
+
+        ToolStripButton3.Checked = True 'выделяем текущий пункт меню
+
+        Table2_Make() ' Заполнение адаптера и таблицы и грида
+
+        'колонка с датой
+        'Dim DateColumn As New CalendarColumn()
+        'DateColumn.DataPropertyName = "Дата"
+        'DateColumn.Name = "Дата"
+
+        'Dim oldColIndex As Int32 = DataGridView1.Columns("Дата").Index
+        'DataGridView1.Columns.RemoveAt(oldColIndex)
+        'DataGridView1.Columns.Insert(oldColIndex, DateColumn)
+
+        'колонка выдача прием
+        'Dim comboColumn As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
+        'comboColumn.Items.AddRange("приём", "выдача")
+        'comboColumn.Name = "Вид операции"
+        'comboColumn.DataPropertyName = "Вид операции"
+        'comboColumn.SortMode = DataGridViewColumnSortMode.Automatic
+
+        'oldColIndex = DataGridView1.Columns("Вид операции").Index
+        'DataGridView1.Columns.RemoveAt(oldColIndex)
+        'DataGridView1.Columns.Insert(oldColIndex, comboColumn)
+        DataGridView1.ReadOnly = False
+
+        'колонка вид участника
+        'Dim comboColumn2 As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
+        'comboColumn2 = New DataGridViewComboBoxColumn()
+
+        'comboColumn2.Items.AddRange("Москва", "терр. банк", "управление")
+        'comboColumn2.Name = "ВидУчастника"
+        'comboColumn2.DataPropertyName = "ВидУчастника"
+        'comboColumn2.SortMode = DataGridViewColumnSortMode.Automatic
+
+        'oldColIndex = DataGridView1.Columns("ВидУчастника").Index
+        'DataGridView1.Columns.RemoveAt(oldColIndex)
+        'DataGridView1.Columns.Insert(oldColIndex, comboColumn2)
+
+        TableLayoutPanel1.SetRowSpan(DataGridView1, 2)
+
+        Button1.Visible = True
+        Button1.Enabled = True
+        Button2.Visible = True
+        Button2.Enabled = True
+        Button3.Visible = True
+        Button3.Enabled = True
+        Button4.Visible = False
+        Button1.Text = "Искать повторы"
+        Button2.Text = "Импорт из Excel"
+        Button3.Text = "Рассчитать номер спецификации"
+
+
+        Panel1.Visible = True
+        Panel1.Enabled = True
+        Panel2.Visible = True
+        FlowLayoutPanel1.Visible = True
+
+        Label1.Text = "Показать операции с"
+        CheckBox1.Visible = False
+        RadioButton1.Text = "Выдача"
+        RadioButton2.Text = "Приём"
+        ComboBox1.Visible = False
     End Sub
 
     Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
@@ -503,6 +733,7 @@ PIVOT [Монета]+"", ""+[Состояние];", Con)
                 DataGridView1.DataSource = tbt
                 DataGridView1.ReadOnly = True
                 Panel1.Enabled = False
+                Panel2.Visible = False
                 Button2.Enabled = False
                 Button3.Enabled = False
                 Button4.Enabled = False
@@ -560,6 +791,7 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
                     TabNum = 9
                     DataGridView1.ReadOnly = True
                     Panel1.Enabled = False
+                    Panel2.Visible = False
                     Button2.Enabled = False
                     Button3.Enabled = False
                     Button4.Enabled = False

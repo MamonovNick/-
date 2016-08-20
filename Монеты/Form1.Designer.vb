@@ -66,11 +66,12 @@ Partial Class MainForm
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.МонетыDataSet = New Монеты.МонетыDataSet()
         Me.SecDA = New Монеты.МонетыDataSetTableAdapters.SecDA()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.MenuStrip1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
@@ -78,8 +79,8 @@ Partial Class MainForm
         Me.ToolStrip2.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.FlowLayoutPanel1.SuspendLayout()
-        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
+        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -385,8 +386,9 @@ Partial Class MainForm
         'Panel1
         '
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel1.Controls.Add(Me.ComboBox1)
         Me.Panel1.Controls.Add(Me.CheckBox1)
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.ComboBox1)
         Me.Panel1.Controls.Add(Me.RadioButton2)
         Me.Panel1.Controls.Add(Me.RadioButton1)
         Me.Panel1.Controls.Add(Me.DateTimePicker1)
@@ -401,7 +403,7 @@ Partial Class MainForm
         'ComboBox1
         '
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(169, 29)
+        Me.ComboBox1.Location = New System.Drawing.Point(181, 29)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(142, 24)
         Me.ComboBox1.TabIndex = 6
@@ -421,7 +423,7 @@ Partial Class MainForm
         'RadioButton2
         '
         Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.Location = New System.Drawing.Point(87, 29)
+        Me.RadioButton2.Location = New System.Drawing.Point(103, 29)
         Me.RadioButton2.Name = "RadioButton2"
         Me.RadioButton2.Size = New System.Drawing.Size(76, 21)
         Me.RadioButton2.TabIndex = 3
@@ -443,7 +445,7 @@ Partial Class MainForm
         'DateTimePicker1
         '
         Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker1.Location = New System.Drawing.Point(169, 3)
+        Me.DateTimePicker1.Location = New System.Drawing.Point(181, 3)
         Me.DateTimePicker1.Name = "DateTimePicker1"
         Me.DateTimePicker1.Size = New System.Drawing.Size(107, 22)
         Me.DateTimePicker1.TabIndex = 1
@@ -452,7 +454,7 @@ Partial Class MainForm
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(3, 3)
+        Me.Label1.Location = New System.Drawing.Point(21, 3)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(130, 17)
         Me.Label1.TabIndex = 0
@@ -511,15 +513,6 @@ Partial Class MainForm
         Me.Button4.Text = "4"
         Me.Button4.UseVisualStyleBackColor = True
         '
-        'МонетыDataSet
-        '
-        Me.МонетыDataSet.DataSetName = "МонетыDataSet"
-        Me.МонетыDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'SecDA
-        '
-        Me.SecDA.ClearBeforeFill = True
-        '
         'Panel2
         '
         Me.Panel2.Controls.Add(Me.CheckBox3)
@@ -529,6 +522,16 @@ Partial Class MainForm
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(619, 40)
         Me.Panel2.TabIndex = 8
+        '
+        'CheckBox3
+        '
+        Me.CheckBox3.AutoSize = True
+        Me.CheckBox3.Location = New System.Drawing.Point(18, 19)
+        Me.CheckBox3.Name = "CheckBox3"
+        Me.CheckBox3.Size = New System.Drawing.Size(230, 21)
+        Me.CheckBox3.TabIndex = 1
+        Me.CheckBox3.Text = "Не учитывать наличие заявки"
+        Me.CheckBox3.UseVisualStyleBackColor = True
         '
         'CheckBox2
         '
@@ -540,15 +543,24 @@ Partial Class MainForm
         Me.CheckBox2.Text = "Показывать по монете полный список цен"
         Me.CheckBox2.UseVisualStyleBackColor = True
         '
-        'CheckBox3
+        'Label2
         '
-        Me.CheckBox3.AutoSize = True
-        Me.CheckBox3.Location = New System.Drawing.Point(18, 19)
-        Me.CheckBox3.Name = "CheckBox3"
-        Me.CheckBox3.Size = New System.Drawing.Size(230, 21)
-        Me.CheckBox3.TabIndex = 1
-        Me.CheckBox3.Text = "Не учитывать наличие заявки"
-        Me.CheckBox3.UseVisualStyleBackColor = True
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(3, 60)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(51, 17)
+        Me.Label2.TabIndex = 7
+        Me.Label2.Text = "Label2"
+        Me.Label2.Visible = False
+        '
+        'МонетыDataSet
+        '
+        Me.МонетыDataSet.DataSetName = "МонетыDataSet"
+        Me.МонетыDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'SecDA
+        '
+        Me.SecDA.ClearBeforeFill = True
         '
         'MainForm
         '
@@ -575,9 +587,9 @@ Partial Class MainForm
         Me.Panel1.PerformLayout()
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.FlowLayoutPanel1.PerformLayout()
-        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -631,4 +643,5 @@ Partial Class MainForm
     Friend WithEvents Panel2 As Panel
     Friend WithEvents CheckBox2 As CheckBox
     Friend WithEvents CheckBox3 As CheckBox
+    Friend WithEvents Label2 As Label
 End Class

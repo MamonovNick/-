@@ -419,24 +419,32 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
         FlowLayoutPanel1.Visible = True
 
         Label1.Text = "Показать заявки с"
+        Label2.Visible = False
         CheckBox1.Visible = True
         CheckBox1.Text = "Показать только незакрытые позиции"
         RadioButton1.Text = "Все"
         RadioButton2.Text = "Только"
     End Sub
 
-    Private Sub Table2_Make()
+    Private Sub Table2or3_Make()
         'внутрисистемные операции
-        If TabNum <> 2 Then
+        If (TabNum <> 2) And (TabNum <> 3) Then
             Return
         End If
         tbt.Reset() 'очищаем таблицу
         tbt = New DataTable
         DA = New OleDb.OleDbDataAdapter
-        SqlCom = New OleDb.OleDbCommand("SELECT * 
+        If TabNum = 2 Then
+            SqlCom = New OleDb.OleDbCommand("SELECT * 
 FROM Операции 
 WHERE ((Операции.ДатаДенег >= @Дата) AND (Операции.[Вид операции] = " + IIf(RadioButton1.Checked, """Выдача""", """Приём""") + "))
 ORDER BY Операции.ДатаДенег, Операции.МестоХранения, Операции.ВидУчастника, Операции.Отделение, Операции.Спецификация, Операции.Монета", Con)
+        Else
+            SqlCom = New OleDb.OleDbCommand("SELECT Операции.[Вид операции], Операции.ДатаДенег, * 
+FROM Операции 
+WHERE ((Операции.ДатаДенег >= @Дата) AND (Операции.[Вид операции] = " + IIf(RadioButton1.Checked, """Продажа""", """Покупка""") + "))
+ORDER BY Операции.ДатаДенег, Операции.Спецификация, Операции.Монета", Con)
+        End If
         DA.SelectCommand = SqlCom
         DA.SelectCommand.Parameters.Add("@Дата", OleDb.OleDbType.Date, -1, "Дата")
         DA.SelectCommand.Parameters(0).Value = DateTimePicker1.Value.Date()
@@ -586,7 +594,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
 
         ToolStripButton3.Checked = True 'выделяем текущий пункт меню
 
-        Table2_Make() ' Заполнение адаптера и таблицы и грида
+        Table2or3_Make() ' Заполнение адаптера, таблицы и грида
 
         'колонка с датой
         'Dim DateColumn As New CalendarColumn()
@@ -650,6 +658,80 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
 
     Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
         'tbt3
+        'Обработка пункта меню "Внешние операции"
+        'Обновление предыдущей таблицы, в случае если она была
+        If Not FirstOpen Then
+            Update_table()
+        Else
+            FirstOpen = False
+        End If
+        PrevTabNum = TabNum
+        TabNum = 3 'номер текущей таблицы
+        Clear_Form() 'отмена выделения пункта меню
+
+        'ComboBox1.DataSource = GetTableForCmb()
+        'ComboBox1.SelectedIndex = 35
+
+        ToolStripButton4.Checked = True 'выделяем текущий пункт меню
+
+        Table2or3_Make() ' Заполнение адаптера, таблицы и грида
+
+        'колонка с датой
+        'Dim DateColumn As New CalendarColumn()
+        'DateColumn.DataPropertyName = "Дата"
+        'DateColumn.Name = "Дата"
+
+        'Dim oldColIndex As Int32 = DataGridView1.Columns("Дата").Index
+        'DataGridView1.Columns.RemoveAt(oldColIndex)
+        'DataGridView1.Columns.Insert(oldColIndex, DateColumn)
+
+        'колонка выдача прием
+        'Dim comboColumn As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
+        'comboColumn.Items.AddRange("приём", "выдача")
+        'comboColumn.Name = "Вид операции"
+        'comboColumn.DataPropertyName = "Вид операции"
+        'comboColumn.SortMode = DataGridViewColumnSortMode.Automatic
+
+        'oldColIndex = DataGridView1.Columns("Вид операции").Index
+        'DataGridView1.Columns.RemoveAt(oldColIndex)
+        'DataGridView1.Columns.Insert(oldColIndex, comboColumn)
+        DataGridView1.ReadOnly = False
+
+        'колонка вид участника
+        'Dim comboColumn2 As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
+        'comboColumn2 = New DataGridViewComboBoxColumn()
+
+        'comboColumn2.Items.AddRange("Москва", "терр. банк", "управление")
+        'comboColumn2.Name = "ВидУчастника"
+        'comboColumn2.DataPropertyName = "ВидУчастника"
+        'comboColumn2.SortMode = DataGridViewColumnSortMode.Automatic
+
+        'oldColIndex = DataGridView1.Columns("ВидУчастника").Index
+        'DataGridView1.Columns.RemoveAt(oldColIndex)
+        'DataGridView1.Columns.Insert(oldColIndex, comboColumn2)
+
+        TableLayoutPanel1.SetRowSpan(DataGridView1, 2)
+
+        Button1.Visible = True
+        Button1.Enabled = True
+        Button2.Visible = False
+        Button3.Visible = True
+        Button3.Enabled = True
+        Button4.Visible = False
+        Button1.Text = "Искать повторы"
+        Button3.Text = "Рассчитать номер спецификации"
+
+
+        Panel1.Visible = True
+        Panel1.Enabled = True
+        Panel2.Visible = True
+        FlowLayoutPanel1.Visible = True
+
+        Label1.Text = "Показать операции с"
+        CheckBox1.Visible = False
+        RadioButton1.Text = "Продажа"
+        RadioButton2.Text = "Покупка"
+        ComboBox1.Visible = False
     End Sub
 
     Private Sub DataGridView1_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DataGridView1.DataError
@@ -673,19 +755,29 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
         If Not FirstOpen Then
             Update_table()
         End If
-        Table1_Make()
+        Select Case TabNum
+            Case 1
+                Table1_Make()
+            Case 2
+                Table2or3_Make()
+        End Select
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
         If Not FirstOpen Then
             Update_table()
         End If
-        Table1_Make()
-        If RadioButton1.Checked Then
-            ComboBox1.Enabled = False
-        Else
-            ComboBox1.Enabled = True
-        End If
+        Select Case TabNum
+            Case 1
+                Table1_Make()
+                If RadioButton1.Checked Then
+                    ComboBox1.Enabled = False
+                Else
+                    ComboBox1.Enabled = True
+                End If
+            Case 2
+                Table2or3_Make()
+        End Select
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
@@ -767,8 +859,29 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
 
                     ToolStripButton1_Click(sender, e)
                 End If
+            Case 2
+                Label2.Text = "Следующий номер спецификации: " + CStr(MaxNumSpec())
+                Label2.Visible = True
         End Select
     End Sub
+
+    Private Function MaxNumSpec() As Integer
+        tbt2.Reset()
+        SqlCom = New OleDb.OleDbCommand("SELECT ДатаДенег, Спецификация FROM Операции", Con)
+        DA2.SelectCommand = SqlCom
+        DA2.Fill(tbt2)
+
+        Dim maxSpec As Integer = 0
+        For i = 0 To tbt2.Rows.Count
+            Try
+                If (CInt(Strings.Left(tbt2.Rows(i)(1), InStr(tbt2.Rows(i)(1), "-") - 1)) > maxSpec) And (Year(tbt2.Rows(i)(0)) = Year(Date.Now())) Then
+                    maxSpec = CInt(Strings.Left(tbt2.Rows(i)(1), InStr(tbt2.Rows(i)(1), "-") - 1))
+                End If
+            Catch e As Exception
+            End Try
+        Next i
+        Return maxSpec
+    End Function
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         If Not FirstOpen Then

@@ -912,4 +912,8 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
                 End If
         End Select
     End Sub
+
+    Private Sub ToolStripButton9_Click(sender As Object, e As EventArgs) Handles ToolStripButton9.Click
+        Form7.Show()
+    End Sub
 End Class

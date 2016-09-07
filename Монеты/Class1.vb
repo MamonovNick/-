@@ -3,6 +3,7 @@
     Private Shared CatNum As String = ""
     Private Shared dateSince As Date
     Private Shared dateTo As Date
+    Private Shared FileToOpenInWebBro As String = ""
 
     Public Shared Function GetCat()
         Return CatNum
@@ -24,6 +25,14 @@
     Public Shared Sub setDate(dates As Date, datet As Date)
         dateSince = dates
         dateTo = datet
+    End Sub
+
+    Public Shared Function getFileWeb()
+        Return FileToOpenInWebBro
+    End Function
+
+    Public Shared Sub setFileWeb(str As String)
+        FileToOpenInWebBro = str
     End Sub
 
 End Class

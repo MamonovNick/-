@@ -25,7 +25,6 @@
     'Private tbt5 As New DataTable() ' переменная таблица для вывода в грид
     'Private tbt6 As New DataTable() ' переменная таблица для вывода в грид
 
-
     Private Sub Update_table()
         'Select Case TabNum
         '    Case 1
@@ -746,8 +745,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'TODO: данная строка кода позволяет загрузить данные в таблицу "МонетыDataSet.Подразделения". При необходимости она может быть перемещена или удалена.
-        Me.SecDA.Fill(Me.МонетыDataSet.Подразделения)
+        Module1.Start_Setup()
         TableLayoutPanel1.SetRowSpan(DataGridView1, 4)
     End Sub
 
@@ -915,5 +913,9 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
 
     Private Sub ToolStripButton9_Click(sender As Object, e As EventArgs) Handles ToolStripButton9.Click
         Form7.Show()
+    End Sub
+
+    Private Sub MainForm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        Module1.Del_Tmp()
     End Sub
 End Class

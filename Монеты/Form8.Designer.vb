@@ -43,7 +43,7 @@ Partial Class Form8
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(887, 567)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1157, 583)
         Me.TableLayoutPanel1.TabIndex = 0
         '
         'WebBrowser1
@@ -54,14 +54,14 @@ Partial Class Form8
         Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
         Me.WebBrowser1.Name = "WebBrowser1"
         Me.TableLayoutPanel1.SetRowSpan(Me.WebBrowser1, 2)
-        Me.WebBrowser1.Size = New System.Drawing.Size(860, 540)
+        Me.WebBrowser1.Size = New System.Drawing.Size(1130, 556)
         Me.WebBrowser1.TabIndex = 0
         '
         'Form8
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(887, 567)
+        Me.ClientSize = New System.Drawing.Size(1157, 583)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Name = "Form8"
         Me.Text = "Form8"

@@ -52,7 +52,45 @@ Public Class Form7
                     oAccess.DoCmd.Quit()
                 End Try
             Case 3
+                'Доход
+                Try
+                    oAccess.DoCmd.OpenForm("Отчёты", Microsoft.Office.Interop.Access.AcFormView.acNormal)
+                    oAccess.DoCmd.SetProperty("ДатаС", Microsoft.Office.Interop.Access.AcProperty.acPropertyValue, CDate(DateTimePicker1.Value.Date))
+                    oAccess.DoCmd.SetProperty("ДатаПо", Microsoft.Office.Interop.Access.AcProperty.acPropertyValue, CDate(DateTimePicker2.Value.Date))
+                    strdate = Date.Now.ToString("ddMMyyHHmmss")
+                    oAccess.Run("Profit", False, Application.StartupPath + "\TempReports\Report" + strdate + ".txt")
+                    oAccess.DoCmd.Quit()
+                Catch ex As Exception
+                    MsgBox("Error in database!", MsgBoxStyle.Critical, "Error")
+                    oAccess.DoCmd.Quit()
+                End Try
+                Dim f As FileIO.TextFieldParser
+                Dim s As String
+                Try
+                    f = FileIO.FileSystem.OpenTextFieldParser(Application.StartupPath + "\TempReports\Report" + strdate + ".txt", "/n")
+                    s = f.ReadLine()
 
+                    Dim itog_ost As Long = CLng(s)
+                    s = f.ReadLine()
+                    Dim itog_sr_ost As Long = CLng(s)
+                    s = f.ReadLine()
+                    Dim itog_doh As Long = CLng(s)
+                    s = f.ReadLine()
+                    Dim itog_doh_dop As Long = CLng(s)
+                    s = f.ReadLine()
+                    Dim itog_dn As Long = CLng(s)
+                    s = f.ReadLine()
+                    Dim days As Long = CLng(s)
+                    f.Dispose()
+                    s = Nothing
+
+                    MsgBox("Сумма вложений на конец дня " + CStr("ДатаПо") + " г.: " + CStr(itog_ost) + " руб." _
++ Chr(13) + "Средняя сума вложений с начала года: " + CStr(itog_sr_ost) + " руб." _
++ Chr(13) + "Полученный доход: " + CStr(itog_doh - itog_doh_dop) + " + " + CStr(itog_doh_dop) + " = " + CStr(itog_doh) + " руб." _
++ Chr(13) + "ИТОГО доходность: " + CStr(CLng(itog_doh / itog_sr_ost * days / itog_dn * 100 * 100) / 100) + "%")
+                Catch ex As Exception
+                    MsgBox("Error reading file!", MsgBoxStyle.Critical, "Error")
+                End Try
         End Select
     End Sub
 

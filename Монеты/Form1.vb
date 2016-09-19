@@ -912,10 +912,21 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
     End Sub
 
     Private Sub ToolStripButton9_Click(sender As Object, e As EventArgs) Handles ToolStripButton9.Click
+        'Отчеты
         Form7.Show()
     End Sub
 
     Private Sub MainForm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         Module1.Del_Tmp()
+    End Sub
+
+    Private Sub ToolStripButton11_Click(sender As Object, e As EventArgs) Handles ToolStripButton11.Click
+        'Условные доходы
+        Form9.Show()
+    End Sub
+
+    Private Sub ToolStripButton7_Click(sender As Object, e As EventArgs) Handles ToolStripButton7.Click
+        'Остатки и цены
+        Form11.Show()
     End Sub
 End Class

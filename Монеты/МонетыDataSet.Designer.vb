@@ -24901,20 +24901,7 @@ Namespace МонетыDataSetTableAdapters
             Me._adapter.UpdateCommand.CommandText = "UPDATE Монеты"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"SET          Серия = ?, [Каталожный номер] = ?, Краткое = ?, Год ="& _ 
                 " ?, Металл = ?, Номинал = ?, Валюта = ?, Качество = ?, Проба = ?, Масса = ?, Диа"& _ 
                 "метр = ?, Тираж = ?, Статус = ?, ФотоРеверс = ?, ФотоАверс = ?, "&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"              "& _ 
-                "    ВыводВСписок = ?, Надписи = ?"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"WHERE  (? = 1 AND Серия IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"         "& _ 
-                "         Серия = ?) AND ([Каталожный номер] = ?) AND (? = 1 AND Краткое IS NULL "& _ 
-                "OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  Краткое = ?) AND (? = 1 AND Год IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"              "& _ 
-                "    Год = ?) AND (? = 1 AND Металл IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  Металл = ?) AND"& _ 
-                " (? = 1 AND Номинал IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  Номинал = ?) AND (? = 1 AND Ва"& _ 
-                "люта IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  Валюта = ?) AND (? = 1 AND Качество IS NULL O"& _ 
-                "R"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  Качество = ?) AND (? = 1 AND Проба IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"            "& _ 
-                "      Проба = ?) AND (? = 1 AND Масса IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  Масса = ?) A"& _ 
-                "ND (? = 1 AND Диаметр IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  Диаметр = ?) AND (? = 1 AND "& _ 
-                "Тираж IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  Тираж = ?) AND (? = 1 AND Статус IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  Статус = ?) AND (? = 1 AND Счётчик IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"              "& _ 
-                "    Счётчик = ?) AND (? = 1 AND ФотоРеверс IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  ФотоРев"& _ 
-                "ерс = ?) AND (? = 1 AND ФотоАверс IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  ФотоАверс = ?) A"& _ 
-                "ND (? = 1 AND ВыводВСписок IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  ВыводВСписок = ?) AND ("& _ 
-                "? = 1 AND Надписи IS NULL OR"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                  Надписи = ?)"
+                "    ВыводВСписок = ?, Надписи = ?"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"WHERE  ([Каталожный номер] = ?)"
             Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.Text
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Серия", Global.System.Data.OleDb.OleDbType.WChar, 80, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Серия", Global.System.Data.DataRowVersion.Current, false, Nothing))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Каталожный_номер", Global.System.Data.OleDb.OleDbType.WChar, 9, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Каталожный номер", Global.System.Data.DataRowVersion.Current, false, Nothing))
@@ -24933,41 +24920,7 @@ Namespace МонетыDataSetTableAdapters
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("ФотоАверс", Global.System.Data.OleDb.OleDbType.WChar, 40, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "ФотоАверс", Global.System.Data.DataRowVersion.Current, false, Nothing))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("ВыводВСписок", Global.System.Data.OleDb.OleDbType.[Boolean], 2, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "ВыводВСписок", Global.System.Data.DataRowVersion.Current, false, Nothing))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Надписи", Global.System.Data.OleDb.OleDbType.WChar, 80, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Надписи", Global.System.Data.DataRowVersion.Current, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Серия", Global.System.Data.OleDb.OleDbType.WChar, 80, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Серия", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Серия1", Global.System.Data.OleDb.OleDbType.WChar, 80, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Серия", Global.System.Data.DataRowVersion.Original, false, Nothing))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Каталожный_номер", Global.System.Data.OleDb.OleDbType.WChar, 9, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Каталожный номер", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Краткое", Global.System.Data.OleDb.OleDbType.WChar, 40, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Краткое", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Краткое1", Global.System.Data.OleDb.OleDbType.WChar, 40, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Краткое", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Год", Global.System.Data.OleDb.OleDbType.SmallInt, 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Год", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Год1", Global.System.Data.OleDb.OleDbType.SmallInt, 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Год", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Металл", Global.System.Data.OleDb.OleDbType.WChar, 8, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Металл", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Металл1", Global.System.Data.OleDb.OleDbType.WChar, 8, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Металл", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Номинал", Global.System.Data.OleDb.OleDbType.[Single], 0, Global.System.Data.ParameterDirection.Input, CType(7,Byte), CType(0,Byte), "Номинал", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Номинал1", Global.System.Data.OleDb.OleDbType.[Single], 0, Global.System.Data.ParameterDirection.Input, CType(7,Byte), CType(0,Byte), "Номинал", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Валюта", Global.System.Data.OleDb.OleDbType.WChar, 20, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Валюта", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Валюта1", Global.System.Data.OleDb.OleDbType.WChar, 20, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Валюта", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Качество", Global.System.Data.OleDb.OleDbType.WChar, 15, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Качество", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Качество1", Global.System.Data.OleDb.OleDbType.WChar, 15, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Качество", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Проба", Global.System.Data.OleDb.OleDbType.[Single], 0, Global.System.Data.ParameterDirection.Input, CType(7,Byte), CType(0,Byte), "Проба", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Проба1", Global.System.Data.OleDb.OleDbType.[Single], 0, Global.System.Data.ParameterDirection.Input, CType(7,Byte), CType(0,Byte), "Проба", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Масса", Global.System.Data.OleDb.OleDbType.[Single], 0, Global.System.Data.ParameterDirection.Input, CType(7,Byte), CType(0,Byte), "Масса", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Масса1", Global.System.Data.OleDb.OleDbType.[Single], 0, Global.System.Data.ParameterDirection.Input, CType(7,Byte), CType(0,Byte), "Масса", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Диаметр", Global.System.Data.OleDb.OleDbType.[Single], 0, Global.System.Data.ParameterDirection.Input, CType(7,Byte), CType(0,Byte), "Диаметр", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Диаметр1", Global.System.Data.OleDb.OleDbType.[Single], 0, Global.System.Data.ParameterDirection.Input, CType(7,Byte), CType(0,Byte), "Диаметр", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Тираж", Global.System.Data.OleDb.OleDbType.[Integer], 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Тираж", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Тираж1", Global.System.Data.OleDb.OleDbType.[Integer], 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Тираж", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Статус", Global.System.Data.OleDb.OleDbType.WChar, 6, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Статус", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Статус1", Global.System.Data.OleDb.OleDbType.WChar, 6, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Статус", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Счётчик", Global.System.Data.OleDb.OleDbType.[Integer], 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Счётчик", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Счётчик1", Global.System.Data.OleDb.OleDbType.[Integer], 0, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Счётчик", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_ФотоРеверс", Global.System.Data.OleDb.OleDbType.WChar, 40, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "ФотоРеверс", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_ФотоРеверс1", Global.System.Data.OleDb.OleDbType.WChar, 40, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "ФотоРеверс", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_ФотоАверс", Global.System.Data.OleDb.OleDbType.WChar, 40, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "ФотоАверс", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_ФотоАверс1", Global.System.Data.OleDb.OleDbType.WChar, 40, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "ФотоАверс", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_ВыводВСписок", Global.System.Data.OleDb.OleDbType.[Boolean], 2, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "ВыводВСписок", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_ВыводВСписок1", Global.System.Data.OleDb.OleDbType.[Boolean], 2, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "ВыводВСписок", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Надписи", Global.System.Data.OleDb.OleDbType.WChar, 80, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Надписи", Global.System.Data.DataRowVersion.Original, false, Nothing))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.OleDb.OleDbParameter("Original_Надписи1", Global.System.Data.OleDb.OleDbType.WChar, 80, Global.System.Data.ParameterDirection.Input, CType(0,Byte), CType(0,Byte), "Надписи", Global.System.Data.DataRowVersion.Original, false, Nothing))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -25240,41 +25193,7 @@ Namespace МонетыDataSetTableAdapters
                     ByVal ФотоАверс As String,  _
                     ByVal ВыводВСписок As Boolean,  _
                     ByVal Надписи As String,  _
-                    ByVal Original_Серия As String,  _
-                    ByVal Original_Серия1 As String,  _
-                    ByVal Original_Каталожный_номер As String,  _
-                    ByVal Original_Краткое As String,  _
-                    ByVal Original_Краткое1 As String,  _
-                    ByVal Original_Год As Global.System.Nullable(Of Short),  _
-                    ByVal Original_Год1 As Global.System.Nullable(Of Short),  _
-                    ByVal Original_Металл As String,  _
-                    ByVal Original_Металл1 As String,  _
-                    ByVal Original_Номинал As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Номинал1 As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Валюта As String,  _
-                    ByVal Original_Валюта1 As String,  _
-                    ByVal Original_Качество As String,  _
-                    ByVal Original_Качество1 As String,  _
-                    ByVal Original_Проба As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Проба1 As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Масса As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Масса1 As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Диаметр As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Диаметр1 As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Тираж As Global.System.Nullable(Of Integer),  _
-                    ByVal Original_Тираж1 As Global.System.Nullable(Of Integer),  _
-                    ByVal Original_Статус As String,  _
-                    ByVal Original_Статус1 As String,  _
-                    ByVal Original_Счётчик As Integer,  _
-                    ByVal Original_Счётчик1 As Integer,  _
-                    ByVal Original_ФотоРеверс As String,  _
-                    ByVal Original_ФотоРеверс1 As String,  _
-                    ByVal Original_ФотоАверс As String,  _
-                    ByVal Original_ФотоАверс1 As String,  _
-                    ByVal Original_ВыводВСписок As Boolean,  _
-                    ByVal Original_ВыводВСписок1 As Boolean,  _
-                    ByVal Original_Надписи As String,  _
-                    ByVal Original_Надписи1 As String) As Integer
+                    ByVal Original_Каталожный_номер As String) As Integer
             If (Серия Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(0).Value = Global.System.DBNull.Value
             Else
@@ -25356,164 +25275,10 @@ Namespace МонетыDataSetTableAdapters
             Else
                 Me.Adapter.UpdateCommand.Parameters(16).Value = CType(Надписи,String)
             End If
-            If (Original_Серия Is Nothing) Then
+            If (Original_Каталожный_номер Is Nothing) Then
                 Me.Adapter.UpdateCommand.Parameters(17).Value = Global.System.DBNull.Value
             Else
-                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(Original_Серия,String)
-            End If
-            If (Original_Серия1 Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(18).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(18).Value = CType(Original_Серия1,String)
-            End If
-            If (Original_Каталожный_номер Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(19).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(19).Value = CType(Original_Каталожный_номер,String)
-            End If
-            If (Original_Краткое Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(20).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(20).Value = CType(Original_Краткое,String)
-            End If
-            If (Original_Краткое1 Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(21).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(21).Value = CType(Original_Краткое1,String)
-            End If
-            If (Original_Год.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(22).Value = CType(Original_Год.Value,Short)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(22).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Год1.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(23).Value = CType(Original_Год1.Value,Short)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(23).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Металл Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(24).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(24).Value = CType(Original_Металл,String)
-            End If
-            If (Original_Металл1 Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(25).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(25).Value = CType(Original_Металл1,String)
-            End If
-            If (Original_Номинал.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(26).Value = CType(Original_Номинал.Value,Decimal)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(26).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Номинал1.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(27).Value = CType(Original_Номинал1.Value,Decimal)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(27).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Валюта Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(28).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(28).Value = CType(Original_Валюта,String)
-            End If
-            If (Original_Валюта1 Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(29).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(29).Value = CType(Original_Валюта1,String)
-            End If
-            If (Original_Качество Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(30).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(30).Value = CType(Original_Качество,String)
-            End If
-            If (Original_Качество1 Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(31).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(31).Value = CType(Original_Качество1,String)
-            End If
-            If (Original_Проба.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(32).Value = CType(Original_Проба.Value,Decimal)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(32).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Проба1.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(33).Value = CType(Original_Проба1.Value,Decimal)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(33).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Масса.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(34).Value = CType(Original_Масса.Value,Decimal)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(34).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Масса1.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(35).Value = CType(Original_Масса1.Value,Decimal)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(35).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Диаметр.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(36).Value = CType(Original_Диаметр.Value,Decimal)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(36).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Диаметр1.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(37).Value = CType(Original_Диаметр1.Value,Decimal)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(37).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Тираж.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(38).Value = CType(Original_Тираж.Value,Integer)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(38).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Тираж1.HasValue = true) Then
-                Me.Adapter.UpdateCommand.Parameters(39).Value = CType(Original_Тираж1.Value,Integer)
-            Else
-                Me.Adapter.UpdateCommand.Parameters(39).Value = Global.System.DBNull.Value
-            End If
-            If (Original_Статус Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(40).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(40).Value = CType(Original_Статус,String)
-            End If
-            If (Original_Статус1 Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(41).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(41).Value = CType(Original_Статус1,String)
-            End If
-            Me.Adapter.UpdateCommand.Parameters(42).Value = CType(Original_Счётчик,Integer)
-            Me.Adapter.UpdateCommand.Parameters(43).Value = CType(Original_Счётчик1,Integer)
-            If (Original_ФотоРеверс Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(44).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(44).Value = CType(Original_ФотоРеверс,String)
-            End If
-            If (Original_ФотоРеверс1 Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(45).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(45).Value = CType(Original_ФотоРеверс1,String)
-            End If
-            If (Original_ФотоАверс Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(46).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(46).Value = CType(Original_ФотоАверс,String)
-            End If
-            If (Original_ФотоАверс1 Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(47).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(47).Value = CType(Original_ФотоАверс1,String)
-            End If
-            Me.Adapter.UpdateCommand.Parameters(48).Value = CType(Original_ВыводВСписок,Boolean)
-            Me.Adapter.UpdateCommand.Parameters(49).Value = CType(Original_ВыводВСписок1,Boolean)
-            If (Original_Надписи Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(50).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(50).Value = CType(Original_Надписи,String)
-            End If
-            If (Original_Надписи1 Is Nothing) Then
-                Me.Adapter.UpdateCommand.Parameters(51).Value = Global.System.DBNull.Value
-            Else
-                Me.Adapter.UpdateCommand.Parameters(51).Value = CType(Original_Надписи1,String)
+                Me.Adapter.UpdateCommand.Parameters(17).Value = CType(Original_Каталожный_номер,String)
             End If
             Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.UpdateCommand.Connection.State
             If ((Me.Adapter.UpdateCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
@@ -25551,42 +25316,8 @@ Namespace МонетыDataSetTableAdapters
                     ByVal ФотоАверс As String,  _
                     ByVal ВыводВСписок As Boolean,  _
                     ByVal Надписи As String,  _
-                    ByVal Original_Серия As String,  _
-                    ByVal Original_Серия1 As String,  _
-                    ByVal Original_Каталожный_номер As String,  _
-                    ByVal Original_Краткое As String,  _
-                    ByVal Original_Краткое1 As String,  _
-                    ByVal Original_Год As Global.System.Nullable(Of Short),  _
-                    ByVal Original_Год1 As Global.System.Nullable(Of Short),  _
-                    ByVal Original_Металл As String,  _
-                    ByVal Original_Металл1 As String,  _
-                    ByVal Original_Номинал As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Номинал1 As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Валюта As String,  _
-                    ByVal Original_Валюта1 As String,  _
-                    ByVal Original_Качество As String,  _
-                    ByVal Original_Качество1 As String,  _
-                    ByVal Original_Проба As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Проба1 As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Масса As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Масса1 As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Диаметр As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Диаметр1 As Global.System.Nullable(Of Decimal),  _
-                    ByVal Original_Тираж As Global.System.Nullable(Of Integer),  _
-                    ByVal Original_Тираж1 As Global.System.Nullable(Of Integer),  _
-                    ByVal Original_Статус As String,  _
-                    ByVal Original_Статус1 As String,  _
-                    ByVal Original_Счётчик As Integer,  _
-                    ByVal Original_Счётчик1 As Integer,  _
-                    ByVal Original_ФотоРеверс As String,  _
-                    ByVal Original_ФотоРеверс1 As String,  _
-                    ByVal Original_ФотоАверс As String,  _
-                    ByVal Original_ФотоАверс1 As String,  _
-                    ByVal Original_ВыводВСписок As Boolean,  _
-                    ByVal Original_ВыводВСписок1 As Boolean,  _
-                    ByVal Original_Надписи As String,  _
-                    ByVal Original_Надписи1 As String) As Integer
-            Return Me.Update(Серия, Original_Каталожный_номер, Краткое, Год, Металл, Номинал, Валюта, Качество, Проба, Масса, Диаметр, Тираж, Статус, ФотоРеверс, ФотоАверс, ВыводВСписок, Надписи, Original_Серия, Original_Серия1, Original_Каталожный_номер, Original_Краткое, Original_Краткое1, Original_Год, Original_Год1, Original_Металл, Original_Металл1, Original_Номинал, Original_Номинал1, Original_Валюта, Original_Валюта1, Original_Качество, Original_Качество1, Original_Проба, Original_Проба1, Original_Масса, Original_Масса1, Original_Диаметр, Original_Диаметр1, Original_Тираж, Original_Тираж1, Original_Статус, Original_Статус1, Original_Счётчик, Original_Счётчик1, Original_ФотоРеверс, Original_ФотоРеверс1, Original_ФотоАверс, Original_ФотоАверс1, Original_ВыводВСписок, Original_ВыводВСписок1, Original_Надписи, Original_Надписи1)
+                    ByVal Original_Каталожный_номер As String) As Integer
+            Return Me.Update(Серия, Original_Каталожный_номер, Краткое, Год, Металл, Номинал, Валюта, Качество, Проба, Масса, Диаметр, Тираж, Статус, ФотоРеверс, ФотоАверс, ВыводВСписок, Надписи, Original_Каталожный_номер)
         End Function
     End Class
     

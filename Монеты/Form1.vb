@@ -929,4 +929,9 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
         'Остатки и цены
         Form11.Show()
     End Sub
+
+    Private Sub ToolStripButton12_Click(sender As Object, e As EventArgs) Handles ToolStripButton12.Click
+        'Расчёт сумм распределениия
+        Form13.Show()
+    End Sub
 End Class

@@ -97,7 +97,7 @@ UNION ALL SELECT [Каталожный номер], Цена, Sum(Количес
 FROM [Перемещение между хранилищами]
 WHERE Year(Дата)=Year(" + DateTimePicker1.Value.Date.ToString("#MM\/dd\/yyyy#") + ") AND Дата<=" + DateTimePicker1.Value.Date.ToString("#MM\/dd\/yyyy#") + " 
 GROUP BY [Каталожный номер], Цена, ВхНДС, Состояние, Дефекты, МестоХраненияНовое)
-WHERE ((([Каталожный номер])=" + CStr(ComboBoxEdit1.GetColumnValue("Каталожный номер")) + ")) 
+WHERE ((([Каталожный номер])=""" + CStr(ComboBoxEdit1.GetColumnValue("Каталожный номер")) + """)) 
 GROUP BY Цена, ВхНДС, Состояние, Дефекты, МестоХранения HAVING (((Sum([Кол-во]))<>0)) 
 ORDER BY Цена DESC;", Con)
             Case 2
@@ -132,11 +132,11 @@ FROM [Перемещение между хранилищами]
 WHERE Year(Дата)=Year(" + DateTimePicker1.Value.Date.ToString("#MM\/dd\/yyyy#") + ") AND Дата<=" + DateTimePicker1.Value.Date.ToString("#MM\/dd\/yyyy#") + " AND [Завершено]
 GROUP BY [Каталожный номер],Цена, ВхНДС, Состояние, Дефекты, МестоХраненияНовое
 )
-WHERE ((([Каталожный номер])=" + CStr(ComboBoxEdit1.GetColumnValue("Каталожный номер")) + ")) 
+WHERE ((([Каталожный номер])=""" + CStr(ComboBoxEdit1.GetColumnValue("Каталожный номер")) + """)) 
 GROUP BY Цена, ВхНДС, Состояние, Дефекты, МестоХранения HAVING (((Sum([Кол-во]))<>0)) 
 ORDER BY Цена DESC;", Con)
         End Select
-
+        table.Clear()
 
         DAh = New OleDb.OleDbDataAdapter(SqlCom) 'Через адаптер получаем результаты запроса
         DAh.Fill(table) ' Заполняем таблицу результатми
@@ -155,8 +155,21 @@ ORDER BY Цена DESC;", Con)
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        'Запомнить новые
-        Dim dateNew As Date = CDate("31.12." + CStr(InputBox("Ввведите год, на начало которого нужно сохранить остатки") - 1))
+        'Запомнить 
+        Dim dateNew As Date
+        Try
+            Dim str As String = CStr(InputBox("Ввведите год, на начало которого нужно сохранить остатки") - 1)
+            Dim a As Int32 = CInt(str)
+            If ((a > 1500) And (a < 3000)) Then
+                dateNew = CDate("31.12." + str)
+            Else
+                'Throw Exception
+                Throw New Exception
+            End If
+        Catch ex As Exception
+            MsgBox("Год введен неверно", MsgBoxStyle.Critical, "Ошибка")
+            Return
+        End Try
         Dim selCom As New OleDb.OleDbCommand("SELECT * FROM [Цены] WHERE [Год]=Year(" + dateNew.ToString("#MM\/dd\/yyyy#") + ")+1", Con)
         Dim insCommand As New OleDb.OleDbCommand("INSERT INTO Цены ( [Каталожный номер], Цена, Количество, ВхНДС, Монета, Год, Состояние, Дефекты, МестоХранения )
 SELECT [Остатки по ценам (фактические)].[Каталожный номер], [Остатки по ценам (фактические)].Цена, Sum([Остатки по ценам (фактические)].[Кол-во]) AS [Sum_Кол-во], [Остатки по ценам (фактические)].ВхНДС, [Краткое]+' - '+CStr(IIf([Год]=2000,[Год],Right([Год],2)))+', '+Left([Качество],2)+', '+[Металл]+', '+CStr([Номинал]) AS Выражение1, Year(" + dateNew.ToString("#MM\/dd\/yyyy#") + ")+1 AS Выражение2, [Остатки по ценам (фактические)].Состояние, [Остатки по ценам (фактические)].Дефекты, [Остатки по ценам (фактические)].МестоХранения

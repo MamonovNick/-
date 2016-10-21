@@ -145,6 +145,10 @@ ORDER BY Цена DESC;", Con)
 
     Private Sub ComboBoxEdit1_EditValueChanged(sender As Object, e As EventArgs) Handles ComboBoxEdit1.EditValueChanged
         'Действие на изменение монеты
+        Dim table As New DataTable() ' таблица с монетами
+
+        table = Module1.GetTable(CStr(ComboBoxEdit1.GetColumnValue("Каталожный номер")))
+        Label4.Text = CStr(table.Rows(0)(1)) + " - " + CStr(table.Rows(0)(2)) + ", " + CStr(table.Rows(0)(5)) + ", " + CStr(table.Rows(0)(3)) + ", " + CStr(table.Rows(0)(4))
         NullMonet = False
         Update_Table()
     End Sub

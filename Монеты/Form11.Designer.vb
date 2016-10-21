@@ -39,6 +39,7 @@ Partial Class Form11
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.ComboBoxEdit1 = New DevExpress.XtraEditors.LookUpEdit()
         Me.МонетыдляВводаBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -63,7 +64,7 @@ Partial Class Form11
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 19.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.GroupBox1, 3, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.DataGridView1, 1, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.Panel1, 3, 7)
@@ -91,7 +92,7 @@ Partial Class Form11
         Me.GroupBox1.Controls.Add(Me.RadioButton2)
         Me.GroupBox1.Controls.Add(Me.RadioButton1)
         Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox1.Location = New System.Drawing.Point(448, 18)
+        Me.GroupBox1.Location = New System.Drawing.Point(447, 18)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(220, 74)
         Me.GroupBox1.TabIndex = 0
@@ -128,7 +129,7 @@ Partial Class Form11
         Me.DataGridView1.Location = New System.Drawing.Point(18, 148)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(650, 309)
+        Me.DataGridView1.Size = New System.Drawing.Size(649, 309)
         Me.DataGridView1.TabIndex = 1
         '
         'Panel1
@@ -136,7 +137,7 @@ Partial Class Form11
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(448, 468)
+        Me.Panel1.Location = New System.Drawing.Point(447, 468)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(220, 59)
         Me.Panel1.TabIndex = 2
@@ -160,7 +161,7 @@ Partial Class Form11
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel2.Location = New System.Drawing.Point(18, 468)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(414, 59)
+        Me.Panel2.Size = New System.Drawing.Size(413, 59)
         Me.Panel2.TabIndex = 3
         '
         'Button3
@@ -198,7 +199,7 @@ Partial Class Form11
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel3.Location = New System.Drawing.Point(18, 18)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(414, 74)
+        Me.Panel3.Size = New System.Drawing.Size(413, 74)
         Me.Panel3.TabIndex = 4
         '
         'DateTimePicker1
@@ -221,13 +222,22 @@ Partial Class Form11
         '
         Me.Panel4.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.TableLayoutPanel1.SetColumnSpan(Me.Panel4, 3)
+        Me.Panel4.Controls.Add(Me.Label4)
         Me.Panel4.Controls.Add(Me.Label2)
         Me.Panel4.Controls.Add(Me.ComboBoxEdit1)
         Me.Panel4.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel4.Location = New System.Drawing.Point(18, 103)
         Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(650, 34)
+        Me.Panel4.Size = New System.Drawing.Size(649, 34)
         Me.Panel4.TabIndex = 5
+        '
+        'Label4
+        '
+        Me.Label4.Location = New System.Drawing.Point(267, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(380, 32)
+        Me.Label4.TabIndex = 2
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label2
         '
@@ -315,4 +325,5 @@ Partial Class Form11
     Friend WithEvents МонетыDataSet As МонетыDataSet
     Friend WithEvents МонетыдляВводаBindingSource As BindingSource
     Friend WithEvents Монеты__для_ввода_TableAdapter As МонетыDataSetTableAdapters.Монеты__для_ввода_TableAdapter
+    Friend WithEvents Label4 As Label
 End Class

@@ -1,8 +1,9 @@
 ﻿Imports Access = Microsoft.Office.Interop.Access
+Imports Монеты.MainSettings
 Public Class Form13
     Private oAccess As Access.Application
-    Private ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
-    Private Con As New OleDb.OleDbConnection(ConnString) ' Переменная для подключения базы
+    'Private ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
+    Private Con As New OleDb.OleDbConnection(AppS.ConnStr) ' Переменная для подключения базы
     Private SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
 
     Private DA As New OleDb.OleDbDataAdapter ' адаптер

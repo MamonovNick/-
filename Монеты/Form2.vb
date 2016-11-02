@@ -1,8 +1,4 @@
-﻿Imports System.Data.OleDb
-Imports System.Data
-Imports System.Xml
-Imports System.Data.DataException
-
+﻿Imports Монеты.MainSettings
 Public Class G_coins
     Private Pic_location As String = "D:\Монеты-Access\Фотографии монет\" 'расположение фотографий монет
     Private ActiveTable As Int16 ' Номер активной таблицы
@@ -73,8 +69,8 @@ Public Class G_coins
     End Function
 
     Private Function GetCol2Table() As DataTable
-        Dim ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
-        Dim Con As New OleDb.OleDbConnection(ConnString) ' Переменная для подключения базы
+        'Dim ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
+        Dim Con As New OleDb.OleDbConnection(AppS.ConnStr) ' Переменная для подключения базы
         Dim SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
         Dim DA As OleDb.OleDbDataAdapter ' Адаптер для заполнения таблицы после запроса
         'Dim table As DataTable = New DataTable()

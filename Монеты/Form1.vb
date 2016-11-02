@@ -1,11 +1,13 @@
-﻿Public Class MainForm
+﻿Imports System.Xml.Serialization
+Imports Монеты.MainSettings
+
+Public Class MainForm
     Private FirstOpen As Boolean = True
     Private OperationBool As Boolean = False 'Открытие подменю операций
     Private TabNum As Int16 = -1 'Номер текущей таблицы и пункта меню
     Private PrevTabNum As Int16 = -1 'Номер предыдущей таблицы
     Private MenuPosNum As Int16 = 6 ' Количество позиций меню
-    Private ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
-    Private Con As New OleDb.OleDbConnection(ConnString) ' Переменная для подключения базы
+    Private Con As New OleDb.OleDbConnection(AppS.ConnStr) ' Переменная для подключения базы
     Private SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
     Private delCommand As OleDb.OleDbCommand ' переменная для запроса удаления
     Private updCommand As OleDb.OleDbCommand ' переменная для запроса апдейта
@@ -19,27 +21,8 @@
     Private bs1 As New BindingSource() 'Переменная bindingsourse
     Private tbt As New DataTable() ' переменная таблица для вывода в грид
     Private tbt2 As New DataTable() ' переменная табоица для проверки задвоений
-    'Private tbtForComboBox As New DataTable() ' переменная таблица для комбобокса
-    'Private tbt3 As New DataTable() ' переменная таблица для вывода в грид
-    'Private tbt4 As New DataTable() ' переменная таблица для вывода в грид
-    'Private tbt5 As New DataTable() ' переменная таблица для вывода в грид
-    'Private tbt6 As New DataTable() ' переменная таблица для вывода в грид
 
     Private Sub Update_table()
-        'Select Case TabNum
-        '    Case 1
-        '        DA.Update(tbt)
-        '    Case 2
-        '        DA.Update(tbt2)
-        '    Case 3
-        '        DA.Update(tbt3)
-        '    Case 4
-        '        DA.Update(tbt4)
-        '    Case 5
-        '        DA.Update(tbt5)
-        '    Case 6
-        '        DA.Update(tbt6)
-        'End Select
         Try
             DA.Update(tbt)
         Catch e As System.Data.DBConcurrencyException
@@ -93,8 +76,6 @@ ORDER BY Подразделения.ВидУчастника DESC , Подраз
         'Only for debugging
         'For tech only 
         'Need to be deleted in release ver
-        'Form7.Show()
-        'Form7.Activate()
     End Sub
 
     Private Sub КонтрагентыToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles КонтрагентыToolStripMenuItem.Click
@@ -106,7 +87,7 @@ ORDER BY Подразделения.ВидУчастника DESC , Подраз
     End Sub
 
     Private Sub ОПрограммеToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ОПрограммеToolStripMenuItem.Click
-        AboutBox1.Show()
+        AboutBox1.ShowDialog()
     End Sub
 
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
@@ -236,10 +217,6 @@ FROM [Изменение состояния]", Con)
         Panel1.Visible = False
         Panel2.Visible = False
         FlowLayoutPanel1.Visible = False
-        'DataGridView1.Columns(6).ReadOnly = True
-        'DataGridView1.Columns(7).ReadOnly = True
-        'DataGridView1.Columns(8).ReadOnly = True
-        'DataGridView1.Columns(9).ReadOnly = True
     End Sub
 
     Private Sub ToolStripButton10_Click(sender As Object, e As EventArgs) Handles ToolStripButton10.Click
@@ -266,10 +243,6 @@ FROM [Приобретение монет ТБ в ЦБ]", Con)
         Panel1.Visible = False
         Panel2.Visible = False
         FlowLayoutPanel1.Visible = False
-        'DataGridView1.Columns(6).ReadOnly = True
-        'DataGridView1.Columns(7).ReadOnly = True
-        'DataGridView1.Columns(8).ReadOnly = True
-        'DataGridView1.Columns(9).ReadOnly = True
     End Sub
 
     Private Sub Table1_Make()
@@ -745,6 +718,25 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If Not IO.File.Exists(Application.StartupPath + "/settings.xml") Then
+            'Start smth)
+            MsgBox("LOL")
+        Else
+            Dim formatter As XmlSerializer = New XmlSerializer(GetType(AppSettings))
+            Dim FileForSerialization As New IO.FileStream("settings.xml", IO.FileMode.OpenOrCreate)
+            AppS = formatter.Deserialize(FileForSerialization)
+        End If
+
+        'AppS.ConnStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=Монеты.mdb"
+        'AppS.LastVisit = Date.Now
+        'AppS.Name = "Nick"
+        'AppS.Phone = "985-45"
+        'AppS.PicPath = "fkvmdf"
+        'Dim b As XmlSerializer = New XmlSerializer(GetType(AppSettings))
+        'Dim c As New IO.FileStream("settings.xml", IO.FileMode.Create)
+        'b.Serialize(c, AppS)
+        Console.WriteLine(AppS.Phone)
+
         Module1.Start_Setup()
         TableLayoutPanel1.SetRowSpan(DataGridView1, 4)
     End Sub
@@ -918,6 +910,7 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
 
     Private Sub MainForm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         Module1.Del_Tmp()
+
     End Sub
 
     Private Sub ToolStripButton11_Click(sender As Object, e As EventArgs) Handles ToolStripButton11.Click
@@ -933,5 +926,9 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
     Private Sub ToolStripButton12_Click(sender As Object, e As EventArgs) Handles ToolStripButton12.Click
         'Расчёт сумм распределениия
         Form13.Show()
+    End Sub
+
+    Private Sub НастройкиToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles НастройкиToolStripMenuItem.Click
+        Form14.ShowDialog()
     End Sub
 End Class

@@ -1,8 +1,9 @@
-﻿Public Class Form3
+﻿Imports Монеты.MainSettings
+Public Class Form3
     Private Pic_location As String = "D:\Монеты-Access\Фотографии монет\" 'расположение фотографий монет
     Private FirstOpen As Boolean = True
-    Private ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
-    Private Con As New OleDb.OleDbConnection(ConnString) ' Переменная для подключения базы
+    'Private ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
+    Private Con As New OleDb.OleDbConnection(AppS.ConnStr) ' Переменная для подключения базы
     Private SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
     Private SqlComForCmb As OleDb.OleDbCommand ' Переменная для Sql запросов
     Private DAh As OleDb.OleDbDataAdapter ' Адаптер для заполнения таблицы после запроса

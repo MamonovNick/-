@@ -4,6 +4,15 @@
     Private Shared dateSince As Date
     Private Shared dateTo As Date
     Private Shared FileToOpenInWebBro As String = ""
+    Private Shared SelectedIndex As Integer
+
+    Public Shared Sub setSelectedIndex(SI As Integer)
+        SelectedIndex = SI
+    End Sub
+
+    Public Shared Function getSelectedIndex()
+        Return SelectedIndex
+    End Function
 
     Public Shared Function GetCat()
         Return CatNum

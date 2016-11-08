@@ -47,7 +47,6 @@ Partial Class MainForm
         Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton10 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton7 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton8 = New System.Windows.Forms.ToolStripButton()
@@ -57,11 +56,13 @@ Partial Class MainForm
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.RadioButton1 = New System.Windows.Forms.RadioButton()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.ComboBoxEdit1 = New DevExpress.XtraEditors.LookUpEdit()
+        Me.ПодразделенияBindingSource = New System.Windows.Forms.BindingSource()
+        Me.МонетыDataSet = New Монеты.МонетыDataSet()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -70,17 +71,21 @@ Partial Class MainForm
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
-        Me.МонетыDataSet = New Монеты.МонетыDataSet()
+        Me.GridControl1 = New DevExpress.XtraGrid.GridControl()
+        Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.SecDA = New Монеты.МонетыDataSetTableAdapters.SecDA()
         Me.MenuStrip1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip2.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        CType(Me.ComboBoxEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ПодразделенияBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
-        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -158,7 +163,7 @@ Partial Class MainForm
         'НастройкиToolStripMenuItem
         '
         Me.НастройкиToolStripMenuItem.Name = "НастройкиToolStripMenuItem"
-        Me.НастройкиToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
+        Me.НастройкиToolStripMenuItem.Size = New System.Drawing.Size(159, 26)
         Me.НастройкиToolStripMenuItem.Text = "Настройки"
         '
         'СправкаToolStripMenuItem
@@ -171,7 +176,7 @@ Partial Class MainForm
         'ОПрограммеToolStripMenuItem
         '
         Me.ОПрограммеToolStripMenuItem.Name = "ОПрограммеToolStripMenuItem"
-        Me.ОПрограммеToolStripMenuItem.Size = New System.Drawing.Size(181, 26)
+        Me.ОПрограммеToolStripMenuItem.Size = New System.Drawing.Size(179, 26)
         Me.ОПрограммеToolStripMenuItem.Text = "О программе"
         '
         'TableLayoutPanel1
@@ -183,11 +188,11 @@ Partial Class MainForm
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 6.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.ToolStrip1, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.DataGridView1, 2, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.ToolStrip2, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Panel1, 2, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.FlowLayoutPanel1, 3, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.Panel2, 3, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.GridControl1, 2, 1)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 28)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -308,18 +313,6 @@ Partial Class MainForm
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         Me.ToolStripSeparator1.Size = New System.Drawing.Size(216, 6)
         '
-        'DataGridView1
-        '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.TableLayoutPanel1.SetColumnSpan(Me.DataGridView1, 2)
-        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(226, 31)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.TableLayoutPanel1.SetRowSpan(Me.DataGridView1, 2)
-        Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(969, 463)
-        Me.DataGridView1.TabIndex = 4
-        '
         'ToolStrip2
         '
         Me.TableLayoutPanel1.SetColumnSpan(Me.ToolStrip2, 4)
@@ -388,11 +381,11 @@ Partial Class MainForm
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.CheckBox1)
         Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Controls.Add(Me.ComboBox1)
         Me.Panel1.Controls.Add(Me.RadioButton2)
         Me.Panel1.Controls.Add(Me.RadioButton1)
         Me.Panel1.Controls.Add(Me.DateTimePicker1)
         Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Controls.Add(Me.ComboBoxEdit1)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(226, 500)
         Me.Panel1.Name = "Panel1"
@@ -421,14 +414,6 @@ Partial Class MainForm
         Me.Label2.TabIndex = 7
         Me.Label2.Text = "Label2"
         Me.Label2.Visible = False
-        '
-        'ComboBox1
-        '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(181, 29)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(142, 24)
-        Me.ComboBox1.TabIndex = 6
         '
         'RadioButton2
         '
@@ -469,6 +454,32 @@ Partial Class MainForm
         Me.Label1.Size = New System.Drawing.Size(130, 17)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Показать заявки с"
+        '
+        'ComboBoxEdit1
+        '
+        Me.ComboBoxEdit1.Enabled = False
+        Me.ComboBoxEdit1.Location = New System.Drawing.Point(181, 29)
+        Me.ComboBoxEdit1.Name = "ComboBoxEdit1"
+        Me.ComboBoxEdit1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.ComboBoxEdit1.Properties.Columns.AddRange(New DevExpress.XtraEditors.Controls.LookUpColumnInfo() {New DevExpress.XtraEditors.Controls.LookUpColumnInfo("Наименование", "Наименование", 96, DevExpress.Utils.FormatType.None, "", True, DevExpress.Utils.HorzAlignment.Near)})
+        Me.ComboBoxEdit1.Properties.DataSource = Me.ПодразделенияBindingSource
+        Me.ComboBoxEdit1.Properties.DisplayMember = "Наименование"
+        Me.ComboBoxEdit1.Properties.NullText = ""
+        Me.ComboBoxEdit1.Properties.PopupSizeable = False
+        Me.ComboBoxEdit1.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard
+        Me.ComboBoxEdit1.Properties.ValueMember = "Наименование"
+        Me.ComboBoxEdit1.Size = New System.Drawing.Size(145, 22)
+        Me.ComboBoxEdit1.TabIndex = 8
+        '
+        'ПодразделенияBindingSource
+        '
+        Me.ПодразделенияBindingSource.DataMember = "Подразделения"
+        Me.ПодразделенияBindingSource.DataSource = Me.МонетыDataSet
+        '
+        'МонетыDataSet
+        '
+        Me.МонетыDataSet.DataSetName = "МонетыDataSet"
+        Me.МонетыDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'FlowLayoutPanel1
         '
@@ -553,10 +564,23 @@ Partial Class MainForm
         Me.CheckBox2.Text = "Показывать по монете полный список цен"
         Me.CheckBox2.UseVisualStyleBackColor = True
         '
-        'МонетыDataSet
+        'GridControl1
         '
-        Me.МонетыDataSet.DataSetName = "МонетыDataSet"
-        Me.МонетыDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        Me.TableLayoutPanel1.SetColumnSpan(Me.GridControl1, 2)
+        Me.GridControl1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GridControl1.Location = New System.Drawing.Point(226, 31)
+        Me.GridControl1.MainView = Me.GridView1
+        Me.GridControl1.Name = "GridControl1"
+        Me.TableLayoutPanel1.SetRowSpan(Me.GridControl1, 2)
+        Me.GridControl1.Size = New System.Drawing.Size(969, 463)
+        Me.GridControl1.TabIndex = 9
+        Me.GridControl1.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
+        '
+        'GridView1
+        '
+        Me.GridView1.GridControl = Me.GridControl1
+        Me.GridView1.Name = "GridView1"
+        Me.GridView1.OptionsView.ShowGroupPanel = False
         '
         'SecDA
         '
@@ -580,16 +604,19 @@ Partial Class MainForm
         Me.TableLayoutPanel1.PerformLayout()
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip2.ResumeLayout(False)
         Me.ToolStrip2.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        CType(Me.ComboBoxEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ПодразделенияBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.FlowLayoutPanel1.PerformLayout()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
-        CType(Me.МонетыDataSet, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -616,7 +643,6 @@ Partial Class MainForm
     Friend WithEvents ToolStripButton3 As ToolStripButton
     Friend WithEvents ToolStripButton4 As ToolStripButton
     Friend WithEvents ToolStripButton5 As ToolStripButton
-    Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents ToolStripButton6 As ToolStripButton
     Friend WithEvents ToolStrip2 As ToolStrip
     Friend WithEvents ToolStripButton7 As ToolStripButton
@@ -637,11 +663,14 @@ Partial Class MainForm
     Friend WithEvents RadioButton1 As RadioButton
     Friend WithEvents DateTimePicker1 As DateTimePicker
     Friend WithEvents Label1 As Label
-    Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents МонетыDataSet As МонетыDataSet
-    Friend WithEvents SecDA As МонетыDataSetTableAdapters.SecDA
     Friend WithEvents Panel2 As Panel
     Friend WithEvents CheckBox2 As CheckBox
     Friend WithEvents CheckBox3 As CheckBox
     Friend WithEvents Label2 As Label
+    Friend WithEvents GridControl1 As DevExpress.XtraGrid.GridControl
+    Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents ComboBoxEdit1 As DevExpress.XtraEditors.LookUpEdit
+    Friend WithEvents ПодразделенияBindingSource As BindingSource
+    Friend WithEvents SecDA As МонетыDataSetTableAdapters.SecDA
 End Class

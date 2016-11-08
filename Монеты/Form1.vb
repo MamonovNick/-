@@ -1,4 +1,5 @@
-﻿Imports System.Xml.Serialization
+﻿Imports DevExpress.XtraGrid.Views.Base
+Imports System.Xml.Serialization
 Imports Монеты.MainSettings
 
 Public Class MainForm
@@ -7,13 +8,12 @@ Public Class MainForm
     Private TabNum As Int16 = -1 'Номер текущей таблицы и пункта меню
     Private PrevTabNum As Int16 = -1 'Номер предыдущей таблицы
     Private MenuPosNum As Int16 = 6 ' Количество позиций меню
+
     Private Con As New OleDb.OleDbConnection(AppS.ConnStr) ' Переменная для подключения базы
     Private SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
     Private delCommand As OleDb.OleDbCommand ' переменная для запроса удаления
     Private updCommand As OleDb.OleDbCommand ' переменная для запроса апдейта
     Private insCommand As OleDb.OleDbCommand ' переменная для запроса вставки
-
-    Private comboColumn2 As New DataGridViewComboBoxColumn
 
     Private DA As New OleDb.OleDbDataAdapter ' адаптер
     Private DA2 As New OleDb.OleDbDataAdapter ' вспомогательный адаптер
@@ -21,25 +21,23 @@ Public Class MainForm
     Private bs1 As New BindingSource() 'Переменная bindingsourse
     Private tbt As New DataTable() ' переменная таблица для вывода в грид
     Private tbt2 As New DataTable() ' переменная табоица для проверки задвоений
+    Private tbtMonets As New DataTable() ' переменная таблица для монет
+    Private tbtPrices As New DataTable() ' переменная таблица для цен
+    Private tbtStores As New DataTable() ' переменная таблица для мест хранения
+
+    Private LookUp1Rep As New DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit
+    Private LookUp2rep As New DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit
 
     Private Sub Update_table()
+        'обновление БД в соответствии с внесенными изменениями
         Try
             DA.Update(tbt)
         Catch e As System.Data.DBConcurrencyException
             MsgBox("Изменения не были сохранены!", MsgBoxStyle.Critical, "Внимание")
+        Catch e As Exception
+            MsgBox("С обновлением БД все плохо(")
         End Try
     End Sub
-
-    Private Function GetTableForCmb() As DataTable
-        Dim da As OleDb.OleDbDataAdapter
-        Dim tbt As New DataTable
-        Dim sqlcom As New OleDb.OleDbCommand("SELECT Подразделения.Наименование 
-FROM Подразделения 
-ORDER BY Подразделения.ВидУчастника DESC , Подразделения.Наименование", Con)
-        da = New OleDb.OleDbDataAdapter(sqlcom)
-        da.Fill(tbt)
-        Return tbt
-    End Function
 
     Private Sub Clear_Form()
         'Отмена выделения пунктов меню
@@ -61,14 +59,17 @@ ORDER BY Подразделения.ВидУчастника DESC , Подраз
     End Sub
 
     Private Sub МонетыToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles МонетыToolStripMenuItem.Click
+        'Справочник монет
         G_coins.Show()
     End Sub
 
     Private Sub ВыходToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ВыходToolStripMenuItem.Click
+        'Выход
         Me.Close()
     End Sub
 
     Private Sub ПодразделенияToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ПодразделенияToolStripMenuItem.Click
+        'Справочник подразделений
         Form4.Show()
     End Sub
 
@@ -79,14 +80,17 @@ ORDER BY Подразделения.ВидУчастника DESC , Подраз
     End Sub
 
     Private Sub КонтрагентыToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles КонтрагентыToolStripMenuItem.Click
+        'Справочник юридических лиц
         Form5.Show()
     End Sub
 
     Private Sub ВидыВалютToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ВидыВалютToolStripMenuItem.Click
+        'Справочник валют
         Form6.Show()
     End Sub
 
     Private Sub ОПрограммеToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ОПрограммеToolStripMenuItem.Click
+        'Окно о программе
         AboutBox1.ShowDialog()
     End Sub
 
@@ -102,17 +106,61 @@ ORDER BY Подразделения.ВидУчастника DESC , Подраз
         OperationBool = Not OperationBool
     End Sub
 
+    Private Sub GridView1_CellValueChanging(sender As Object, e As CellValueChangedEventArgs) Handles GridView1.CellValueChanging
+        Select Case TabNum
+            Case 4
+                Select Case e.Column.Name
+                    Case "colКаталожныйномер"
+                        'Обновление краткого описания монеты (столбец №3)
+                        Dim InfoRow As DataRowView = LookUp1Rep.GetRowByKeyValue(e.Value)
+                        Dim NewStr As String = InfoRow.Item(1) + " - " + Strings.Right(CStr(InfoRow.Item(2)), 2) + ", " + Strings.Left(InfoRow.Item(5), 2) + ", " + Strings.Left(InfoRow.Item(3), 3) + ", " + CStr(InfoRow.Item(4))
+                        GridView1.SetRowCellValue(e.RowHandle, GridView1.Columns(3), NewStr)
+                    Case "colЦена"
+                        'tbtprice
+                End Select
+
+        End Select
+    End Sub
+
+    Private Sub GridControl1_Click(sender As Object, e As EventArgs) Handles GridControl1.Click
+        If GridView1.FocusedColumn.AbsoluteIndex = 5 Then
+            Class1.PutCat(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(2)))
+            Class1.setDate(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(1)), GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(1)))
+            If Dialog3.ShowDialog() = DialogResult.OK Then
+                tbtPrices.Reset()
+                tbtPrices = Module1.GetTablePrices(Class1.GetCat, Class1.getDate(1))
+                GridView1.SetFocusedRowCellValue(GridView1.Columns(5), tbtPrices.Rows(Class1.getSelectedIndex)(0))
+                GridView1.SetFocusedRowCellValue(GridView1.Columns(6), tbtPrices.Rows(Class1.getSelectedIndex)(2))
+                GridView1.SetFocusedRowCellValue(GridView1.Columns(7), tbtPrices.Rows(Class1.getSelectedIndex)(3))
+                GridView1.SetFocusedRowCellValue(GridView1.Columns(8), tbtPrices.Rows(Class1.getSelectedIndex)(4))
+                GridView1.SetFocusedRowCellValue(GridView1.Columns(9), tbtPrices.Rows(Class1.getSelectedIndex)(5))
+            End If
+        Else
+            Return
+        End If
+    End Sub
+
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
+        'Перемещение монет
         If Not FirstOpen Then
             Update_table()
         Else
             FirstOpen = False
         End If
+
         TabNum = 4
         Clear_Form()
+        GridView1.Columns.Clear()
         ToolStripButton5.Checked = True
-        tbt.Reset()
+        tbt.Dispose()
+        tbtMonets.Reset()
+        tbtStores.Reset()
+        LookUp1Rep.Dispose()
+        LookUp2rep.Dispose()
+
         tbt = New DataTable
+        LookUp1Rep = New DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit
+        LookUp2rep = New DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit
         DA = New OleDb.OleDbDataAdapter
         SqlCom = New OleDb.OleDbCommand("SELECT Завершено, Дата, [Каталожный номер], Монета, Количество, Цена, ВхНДС as НДС, Состояние, Дефекты, МестоХраненияСтарое as [Старое место хранения], МестоХраненияНовое as [Новое место хранения], Спецификация 
 FROM [Перемещение между хранилищами]", Con)
@@ -120,12 +168,34 @@ FROM [Перемещение между хранилищами]", Con)
 
         DA.Fill(tbt)
         bs1.DataSource = tbt
-        DataGridView1.DataSource = bs1
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 3)
-        DataGridView1.Columns(6).ReadOnly = True
-        DataGridView1.Columns(7).ReadOnly = True
-        DataGridView1.Columns(8).ReadOnly = True
-        DataGridView1.Columns(9).ReadOnly = True
+        GridControl1.DataSource = bs1
+        tbtMonets = Module1.GetTable("")
+        tbtStores = Module1.GetTableStores()
+
+        TableLayoutPanel1.SetRowSpan(GridControl1, 3)
+        LookUp1Rep.DataSource = tbtMonets
+        LookUp1Rep.AutoComplete = True
+        LookUp1Rep.DisplayMember = "Каталожный номер"
+        LookUp1Rep.ValueMember = "Каталожный номер"
+        LookUp1Rep.AcceptEditorTextAsNewValue = True
+        LookUp1Rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        LookUp1Rep.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup
+        GridView1.Columns(2).ColumnEdit = LookUp1Rep
+
+        GridView1.Columns(5).OptionsColumn.AllowEdit = False 'запрет редактирования цены, обработка по клику
+        GridView1.Columns(6).OptionsColumn.AllowEdit = False 'запрет редактирования НДС
+        GridView1.Columns(7).OptionsColumn.AllowEdit = False 'запрет редактирования Состояния
+        GridView1.Columns(8).OptionsColumn.AllowEdit = False 'запрет редактирования Дефектов
+        GridView1.Columns(9).OptionsColumn.AllowEdit = False 'запрет редактирования Старого места хранения
+
+        LookUp2rep.DataSource = tbtStores
+        LookUp2rep.AutoComplete = True
+        LookUp2rep.DisplayMember = "Обозначение"
+        LookUp2rep.ValueMember = "Обозначение"
+        LookUp2rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        LookUp2rep.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup
+        GridView1.Columns(10).ColumnEdit = LookUp2rep
+
 
         Button1.Visible = True
         Button1.Enabled = True
@@ -140,7 +210,7 @@ FROM [Перемещение между хранилищами]", Con)
     End Sub
 
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        'Update table!!!!
+        'Закрытие формы: обновление БД
         If Not FirstOpen Then
             Update_table()
         Else
@@ -177,9 +247,9 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
                 DA.SelectCommand.Parameters(0).Value = DateTimePicker1.Value.Date()
 
                 DA.Fill(tbt)
-                DataGridView1.DataSource = tbt
-                DataGridView1.ReadOnly = True
-                TableLayoutPanel1.SetRowSpan(DataGridView1, 3)
+                GridControl1.DataSource = tbt
+                'GridControl1.ReadOnly = True
+                TableLayoutPanel1.SetRowSpan(GridControl1, 3)
                 Panel1.Enabled = False
                 Panel2.Visible = False
                 Button2.Enabled = False
@@ -212,8 +282,8 @@ FROM [Изменение состояния]", Con)
         DA.SelectCommand = SqlCom
         DA.Fill(tbt)
         bs1.DataSource = tbt
-        DataGridView1.DataSource = bs1
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 4)
+        GridControl1.DataSource = bs1
+        TableLayoutPanel1.SetRowSpan(GridControl1, 4)
         Panel1.Visible = False
         Panel2.Visible = False
         FlowLayoutPanel1.Visible = False
@@ -238,8 +308,8 @@ FROM [Приобретение монет ТБ в ЦБ]", Con)
         DA.SelectCommand = SqlCom
         DA.Fill(tbt)
         bs1.DataSource = tbt
-        DataGridView1.DataSource = bs1
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 4)
+        GridControl1.DataSource = bs1
+        TableLayoutPanel1.SetRowSpan(GridControl1, 4)
         Panel1.Visible = False
         Panel2.Visible = False
         FlowLayoutPanel1.Visible = False
@@ -254,7 +324,7 @@ FROM [Приобретение монет ТБ в ЦБ]", Con)
         DA = New OleDb.OleDbDataAdapter
         SqlCom = New OleDb.OleDbCommand("SELECT Дата, Номер, [Вид операции], ВидУчастника, Подразделение, [Каталожный номер], Монета, Количество, Состояние, Исполнено, Закрыто 
 FROM Заявки
-WHERE ((Дата >= @Дата)" + IIf(CheckBox1.Checked, " AND (Закрыто = False)", "") + IIf(RadioButton2.Checked, " AND (Подразделение = """ + CStr(ComboBox1.Text) + """)", "") + ")", Con)
+WHERE ((Дата >= @Дата)" + IIf(CheckBox1.Checked, " AND (Закрыто = False)", "") + IIf(RadioButton2.Checked, " AND (Подразделение = """ + CStr(ComboBoxEdit1.SelectedText) + """)", "") + ")", Con)
         DA.SelectCommand = SqlCom
         DA.SelectCommand.Parameters.Add("@Дата", OleDb.OleDbType.Date, -1, "Дата")
         DA.SelectCommand.Parameters(0).Value = DateTimePicker1.Value.Date()
@@ -312,7 +382,7 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
 
         DA.Fill(tbt)
         bs1.DataSource = tbt
-        DataGridView1.DataSource = bs1
+        GridControl1.DataSource = bs1
     End Sub
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
@@ -327,50 +397,13 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
         TabNum = 1 'номер текущей таблицы
         Clear_Form() 'отмена выделения пункта меню
 
-        ComboBox1.Visible = True
-        ComboBox1.DisplayMember = "Наименование"
-        ComboBox1.DataSource = GetTableForCmb()
-        ComboBox1.SelectedIndex = 35
+        ComboBoxEdit1.Visible = True
 
         ToolStripButton1.Checked = True 'выделяем текущий пункт меню
 
         Table1_Make() ' Заполнение адаптера и таблицы и грида
 
-        'колонка с датой
-        Dim DateColumn As New CalendarColumn()
-        DateColumn.DataPropertyName = "Дата"
-        DateColumn.Name = "Дата"
-
-        Dim oldColIndex As Int32 = DataGridView1.Columns("Дата").Index
-        DataGridView1.Columns.RemoveAt(oldColIndex)
-        DataGridView1.Columns.Insert(oldColIndex, DateColumn)
-
-        'колонка выдача прием
-        Dim comboColumn As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
-        comboColumn.Items.AddRange("приём", "выдача")
-        comboColumn.Name = "Вид операции"
-        comboColumn.DataPropertyName = "Вид операции"
-        comboColumn.SortMode = DataGridViewColumnSortMode.Automatic
-
-        oldColIndex = DataGridView1.Columns("Вид операции").Index
-        DataGridView1.Columns.RemoveAt(oldColIndex)
-        DataGridView1.Columns.Insert(oldColIndex, comboColumn)
-        DataGridView1.ReadOnly = False
-
-        'колонка вид участника
-        'Dim comboColumn2 As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
-        comboColumn2 = New DataGridViewComboBoxColumn()
-
-        comboColumn2.Items.AddRange("Москва", "терр. банк", "управление")
-        comboColumn2.Name = "ВидУчастника"
-        comboColumn2.DataPropertyName = "ВидУчастника"
-        comboColumn2.SortMode = DataGridViewColumnSortMode.Automatic
-
-        oldColIndex = DataGridView1.Columns("ВидУчастника").Index
-        DataGridView1.Columns.RemoveAt(oldColIndex)
-        DataGridView1.Columns.Insert(oldColIndex, comboColumn2)
-
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 2)
+        TableLayoutPanel1.SetRowSpan(GridControl1, 2)
 
         Button1.Visible = True
         Button1.Enabled = True
@@ -544,7 +577,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
 
         DA.Fill(tbt)
         bs1.DataSource = tbt
-        DataGridView1.DataSource = bs1
+        GridControl1.DataSource = bs1
     End Sub
 
 
@@ -573,9 +606,9 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
         'DateColumn.DataPropertyName = "Дата"
         'DateColumn.Name = "Дата"
 
-        'Dim oldColIndex As Int32 = DataGridView1.Columns("Дата").Index
-        'DataGridView1.Columns.RemoveAt(oldColIndex)
-        'DataGridView1.Columns.Insert(oldColIndex, DateColumn)
+        'Dim oldColIndex As Int32 = GridControl1.Columns("Дата").Index
+        'GridControl1.Columns.RemoveAt(oldColIndex)
+        'GridControl1.Columns.Insert(oldColIndex, DateColumn)
 
         'колонка выдача прием
         'Dim comboColumn As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
@@ -584,10 +617,10 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
         'comboColumn.DataPropertyName = "Вид операции"
         'comboColumn.SortMode = DataGridViewColumnSortMode.Automatic
 
-        'oldColIndex = DataGridView1.Columns("Вид операции").Index
-        'DataGridView1.Columns.RemoveAt(oldColIndex)
-        'DataGridView1.Columns.Insert(oldColIndex, comboColumn)
-        DataGridView1.ReadOnly = False
+        'oldColIndex = GridControl1.Columns("Вид операции").Index
+        'GridControl1.Columns.RemoveAt(oldColIndex)
+        'GridControl1.Columns.Insert(oldColIndex, comboColumn)
+        'GridControl1.ReadOnly = False
 
         'колонка вид участника
         'Dim comboColumn2 As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
@@ -598,11 +631,11 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
         'comboColumn2.DataPropertyName = "ВидУчастника"
         'comboColumn2.SortMode = DataGridViewColumnSortMode.Automatic
 
-        'oldColIndex = DataGridView1.Columns("ВидУчастника").Index
-        'DataGridView1.Columns.RemoveAt(oldColIndex)
-        'DataGridView1.Columns.Insert(oldColIndex, comboColumn2)
+        'oldColIndex = GridControl1.Columns("ВидУчастника").Index
+        'GridControl1.Columns.RemoveAt(oldColIndex)
+        'GridControl1.Columns.Insert(oldColIndex, comboColumn2)
 
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 2)
+        TableLayoutPanel1.SetRowSpan(GridControl1, 2)
 
         Button1.Visible = True
         Button1.Enabled = True
@@ -625,7 +658,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
         CheckBox1.Visible = False
         RadioButton1.Text = "Выдача"
         RadioButton2.Text = "Приём"
-        ComboBox1.Visible = False
+        ComboBoxEdit1.Visible = False
     End Sub
 
     Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
@@ -653,9 +686,9 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
         'DateColumn.DataPropertyName = "Дата"
         'DateColumn.Name = "Дата"
 
-        'Dim oldColIndex As Int32 = DataGridView1.Columns("Дата").Index
-        'DataGridView1.Columns.RemoveAt(oldColIndex)
-        'DataGridView1.Columns.Insert(oldColIndex, DateColumn)
+        'Dim oldColIndex As Int32 = GridControl1.Columns("Дата").Index
+        'GridControl1.Columns.RemoveAt(oldColIndex)
+        'GridControl1.Columns.Insert(oldColIndex, DateColumn)
 
         'колонка выдача прием
         'Dim comboColumn As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
@@ -664,10 +697,10 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
         'comboColumn.DataPropertyName = "Вид операции"
         'comboColumn.SortMode = DataGridViewColumnSortMode.Automatic
 
-        'oldColIndex = DataGridView1.Columns("Вид операции").Index
-        'DataGridView1.Columns.RemoveAt(oldColIndex)
-        'DataGridView1.Columns.Insert(oldColIndex, comboColumn)
-        DataGridView1.ReadOnly = False
+        'oldColIndex = GridControl1.Columns("Вид операции").Index
+        'GridControl1.Columns.RemoveAt(oldColIndex)
+        'GridControl1.Columns.Insert(oldColIndex, comboColumn)
+        'GridControl1.ReadOnly = False
 
         'колонка вид участника
         'Dim comboColumn2 As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn()
@@ -678,11 +711,11 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
         'comboColumn2.DataPropertyName = "ВидУчастника"
         'comboColumn2.SortMode = DataGridViewColumnSortMode.Automatic
 
-        'oldColIndex = DataGridView1.Columns("ВидУчастника").Index
-        'DataGridView1.Columns.RemoveAt(oldColIndex)
-        'DataGridView1.Columns.Insert(oldColIndex, comboColumn2)
+        'oldColIndex = GridControl1.Columns("ВидУчастника").Index
+        'GridControl1.Columns.RemoveAt(oldColIndex)
+        'GridControl1.Columns.Insert(oldColIndex, comboColumn2)
 
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 2)
+        TableLayoutPanel1.SetRowSpan(GridControl1, 2)
 
         Button1.Visible = True
         Button1.Enabled = True
@@ -703,13 +736,13 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
         CheckBox1.Visible = False
         RadioButton1.Text = "Продажа"
         RadioButton2.Text = "Покупка"
-        ComboBox1.Visible = False
+        ComboBoxEdit1.Visible = False
     End Sub
 
-    Private Sub DataGridView1_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles DataGridView1.DataError
+    Private Sub GridControl1_DataError(sender As Object, e As DataGridViewDataErrorEventArgs)
         Select Case TabNum
             Case 1
-                'If e.ColumnIndex = DataGridView1.Columns("ВидУчастника").Index Then
+                'If e.ColumnIndex = GridControl1.Columns("ВидУчастника").Index Then
                 '    comboColumn2.Items.Add(tbt.Rows(e.RowIndex)(e.ColumnIndex))
                 'End If
             Case 2
@@ -718,9 +751,11 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'TODO: данная строка кода позволяет загрузить данные в таблицу "МонетыDataSet.Подразделения". При необходимости она может быть перемещена или удалена.
+        Me.SecDA.Fill(Me.МонетыDataSet.Подразделения)
         If Not IO.File.Exists(Application.StartupPath + "/settings.xml") Then
             'Start smth)
-            MsgBox("LOL")
+            MsgBox("Отсутствует файл настроек!", MsgBoxStyle.Exclamation)
         Else
             Dim formatter As XmlSerializer = New XmlSerializer(GetType(AppSettings))
             Dim FileForSerialization As New IO.FileStream("settings.xml", IO.FileMode.OpenOrCreate)
@@ -738,7 +773,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
         Console.WriteLine(AppS.Phone)
 
         Module1.Start_Setup()
-        TableLayoutPanel1.SetRowSpan(DataGridView1, 4)
+        TableLayoutPanel1.SetRowSpan(GridControl1, 4)
     End Sub
 
     Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker1.ValueChanged
@@ -761,16 +796,16 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?))", Con)
             Case 1
                 Table1_Make()
                 If RadioButton1.Checked Then
-                    ComboBox1.Enabled = False
+                    ComboBoxEdit1.Enabled = False
                 Else
-                    ComboBox1.Enabled = True
+                    ComboBoxEdit1.Enabled = True
                 End If
             Case 2
                 Table2or3_Make()
         End Select
     End Sub
 
-    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
         If Not FirstOpen Then
             Update_table()
         End If
@@ -812,8 +847,8 @@ PIVOT [Монета]+"", ""+[Состояние];", Con)
                 DA.SelectCommand.Parameters(0).Value = DateTimePicker1.Value.Date()
 
                 DA.Fill(tbt)
-                DataGridView1.DataSource = tbt
-                DataGridView1.ReadOnly = True
+                GridControl1.DataSource = tbt
+                'GridControl1.ReadOnly = True
                 Panel1.Enabled = False
                 Panel2.Visible = False
                 Button2.Enabled = False
@@ -889,10 +924,10 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
                     MsgBox("Повторов не найдено",, "Поиск повторяющихся строк")
                 Else
                     MsgBox("Повторы найдены!", MsgBoxStyle.Exclamation, "Поиск повторяющихся строк")
-                    DataGridView1.DataSource = tbt2
+                    GridControl1.DataSource = tbt2
 
                     TabNum = 9
-                    DataGridView1.ReadOnly = True
+                    'GridControl1.ReadOnly = True
                     Panel1.Enabled = False
                     Panel2.Visible = False
                     Button2.Enabled = False

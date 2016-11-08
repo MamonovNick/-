@@ -124,11 +124,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="CalendarCell.vb" />
-    <Compile Include="CalendarColumn.vb" />
-    <Compile Include="CalendarEditingControl.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Class1.vb" />
     <Compile Include="AppSettings.vb" />
     <Compile Include="Dialog1.Designer.vb">
@@ -141,6 +136,12 @@
       <DependentUpon>Dialog2.vb</DependentUpon>
     </Compile>
     <Compile Include="Dialog2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog3.Designer.vb">
+      <DependentUpon>Dialog3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog3.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.vb">
@@ -268,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog2.resx">
       <DependentUpon>Dialog2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog3.resx">
+      <DependentUpon>Dialog3.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>

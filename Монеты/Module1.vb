@@ -78,6 +78,53 @@ ORDER BY [Остатки по ценам (для перемещения)].Цен
         Return table
     End Function
 
+    Function GetTablePricesForCond(CatNum As String, DateM As Date, Storage As String) As DataTable
+        Dim SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
+        Dim DAh As New OleDb.OleDbDataAdapter
+        Dim table As New DataTable() ' таблица с монетами
+        Dim Con As New OleDb.OleDbConnection(MainSettings.AppS.ConnStr) ' Переменная для подключения базы
+
+        SqlCom = New OleDb.OleDbCommand("SELECT [Остатки по ценам (для изменения состояния)].Цена, Sum([Остатки по ценам (для изменения состояния)].[Кол-во]) AS Кол, [Остатки по ценам (для изменения состояния)].ВхНДС AS НДС, [Остатки по ценам (для изменения состояния)].Состояние AS Сост, [Остатки по ценам (для изменения состояния)].Дефекты 
+FROM (SELECT Цена, Количество as [Кол-во], ВхНДС, Состояние, Дефекты, МестоХранения
+FROM Цены
+WHERE [Год]=Year(" + DateM.Date.ToString("#MM\/dd\/yyyy#") + ") AND [Каталожный номер]=""" + CatNum + """
+
+UNION ALL SELECT Цена, Sum(IIf([Вид операции] In (""выдача"",""продажа""),-[Количество],[Количество])) AS [Кол-во], ВхНДС, Состояние, Дефекты, МестоХранения
+FROM Операции
+WHERE (((Year([ДатаМонет]))=Year(" + DateM.Date.ToString("#MM\/dd\/yyyy#") + ") Or (Year([ДатаМонет])) Is Null) AND ((IIf([Вид операции] In (""покупка"",""приём""),[ДатаМонет],[ДатаДенег]))<=" + DateM.Date.ToString("#MM\/dd\/yyyy#") + ")) AND [Каталожный номер]=""" + CatNum + """
+GROUP BY Цена, ВхНДС, Состояние, Дефекты, МестоХранения
+
+UNION ALL SELECT Цена, Sum(-Количество) AS [Кол-во], ВхНДС, СтарСостояние AS Состояние, СтарДефекты AS Дефекты, МестоХранения
+FROM [Изменение состояния]
+WHERE Year(Дата)=Year(" + DateM.Date.ToString("#MM\/dd\/yyyy#") + ") AND Дата<=" + DateM.Date.ToString("#MM\/dd\/yyyy#") + " AND [Каталожный номер]=""" + CatNum + """
+GROUP BY Цена, ВхНДС, СтарСостояние, СтарДефекты, МестоХранения
+
+UNION ALL SELECT Цена, Sum(Количество) AS [Кол-во], ВхНДС, НовСостояние AS Состояние, НовДефекты AS Дефекты, МестоХранения
+FROM [Изменение состояния]
+WHERE Year(Дата)=Year(" + DateM.Date.ToString("#MM\/dd\/yyyy#") + ") AND Дата<=" + DateM.Date.ToString("#MM\/dd\/yyyy#") + " AND [Каталожный номер]=""" + CatNum + """
+GROUP BY Цена, ВхНДС, НовСостояние, НовДефекты, МестоХранения
+
+UNION ALL SELECT Цена, Sum(-Количество) AS [Кол-во], ВхНДС, Состояние, Дефекты, МестоХраненияСтарое AS МестоХранения
+FROM [Перемещение между хранилищами]
+WHERE Year(Дата)=Year(" + DateM.Date.ToString("#MM\/dd\/yyyy#") + ") AND Дата<=" + DateM.Date.ToString("#MM\/dd\/yyyy#") + " AND [Каталожный номер]=""" + CatNum + """
+GROUP BY Цена, ВхНДС, Состояние, Дефекты, МестоХраненияСтарое
+
+UNION ALL SELECT Цена, Sum(Количество) AS [Кол-во], ВхНДС, Состояние, Дефекты, МестоХраненияНовое AS МестоХранения
+FROM [Перемещение между хранилищами]
+WHERE Year(Дата)=Year(" + DateM.Date.ToString("#MM\/dd\/yyyy#") + ") AND Дата<=" + DateM.Date.ToString("#MM\/dd\/yyyy#") + " AND [Каталожный номер]=""" + CatNum + """
+GROUP BY Цена, ВхНДС, Состояние, Дефекты, МестоХраненияНовое) AS [Остатки по ценам (для изменения состояния)] 
+
+WHERE ((([Остатки по ценам (для изменения состояния)].МестоХранения)=""" + Storage + """)) 
+GROUP BY [Остатки по ценам (для изменения состояния)].Цена, [Остатки по ценам (для изменения состояния)].ВхНДС, [Остатки по ценам (для изменения состояния)].Состояние, [Остатки по ценам (для изменения состояния)].Дефекты 
+HAVING (((Sum([Остатки по ценам (для изменения состояния)].[Кол-во]))<>0)) 
+ORDER BY [Остатки по ценам (для изменения состояния)].Цена DESC;", Con) ' Указываем строку запроса и привязываем к соединению
+
+        DAh.SelectCommand = SqlCom
+        DAh.Fill(table) ' Заполняем таблицу результатми
+
+        Return table
+    End Function
+
     Function GetTableStores() As DataTable
         Dim SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
         Dim DAh As New OleDb.OleDbDataAdapter
@@ -85,6 +132,22 @@ ORDER BY [Остатки по ценам (для перемещения)].Цен
         Dim Con As New OleDb.OleDbConnection(MainSettings.AppS.ConnStr) ' Переменная для подключения базы
 
         SqlCom = New OleDb.OleDbCommand("SELECT Обозначение FROM [Места хранения монет]", Con) ' Указываем строку запроса и привязываем к соединению
+
+        DAh.SelectCommand = SqlCom
+        DAh.Fill(table) ' Заполняем таблицу результатми
+
+        Return table
+    End Function
+
+    Function GetTableRegional() As DataTable
+        Dim SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
+        Dim DAh As New OleDb.OleDbDataAdapter
+        Dim table As New DataTable() ' таблица с монетами
+        Dim Con As New OleDb.OleDbConnection(MainSettings.AppS.ConnStr) ' Переменная для подключения базы
+
+        SqlCom = New OleDb.OleDbCommand("SELECT Подразделения.Наименование 
+FROM Подразделения 
+WHERE (((Подразделения.ВидУчастника)=""Терр. банк""));", Con) ' Указываем строку запроса и привязываем к соединению
 
         DAh.SelectCommand = SqlCom
         DAh.Fill(table) ' Заполняем таблицу результатми

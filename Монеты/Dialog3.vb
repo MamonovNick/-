@@ -15,8 +15,16 @@ Public Class Dialog3
     End Sub
 
     Private Sub Dialog3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        tbt.Reset()
+        tbt.Columns.Clear()
+        GridView1.Columns.Clear()
         GridView1.OptionsView.ColumnAutoWidth = True
-        tbt = Module1.GetTablePrices(Class1.GetCat, Class1.getDate(1))
+        Select Case Class1.getPriceType
+            Case 1
+                tbt = Module1.GetTablePrices(Class1.GetCat(), Class1.getDate(1))
+            Case 2
+                tbt = Module1.GetTablePricesForCond(Class1.GetCat(), Class1.getDate(1), Class1.getStoragePlace())
+        End Select
         GridControl1.DataSource = tbt
         GridView1.OptionsBehavior.Editable = False
     End Sub

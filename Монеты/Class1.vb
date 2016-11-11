@@ -5,6 +5,24 @@
     Private Shared dateTo As Date
     Private Shared FileToOpenInWebBro As String = ""
     Private Shared SelectedIndex As Integer
+    Private Shared PriceType As Integer
+    Private Shared StoragePlace As String
+
+    Public Shared Sub setStoragePlace(SP As String)
+        StoragePlace = SP
+    End Sub
+
+    Public Shared Function getStoragePlace()
+        Return StoragePlace
+    End Function
+
+    Public Shared Sub setPriceType(PT As Integer)
+        PriceType = PT
+    End Sub
+
+    Public Shared Function getPriceType()
+        Return PriceType
+    End Function
 
     Public Shared Sub setSelectedIndex(SI As Integer)
         SelectedIndex = SI

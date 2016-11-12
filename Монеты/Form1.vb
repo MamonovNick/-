@@ -28,6 +28,8 @@ Public Class MainForm
     Private LookUp1Rep As New DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit
     Private LookUp2rep As New DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit
     Private Combo1Rep As New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
+    Private Combo2Rep As New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
+    Private Combo3Rep As New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
 
     Private Sub Update_table()
         'обновление БД в соответствии с внесенными изменениями
@@ -107,6 +109,34 @@ Public Class MainForm
         OperationBool = Not OperationBool
     End Sub
 
+    Private Sub GridView1_FocusedRowChanged(sender As Object, e As FocusedRowChangedEventArgs) Handles GridView1.FocusedRowChanged
+        Select Case TabNum
+            Case 1
+                Try
+                    If GridView1.FocusedColumn.AbsoluteIndex = 4 Then
+                        tbtStores.Reset()
+                        tbtStores = Module1.GetTableRegional(GridView1.GetRowCellValue(e.FocusedRowHandle, GridView1.Columns(3)))
+                        LookUp2rep.DataSource = tbtStores
+                    End If
+                Catch ex As Exception
+                End Try
+        End Select
+    End Sub
+
+    Private Sub GridView1_FocusedColumnChanged(sender As Object, e As FocusedColumnChangedEventArgs) Handles GridView1.FocusedColumnChanged
+        Select Case TabNum
+            Case 1
+                Try
+                    If e.FocusedColumn.AbsoluteIndex = 4 Then
+                        tbtStores.Reset()
+                        tbtStores = Module1.GetTableRegional(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(3)))
+                        LookUp2rep.DataSource = tbtStores
+                    End If
+                Catch ex As Exception
+                End Try
+        End Select
+    End Sub
+
     Private Sub GridView1_CellValueChanging(sender As Object, e As CellValueChangedEventArgs) Handles GridView1.CellValueChanging
         Select Case TabNum
             Case 4, 5, 6
@@ -116,6 +146,14 @@ Public Class MainForm
                         Dim InfoRow As DataRowView = LookUp1Rep.GetRowByKeyValue(e.Value)
                         Dim NewStr As String = InfoRow.Item(1) + " - " + Strings.Right(CStr(InfoRow.Item(2)), 2) + ", " + Strings.Left(InfoRow.Item(5), 2) + ", " + Strings.Left(InfoRow.Item(3), 3) + ", " + CStr(InfoRow.Item(4))
                         GridView1.SetRowCellValue(e.RowHandle, GridView1.Columns(3), NewStr)
+                End Select
+            Case 1
+                Select Case e.Column.Name
+                    Case "colКаталожныйномер"
+                        'Обновление краткого описания монеты (столбец №3)
+                        Dim InfoRow As DataRowView = LookUp1Rep.GetRowByKeyValue(e.Value)
+                        Dim NewStr As String = InfoRow.Item(1) + " - " + Strings.Right(CStr(InfoRow.Item(2)), 2) + ", " + Strings.Left(InfoRow.Item(5), 2) + ", " + Strings.Left(InfoRow.Item(3), 3) + ", " + CStr(InfoRow.Item(4))
+                        GridView1.SetRowCellValue(e.RowHandle, GridView1.Columns(6), NewStr)
                 End Select
         End Select
     End Sub
@@ -210,11 +248,13 @@ Public Class MainForm
         If Not FirstOpen Then
             Update_table()
         End If
+
         Select Case TabNum
             Case 1
                 'загрузить таблицу
                 TabNum = 7
                 tbt.Reset()
+                GridView1.Columns.Clear()
                 tbt = New DataTable
                 DA = New OleDb.OleDbDataAdapter
                 SqlCom = New OleDb.OleDbCommand("TRANSFORM IIf(Sum([Количество]-IIf(IsNull([Исполнено]),0,[Исполнено]))=0,"""",Sum([Количество]-IIf(IsNull([Исполнено]),0,[Исполнено]))) AS Выражение2 
@@ -236,7 +276,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
 
                 DA.Fill(tbt)
                 GridControl1.DataSource = tbt
-                'GridControl1.ReadOnly = True
+                GridView1.OptionsBehavior.ReadOnly = True
                 TableLayoutPanel1.SetRowSpan(GridControl1, 3)
                 Panel1.Enabled = False
                 Panel2.Visible = False
@@ -244,6 +284,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
                 Button3.Enabled = False
                 Button4.Enabled = False
                 Button1.Text = "Назад"
+                GridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None
             Case 4
                 MsgBox("Данное действие еще не реализовано!", MsgBoxStyle.Critical, "Ошибка")
             Case 7, 8, 9
@@ -301,11 +342,11 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         Else
             FirstOpen = False
         End If
-        'PrevTabNum = TabNum 'пока не используется
+        PrevTabNum = TabNum 'пока не используется
 
-        TabNum = 1 'номер текущей таблицы
         Clear_Form() 'отмена выделения пункта меню
         GridView1.Columns.Clear()
+        TabNum = 1 'номер текущей таблицы
         ToolStripButton1.Checked = True 'выделяем текущий пункт меню
 
         TableOrdersMake() ' Заполнение адаптера и таблицы и грида
@@ -337,11 +378,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         RadioButton2.Text = "Только"
     End Sub
 
-
-
-
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
-        'tbt2
         'Обработка пункта меню "Внутрисистемные операции"
         'Обновление предыдущей таблицы, в случае если она была
         If Not FirstOpen Then
@@ -349,9 +386,11 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         Else
             FirstOpen = False
         End If
+
         PrevTabNum = TabNum
         TabNum = 2 'номер текущей таблицы
         Clear_Form() 'отмена выделения пункта меню
+        GridView1.Columns.Clear()
 
         'ComboBox1.DataSource = GetTableForCmb()
         'ComboBox1.SelectedIndex = 35
@@ -429,6 +468,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         Else
             FirstOpen = False
         End If
+
         PrevTabNum = TabNum
         TabNum = 3 'номер текущей таблицы
         Clear_Form() 'отмена выделения пункта меню
@@ -553,18 +593,18 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         End If
         Select Case TabNum
             Case 1
-                TableOrdersMake()
                 If RadioButton1.Checked Then
                     ComboBoxEdit1.Enabled = False
                 Else
                     ComboBoxEdit1.Enabled = True
                 End If
+                TableOrdersMake()
             Case 2
                 Table2or3_Make()
         End Select
     End Sub
 
-    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxEdit1.EditValueChanged
         If Not FirstOpen Then
             Update_table()
         End If
@@ -582,11 +622,13 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         If Not FirstOpen Then
             Update_table()
         End If
+
         Select Case TabNum
             Case 1
                 PrevTabNum = TabNum
                 TabNum = 8
                 tbt.Reset()
+                GridView1.Columns.Clear()
                 tbt = New DataTable
                 DA = New OleDb.OleDbDataAdapter
                 SqlCom = New OleDb.OleDbCommand("TRANSFORM IIf(Sum([Количество]-IIf(IsNull([Исполнено]),0,[Исполнено]))=0,"""",Sum([Количество]-IIf(IsNull([Исполнено]),0,[Исполнено]))) AS Выражение1
@@ -607,13 +649,14 @@ PIVOT [Монета]+"", ""+[Состояние];", Con)
 
                 DA.Fill(tbt)
                 GridControl1.DataSource = tbt
-                'GridControl1.ReadOnly = True
+                GridView1.OptionsBehavior.ReadOnly = True
                 Panel1.Enabled = False
                 Panel2.Visible = False
                 Button2.Enabled = False
                 Button3.Enabled = False
                 Button4.Enabled = False
                 Button1.Text = "Назад"
+                GridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None
         End Select
     End Sub
 
@@ -671,6 +714,7 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
         If Not FirstOpen Then
             Update_table()
         End If
+
         Select Case TabNum
             Case 1
                 'Искать повторы
@@ -683,16 +727,18 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
                     MsgBox("Повторов не найдено",, "Поиск повторяющихся строк")
                 Else
                     MsgBox("Повторы найдены!", MsgBoxStyle.Exclamation, "Поиск повторяющихся строк")
+                    GridView1.Columns.Clear()
                     GridControl1.DataSource = tbt2
+                    GridView1.OptionsBehavior.ReadOnly = True
 
                     TabNum = 9
-                    'GridControl1.ReadOnly = True
                     Panel1.Enabled = False
                     Panel2.Visible = False
                     Button2.Enabled = False
                     Button3.Enabled = False
                     Button4.Enabled = False
                     Button1.Text = "Назад"
+                    GridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None
                 End If
         End Select
     End Sub
@@ -733,9 +779,23 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
             Return
         End If
 
-        tbt.Reset() 'очищаем таблицу
+        tbt.Dispose()
+        tbtMonets.Reset()
+        tbtStores.Reset()
+        LookUp1Rep.Dispose()
+        LookUp2rep.Dispose()
+        Combo1Rep.Dispose()
+        Combo2Rep.Dispose()
+        Combo3Rep.Dispose()
+
         tbt = New DataTable
         DA = New OleDb.OleDbDataAdapter
+        LookUp1Rep = New DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit
+        LookUp2rep = New DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit
+        Combo1Rep = New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
+        Combo2Rep = New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
+        Combo3Rep = New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
+
         SqlCom = New OleDb.OleDbCommand("SELECT Дата, Номер, [Вид операции], ВидУчастника, Подразделение, [Каталожный номер], Монета, Количество, Состояние, Исполнено, Закрыто 
 FROM Заявки
 WHERE ((Дата >= @Дата)" + IIf(CheckBox1.Checked, " AND (Закрыто = False)", "") + IIf(RadioButton2.Checked, " AND (Подразделение = """ + CStr(ComboBoxEdit1.SelectedText) + """)", "") + ")", Con)
@@ -798,7 +858,44 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
         bs1.DataSource = tbt
         GridControl1.DataSource = bs1
 
+        tbtMonets = Module1.GetTable("")
+
+        Combo1Rep.Items.AddRange({"выдача", "приём"})
+        Combo1Rep.AutoComplete = True
+        Combo1Rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        GridView1.Columns(2).ColumnEdit = Combo1Rep
+
+        Combo2Rep.Items.AddRange({"Москва", "терр. банк", "управление"})
+        Combo2Rep.AutoComplete = True
+        Combo2Rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        GridView1.Columns(3).ColumnEdit = Combo2Rep
+
+        LookUp1Rep.DataSource = tbtMonets
+        LookUp1Rep.AutoComplete = True
+        LookUp1Rep.DisplayMember = "Каталожный номер"
+        LookUp1Rep.ValueMember = "Каталожный номер"
+        LookUp1Rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        LookUp1Rep.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup
+        GridView1.Columns(5).ColumnEdit = LookUp1Rep
+
+        LookUp2rep.DataSource = tbtStores
+        LookUp2rep.AutoComplete = True
+        LookUp2rep.DisplayMember = "Наименование"
+        LookUp2rep.ValueMember = "Наименование"
+        LookUp2rep.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.True
+        LookUp2rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard
+        LookUp2rep.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup
+        GridView1.Columns(4).ColumnEdit = LookUp2rep
+
+        Combo3Rep.Items.AddRange({"отл.", "уд.", "неуд."})
+        Combo3Rep.AutoComplete = True
+        Combo3Rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        GridView1.Columns(8).ColumnEdit = Combo3Rep
+
         TableLayoutPanel1.SetRowSpan(GridControl1, 2)
+        'GridView1.FocusedRowHandle = 1
+        GridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom
+        GridView1.OptionsSelection.MultiSelect = True
     End Sub
 
     Private Sub Table2or3_Make()
@@ -1213,13 +1310,12 @@ WHERE ((Дата = ?) OR Дата IS NULL) AND ((МестоХранения = ?)
         tbtStores.Reset()
         LookUp1Rep.Dispose()
         LookUp2rep.Dispose()
-        Combo1Rep.Dispose()
+        'Combo1Rep.Dispose()
 
         tbt = New DataTable
         DA = New OleDb.OleDbDataAdapter
         LookUp1Rep = New DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit
         LookUp2rep = New DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit
-        Combo1Rep = New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
 
         SqlCom = New OleDb.OleDbCommand("SELECT ДатаМонет AS Дата, [Наименование ТБ], [Каталожный номер], Монета, Количество, Цена  
 FROM [Приобретение монет ТБ в ЦБ]", Con)

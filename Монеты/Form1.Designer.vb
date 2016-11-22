@@ -22,6 +22,7 @@ Partial Class MainForm
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.ОсновнаяToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -61,7 +62,7 @@ Partial Class MainForm
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ComboBoxEdit1 = New DevExpress.XtraEditors.LookUpEdit()
-        Me.ПодразделенияBindingSource = New System.Windows.Forms.BindingSource()
+        Me.ПодразделенияBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.МонетыDataSet = New Монеты.МонетыDataSet()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -444,7 +445,7 @@ Partial Class MainForm
         Me.DateTimePicker1.Name = "DateTimePicker1"
         Me.DateTimePicker1.Size = New System.Drawing.Size(107, 22)
         Me.DateTimePicker1.TabIndex = 1
-        Me.DateTimePicker1.Value = New Date(2004, 10, 1, 23, 29, 0, 0)
+        Me.DateTimePicker1.Value = New Date(2015, 10, 1, 23, 29, 0, 0)
         '
         'Label1
         '
@@ -547,6 +548,8 @@ Partial Class MainForm
         'CheckBox3
         '
         Me.CheckBox3.AutoSize = True
+        Me.CheckBox3.Checked = True
+        Me.CheckBox3.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox3.Location = New System.Drawing.Point(18, 19)
         Me.CheckBox3.Name = "CheckBox3"
         Me.CheckBox3.Size = New System.Drawing.Size(230, 21)
@@ -574,6 +577,7 @@ Partial Class MainForm
         Me.TableLayoutPanel1.SetRowSpan(Me.GridControl1, 2)
         Me.GridControl1.Size = New System.Drawing.Size(969, 463)
         Me.GridControl1.TabIndex = 9
+        Me.GridControl1.UseEmbeddedNavigator = True
         Me.GridControl1.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
         'GridView1

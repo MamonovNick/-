@@ -24,6 +24,8 @@ Public Class Dialog3
                 tbt = Module1.GetTablePrices(Class1.GetCat(), Class1.getDate(1))
             Case 2
                 tbt = Module1.GetTablePricesForCond(Class1.GetCat(), Class1.getDate(1), Class1.getStoragePlace())
+            Case 3
+                tbt = Module1.GetTablePricesForOperations(Class1.GetCat, Class1.getDate(1), Class1.getStoragePlace, Class1.getFullPrice(), Class1.getState())
         End Select
         GridControl1.DataSource = tbt
         GridView1.OptionsBehavior.Editable = False

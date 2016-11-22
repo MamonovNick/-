@@ -1,12 +1,30 @@
 ﻿Public Class Class1
     ' Класс для передачи значений между формами
     Private Shared CatNum As String = ""
-    Private Shared dateSince As Date
-    Private Shared dateTo As Date
+    Private Shared dateSince As Date = Nothing
+    Private Shared dateTo As Date = Nothing
     Private Shared FileToOpenInWebBro As String = ""
     Private Shared SelectedIndex As Integer
     Private Shared PriceType As Integer
-    Private Shared StoragePlace As String
+    Private Shared StoragePlace As String = ""
+    Private Shared FullPrice As Boolean
+    Private Shared State As String = ""
+
+    Public Shared Sub setState(St As String)
+        State = St
+    End Sub
+
+    Public Shared Function getState()
+        Return State
+    End Function
+
+    Public Shared Sub setFullPrice(FP As Boolean)
+        FullPrice = FP
+    End Sub
+
+    Public Shared Function getFullPrice()
+        Return FullPrice
+    End Function
 
     Public Shared Sub setStoragePlace(SP As String)
         StoragePlace = SP

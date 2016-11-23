@@ -37,7 +37,7 @@ Public Class MainForm
     Private Combo2Rep As New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
     Private Combo3Rep As New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
     Private Text1Rep As New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
-    Private Text2Rep As New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
+    'Private Text2Rep As New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
 
     Private Sub Update_table()
         'обновление БД в соответствии с внесенными изменениями
@@ -194,6 +194,17 @@ Public Class MainForm
                     End If
                 Catch ex As Exception
                 End Try
+            Case 3
+
+                Try
+                    If MonetType = 2 Then
+                        tbtMonets.Reset()
+                        tbtMonets.Columns.Clear()
+                        tbtMonets = Module1.GetTable2(MonetType, GridView1.GetRowCellValue(e.FocusedRowHandle, GridView1.Columns(3)), IIf(RadioButton1.Checked, "продажа", "покупка"))
+                        LookUp1Rep.DataSource = tbtMonets
+                    End If
+                Catch ex As Exception
+                End Try
         End Select
     End Sub
 
@@ -223,14 +234,14 @@ Public Class MainForm
                 Catch ex As Exception
                 End Try
 
-                Try
-                    If MonetType = 2 Then
-                        tbtMonets.Reset()
-                        tbtMonets = Module1.GetTable2(MonetType, GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(4)), IIf(RadioButton1.Checked, "выдача", "приём"))
-                        LookUp1Rep.DataSource = tbtMonets
-                    End If
-                Catch ex As Exception
-                End Try
+                'Try
+                '    If MonetType = 2 Then
+                '        tbtMonets.Reset()
+                '        tbtMonets = Module1.GetTable2(MonetType, GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(4)), IIf(RadioButton1.Checked, "выдача", "приём"))
+                '        LookUp1Rep.DataSource = tbtMonets
+                '    End If
+                'Catch ex As Exception
+                'End Try
         End Select
     End Sub
 
@@ -266,6 +277,24 @@ Public Class MainForm
                                 GridView1.SetRowCellValue(e.RowHandle, GridView1.Columns(14), CStr(InfoRow.Item(7)))
                             Else
                                 GridView1.SetRowCellValue(e.RowHandle, GridView1.Columns(14), "без заявки")
+                            End If
+                        Catch ee As Exception
+                        End Try
+                End Select
+            Case 3
+                Select Case e.Column.Name
+                    Case "colКаталожныйномер"
+                        'Обновление краткого описания монеты (столбец №5)
+                        Dim InfoRow As DataRowView = LookUp1Rep.GetRowByKeyValue(e.Value)
+                        Try
+                            Dim NewStr As String = InfoRow.Item(1) + ", " + Strings.Left(CStr(InfoRow.Item(4)), 2) + ", " + Strings.Left(InfoRow.Item(2), 3) + ", " + CStr(InfoRow.Item(3))
+                            GridView1.SetRowCellValue(e.RowHandle, GridView1.Columns(6), NewStr)
+                            If (Not CheckBox3.Checked) Then
+                                GridView1.SetRowCellValue(e.RowHandle, GridView1.Columns(10), CStr(InfoRow.Item(5)))
+                                GridView1.SetRowCellValue(e.RowHandle, GridView1.Columns(7), CStr(InfoRow.Item(6)))
+                                GridView1.SetRowCellValue(e.RowHandle, GridView1.Columns(12), CStr(InfoRow.Item(7)))
+                            Else
+                                GridView1.SetRowCellValue(e.RowHandle, GridView1.Columns(12), "без заявки")
                             End If
                         Catch ee As Exception
                         End Try
@@ -332,6 +361,30 @@ Public Class MainForm
                             GridView1.SetFocusedRowCellValue(GridView1.Columns(10), tbtPrices.Rows(Class1.getSelectedIndex)(2))
                             GridView1.SetFocusedRowCellValue(GridView1.Columns(11), tbtPrices.Rows(Class1.getSelectedIndex)(3))
                             GridView1.SetFocusedRowCellValue(GridView1.Columns(12), tbtPrices.Rows(Class1.getSelectedIndex)(4))
+                        End If
+                    Else
+                        Return
+                    End If
+                Case 3
+                    If GridView1.FocusedColumn.AbsoluteIndex = 8 Then
+                        Class1.PutCat(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(5)))
+                        Class1.setDate(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(1)), GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(1)))
+                        Class1.setPriceType(3)
+                        Class1.setStoragePlace(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(0)))
+                        Class1.setFullPrice(CheckBox2.Checked)
+                        Try
+                            Class1.setState(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(10)))
+                        Catch ex As Exception
+                            Class1.setState("")
+                        End Try
+                        If Dialog3.ShowDialog() = DialogResult.OK Then
+                            tbtPrices.Dispose()
+                            tbtPrices = New DataTable
+                            tbtPrices = Module1.GetTablePricesForOperations(Class1.GetCat, Class1.getDate(1), Class1.getStoragePlace, Class1.getFullPrice(), Class1.getState())
+                            GridView1.SetFocusedRowCellValue(GridView1.Columns(8), tbtPrices.Rows(Class1.getSelectedIndex)(0))
+                            GridView1.SetFocusedRowCellValue(GridView1.Columns(9), tbtPrices.Rows(Class1.getSelectedIndex)(2))
+                            GridView1.SetFocusedRowCellValue(GridView1.Columns(10), tbtPrices.Rows(Class1.getSelectedIndex)(3))
+                            GridView1.SetFocusedRowCellValue(GridView1.Columns(11), tbtPrices.Rows(Class1.getSelectedIndex)(4))
                         End If
                     Else
                         Return
@@ -551,7 +604,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
 
         ToolStripButton3.Checked = True 'выделяем текущий пункт меню
 
-        TableOperationsMake() ' Заполнение адаптера, таблицы и грида
+        TableOperationsMakeInner() ' Заполнение адаптера, таблицы и грида
 
         Button1.Visible = True
         Button1.Enabled = True
@@ -577,7 +630,6 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
     End Sub
 
     Private Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles ToolStripButton4.Click
-        'tbt3
         'Обработка пункта меню "Внешние операции"
         'Обновление предыдущей таблицы, в случае если она была
         If Not FirstOpen Then
@@ -593,7 +645,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
 
         ToolStripButton4.Checked = True 'выделяем текущий пункт меню
 
-        TableOperationsMake() ' Заполнение адаптера, таблицы и грида
+        TableOperationsMakeOut() ' Заполнение адаптера, таблицы и грида
 
         Button1.Visible = True
         Button1.Enabled = True
@@ -661,7 +713,9 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
             Case 1
                 TableOrdersMake()
             Case 2
-                TableOperationsMake()
+                TableOperationsMakeInner()
+            Case 3
+                TableOperationsMakeOut()
         End Select
     End Sub
 
@@ -680,7 +734,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
             Case 1
                 TableOrdersMake()
             Case 2
-                TableOperationsMake()
+                TableOperationsMakeInner()
         End Select
     End Sub
 
@@ -854,7 +908,7 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
 
     Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
         Select Case TabNum
-            Case 2
+            Case 2, 3
                 MonetType = IIf(CheckBox3.Checked, 1, 2)
                 If CheckBox3.Checked Then
                     tbtMonets.Reset()
@@ -991,13 +1045,7 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
         GridView1.OptionsSelection.MultiSelect = True
     End Sub
 
-    Private Sub TableOperationsMake()
-        'Операции
-        Cursor.Current = Cursors.WaitCursor
-        If (TabNum <> 2) And (TabNum <> 3) Then
-            Return
-        End If
-
+    Private Sub CleanMakeForTableOperation()
         tbt.Dispose()
         tbtMonets.Reset()
         tbtStores.Reset()
@@ -1010,6 +1058,7 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
         Combo1Rep.Dispose()
         Combo2Rep.Dispose()
         Combo3Rep.Dispose()
+        Text1Rep.Dispose()
 
         tbt = New DataTable
         DA = New OleDb.OleDbDataAdapter
@@ -1020,18 +1069,23 @@ WHERE ((Дата = Дата_Orig) AND ((Номер = Номер_Orig) OR Ном�
         Combo1Rep = New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
         Combo2Rep = New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
         Combo3Rep = New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
+        Text1Rep = New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
+    End Sub
 
-        If TabNum = 2 Then
-            SqlCom = New OleDb.OleDbCommand("SELECT ДатаДенег, ДатаМонет, МестоХранения, ВидУчастника, Отделение as Участник, РасшифрПодр as [Расшифровка к подразделению], [Каталожный номер], Монета, Количество, Цена, ВхНДС as НДС, Состояние, Дефекты, Спецификация, Заявка, Комиссия, Распоряжение, [Вид операции] 
+    Private Sub TableOperationsMakeInner()
+        'Операции внутренние
+        Cursor.Current = Cursors.WaitCursor
+        If (TabNum <> 2) Then
+            Return
+        End If
+
+        CleanMakeForTableOperation()
+
+        SqlCom = New OleDb.OleDbCommand("SELECT ДатаДенег, ДатаМонет, МестоХранения, ВидУчастника, Отделение as Участник, РасшифрПодр as [Расшифровка к подразделению], [Каталожный номер], Монета, Количество, Цена, ВхНДС as НДС, Состояние, Дефекты, Спецификация, Заявка, Комиссия, Распоряжение, [Вид операции] 
 FROM Операции 
 WHERE ((Операции.ДатаДенег >= @Дата) AND (Операции.[Вид операции] = " + IIf(RadioButton1.Checked, """Выдача""", """Приём""") + "))
 ORDER BY Операции.ДатаДенег, Операции.МестоХранения, Операции.ВидУчастника, Операции.Отделение, Операции.Спецификация, Операции.Монета", Con)
-        Else
-            SqlCom = New OleDb.OleDbCommand("SELECT Операции.[Вид операции], Операции.ДатаДенег, * 
-FROM Операции 
-WHERE ((Операции.ДатаДенег >= @Дата) AND (Операции.[Вид операции] = " + IIf(RadioButton1.Checked, """Продажа""", """Покупка""") + "))
-ORDER BY Операции.ДатаДенег, Операции.Спецификация, Операции.Монета", Con)
-        End If
+
         DA.SelectCommand = SqlCom
         DA.SelectCommand.Parameters.Add("@Дата", OleDb.OleDbType.Date, -1, "Дата")
         DA.SelectCommand.Parameters(0).Value = DateTimePicker1.Value.Date()
@@ -1222,6 +1276,175 @@ WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаД
         End If
         GridView1.Columns(17).ColumnEdit = Text1Rep
         GridView1.Columns(17).OptionsColumn.AllowEdit = False
+
+        TableLayoutPanel1.SetRowSpan(GridControl1, 2)
+        GridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom
+        GridView1.OptionsBehavior.KeepFocusedRowOnUpdate = True
+        GridView1.OptionsSelection.MultiSelect = True
+    End Sub
+
+    Private Sub TableOperationsMakeOut()
+        'Операции внешние
+        Cursor.Current = Cursors.WaitCursor
+        If (TabNum <> 3) Then
+            Return
+        End If
+
+        CleanMakeForTableOperation()
+
+        SqlCom = New OleDb.OleDbCommand("SELECT МестоХранения, ДатаДенег, ДатаМонет, Отделение as Контрагент, Спецификация, [Каталожный номер], Монета, Количество, Цена, ВхНДС as НДС, Состояние, Дефекты, Заявка as Основание 
+FROM Операции 
+WHERE ((Операции.ДатаДенег >= @Дата) AND (Операции.[Вид операции] = " + IIf(RadioButton1.Checked, """продажа""", """покупка""") + "))
+ORDER BY Операции.ДатаДенег, Операции.Спецификация, Операции.Монета", Con)
+        DA.SelectCommand = SqlCom
+        DA.SelectCommand.Parameters.Add("@Дата", OleDb.OleDbType.Date, -1, "Дата")
+        DA.SelectCommand.Parameters(0).Value = DateTimePicker1.Value.Date()
+
+        delCommand = New OleDb.OleDbCommand("DELETE FROM Операции
+WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаДенег = ?) OR ДатаДенег IS NULL) AND ((Отделение = ?) OR Отделение IS NULL) AND (([Каталожный номер] = ?) OR [Каталожный номер] IS NULL) AND ((Количество = ?) OR Количество IS NULL) AND ((Цена = ?) OR Цена IS NULL) AND 
+       ((Спецификация = ?) OR Спецификация IS NULL) AND ((Заявка = ?) OR Заявка IS NULL) AND ((ВхНДС = ?) OR ВхНДС IS NULL) AND ((Состояние = ?) OR Состояние IS NULL) AND ((Дефекты = ?) OR Дефекты IS NULL) AND 
+       ((МестоХранения = ?) OR МестоХранения IS NULL) AND (([Вид операции] = ?) OR [Вид операции] IS NULL)", Con)
+        DA.DeleteCommand = delCommand
+        DA.DeleteCommand.Parameters.Add("1", OleDb.OleDbType.Date, -1, "ДатаМонет")
+        DA.DeleteCommand.Parameters.Add("2", OleDb.OleDbType.Date, -1, "ДатаДенег")
+        DA.DeleteCommand.Parameters.Add("3", OleDb.OleDbType.VarChar, 41, "Конртагент")
+        DA.DeleteCommand.Parameters.Add("4", OleDb.OleDbType.VarChar, 9, "Каталожный номер")
+        DA.DeleteCommand.Parameters.Add("5", OleDb.OleDbType.Integer, -1, "Количество")
+        DA.DeleteCommand.Parameters.Add("6", OleDb.OleDbType.Double, -1, "Цена")
+        DA.DeleteCommand.Parameters.Add("7", OleDb.OleDbType.VarChar, 7, "Спецификация")
+        DA.DeleteCommand.Parameters.Add("8", OleDb.OleDbType.VarChar, 50, "Основание")
+        DA.DeleteCommand.Parameters.Add("9", OleDb.OleDbType.VarChar, 12, "НДС")
+        DA.DeleteCommand.Parameters.Add("10", OleDb.OleDbType.VarChar, 5, "Состояние")
+        DA.DeleteCommand.Parameters.Add("11", OleDb.OleDbType.VarChar, 60, "Дефекты")
+        DA.DeleteCommand.Parameters.Add("12", OleDb.OleDbType.VarChar, 5, "МестоХранения")
+        DA.DeleteCommand.Parameters.AddWithValue("13", IIf(RadioButton1.Checked, "продажа", "покупка"))
+
+        updCommand = New OleDb.OleDbCommand("UPDATE Операции
+SET  ДатаМонет = ?, ДатаДенег = ?, [Вид операции] = ?, ВидУчастника = ?, Отделение = ?, [Каталожный номер] = ?, Монета = ?, Количество = ?, Цена = ?, Спецификация = ?, Распоряжение = ?, Заявка = ?, 
+     ВхНДС = ?, Состояние = ?, Дефекты = ?, Комиссия = ?, РасшифрПодр = ?, МестоХранения = ?
+WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаДенег = ?) OR ДатаДенег IS NULL) AND ((Отделение = ?) OR Отделение IS NULL) AND (([Каталожный номер] = ?) OR [Каталожный номер] IS NULL) AND ((Количество = ?) OR Количество IS NULL) AND ((Цена = ?) OR Цена IS NULL) AND 
+       ((Спецификация = ?) OR Спецификация IS NULL) AND ((Заявка = ?) OR Заявка IS NULL) AND ((ВхНДС = ?) OR ВхНДС IS NULL) AND ((Состояние = ?) OR Состояние IS NULL) AND ((Дефекты = ?) OR Дефекты IS NULL) AND 
+       ((МестоХранения = ?) OR МестоХранения IS NULL) AND (([Вид операции] = ?) OR [Вид операции] IS NULL)", Con)
+        DA.UpdateCommand = updCommand
+        DA.UpdateCommand.Parameters.Add("s1", OleDb.OleDbType.Date, -1, "ДатаМонет") '0
+        DA.UpdateCommand.Parameters.Add("s2", OleDb.OleDbType.Date, -1, "ДатаДенег") '1
+        DA.UpdateCommand.Parameters.AddWithValue("s3", IIf(RadioButton1.Checked, "продажа", "покупка")) '2
+        DA.UpdateCommand.Parameters.AddWithValue("s4", "юр. лицо") '3
+        DA.UpdateCommand.Parameters.Add("s5", OleDb.OleDbType.VarChar, 41, "Контрагент") '4
+        DA.UpdateCommand.Parameters.Add("s6", OleDb.OleDbType.VarChar, 9, "Каталожный номер") '5
+        DA.UpdateCommand.Parameters.Add("s7", OleDb.OleDbType.VarChar, 60, "Монета") '6
+        DA.UpdateCommand.Parameters.Add("s8", OleDb.OleDbType.Integer, -1, "Количество") '7
+        DA.UpdateCommand.Parameters.Add("s9", OleDb.OleDbType.Double, -1, "Цена") '8
+        DA.UpdateCommand.Parameters.Add("s10", OleDb.OleDbType.VarChar, 7, "Спецификация") '9
+        DA.UpdateCommand.Parameters.AddWithValue("s11", "") '10
+        DA.UpdateCommand.Parameters.Add("s12", OleDb.OleDbType.VarChar, 50, "Основание") '11
+        DA.UpdateCommand.Parameters.Add("s13", OleDb.OleDbType.VarChar, 12, "НДС") '12
+        DA.UpdateCommand.Parameters.Add("s14", OleDb.OleDbType.VarChar, 5, "Состояние") '13
+        DA.UpdateCommand.Parameters.Add("s15", OleDb.OleDbType.VarChar, 60, "Дефекты") '14
+        DA.UpdateCommand.Parameters.AddWithValue("s16", False) '15
+        DA.UpdateCommand.Parameters.AddWithValue("13", "") '16
+        DA.UpdateCommand.Parameters.Add("s18", OleDb.OleDbType.VarChar, 5, "МестоХранения") '17
+
+        DA.UpdateCommand.Parameters.Add("1", OleDb.OleDbType.Date, -1, "ДатаМонет")
+        DA.UpdateCommand.Parameters.Item(18).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("2", OleDb.OleDbType.Date, -1, "ДатаДенег")
+        DA.UpdateCommand.Parameters.Item(19).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("3", OleDb.OleDbType.VarChar, 41, "Конртагент")
+        DA.UpdateCommand.Parameters.Item(20).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("4", OleDb.OleDbType.VarChar, 9, "Каталожный номер")
+        DA.UpdateCommand.Parameters.Item(21).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("5", OleDb.OleDbType.Integer, -1, "Количество")
+        DA.UpdateCommand.Parameters.Item(22).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("6", OleDb.OleDbType.Double, -1, "Цена")
+        DA.UpdateCommand.Parameters.Item(23).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("7", OleDb.OleDbType.VarChar, 7, "Спецификация")
+        DA.UpdateCommand.Parameters.Item(24).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("8", OleDb.OleDbType.VarChar, 50, "Основание")
+        DA.UpdateCommand.Parameters.Item(25).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("9", OleDb.OleDbType.VarChar, 12, "НДС")
+        DA.UpdateCommand.Parameters.Item(26).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("10", OleDb.OleDbType.VarChar, 5, "Состояние")
+        DA.UpdateCommand.Parameters.Item(27).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("11", OleDb.OleDbType.VarChar, 60, "Дефекты")
+        DA.UpdateCommand.Parameters.Item(28).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.Add("12", OleDb.OleDbType.VarChar, 5, "МестоХранения")
+        DA.UpdateCommand.Parameters.Item(29).SourceVersion = DataRowVersion.Original
+        DA.UpdateCommand.Parameters.AddWithValue("13", IIf(RadioButton1.Checked, "продажа", "покупка"))
+        DA.UpdateCommand.Parameters.Item(30).SourceVersion = DataRowVersion.Original
+
+        insCommand = New OleDb.OleDbCommand("INSERT INTO Операции 
+        (ДатаМонет, ДатаДенег, [Вид операции], ВидУчастника, Отделение, [Каталожный номер], Монета, Количество, Цена, Спецификация, Распоряжение, Заявка, ВхНДС, Состояние, Дефекты, Комиссия, 
+        РасшифрПодр, МестоХранения) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Con)
+        DA.InsertCommand = insCommand
+        DA.InsertCommand.Parameters.Add("s1", OleDb.OleDbType.Date, -1, "ДатаМонет") '0
+        DA.InsertCommand.Parameters.Add("s2", OleDb.OleDbType.Date, -1, "ДатаДенег") '1
+        DA.InsertCommand.Parameters.AddWithValue("s3", IIf(RadioButton1.Checked, "продажа", "покупка")) '2
+        DA.InsertCommand.Parameters.AddWithValue("s4", "юр. лицо") '3
+        DA.InsertCommand.Parameters.Add("s5", OleDb.OleDbType.VarChar, 41, "Контрагент") '4
+        DA.InsertCommand.Parameters.Add("s6", OleDb.OleDbType.VarChar, 9, "Каталожный номер") '5
+        DA.InsertCommand.Parameters.Add("s7", OleDb.OleDbType.VarChar, 60, "Монета") '6
+        DA.InsertCommand.Parameters.Add("s8", OleDb.OleDbType.Integer, -1, "Количество") '7
+        DA.InsertCommand.Parameters.Add("s9", OleDb.OleDbType.Double, -1, "Цена") '8
+        DA.InsertCommand.Parameters.Add("s10", OleDb.OleDbType.VarChar, 7, "Спецификация") '9
+        DA.InsertCommand.Parameters.AddWithValue("s11", "") '10
+        DA.InsertCommand.Parameters.Add("s12", OleDb.OleDbType.VarChar, 50, "Основание") '11
+        DA.InsertCommand.Parameters.Add("s13", OleDb.OleDbType.VarChar, 12, "НДС") '12
+        DA.InsertCommand.Parameters.Add("s14", OleDb.OleDbType.VarChar, 5, "Состояние") '13
+        DA.InsertCommand.Parameters.Add("s15", OleDb.OleDbType.VarChar, 60, "Дефекты") '14
+        DA.InsertCommand.Parameters.AddWithValue("s16", False) '15
+        DA.InsertCommand.Parameters.AddWithValue("13", "") '16
+        DA.InsertCommand.Parameters.Add("s18", OleDb.OleDbType.VarChar, 5, "МестоХранения") '17
+
+        DA.Fill(tbt)
+        bs1.DataSource = tbt
+        GridControl1.DataSource = bs1
+
+        MonetType = IIf(CheckBox3.Checked, 1, 2)
+        tbtMonets = Module1.GetTable2(MonetType, "", "")
+        tbtStores = Module1.GetTableContr()
+        tbtStores2 = Module1.GetTableStores()
+
+        LookUp3rep.DataSource = tbtStores2
+        LookUp3rep.AutoComplete = True
+        LookUp3rep.DisplayMember = "Обозначение"
+        LookUp3rep.ValueMember = "Обозначение"
+        LookUp3rep.NullText = Nothing
+        LookUp3rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        LookUp3rep.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup
+        GridView1.Columns(0).ColumnEdit = LookUp3rep
+
+        LookUp2rep.DataSource = tbtStores
+        LookUp2rep.AutoComplete = True
+        LookUp2rep.DisplayMember = "Наименование"
+        LookUp2rep.ValueMember = "Наименование"
+        LookUp2rep.NullText = Nothing
+        LookUp2rep.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.True
+        LookUp2rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard
+        LookUp2rep.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup
+        GridView1.Columns(3).ColumnEdit = LookUp2rep
+
+        LookUp1Rep.DataSource = tbtMonets
+        LookUp1Rep.AutoComplete = True
+        LookUp1Rep.DisplayMember = "Каталожный номер"
+        LookUp1Rep.ValueMember = "Каталожный номер"
+        LookUp1Rep.NullText = Nothing
+        LookUp1Rep.AcceptEditorTextAsNewValue = DevExpress.Utils.DefaultBoolean.True
+        LookUp1Rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.Standard
+        LookUp1Rep.BestFitMode = DevExpress.XtraEditors.Controls.BestFitMode.BestFitResizePopup
+        GridView1.Columns(5).ColumnEdit = LookUp1Rep
+
+        Combo1Rep.Items.AddRange({"18%", "без номинала", "16.67%", "нет"})
+        Combo1Rep.AutoComplete = True
+        Combo1Rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        GridView1.Columns(9).ColumnEdit = Combo1Rep
+
+        Combo2Rep.Items.AddRange({"отл.", "уд.", "неуд."})
+        Combo2Rep.AutoComplete = True
+        Combo2Rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
+        GridView1.Columns(10).ColumnEdit = Combo2Rep
+
+        GridView1.Columns(8).OptionsColumn.AllowEdit = False 'запрет редактирования цены, обработка по клику
 
         TableLayoutPanel1.SetRowSpan(GridControl1, 2)
         GridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom

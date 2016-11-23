@@ -41,17 +41,20 @@ Public Class MainForm
 
     Private Sub Update_table()
         'обновление БД в соответствии с внесенными изменениями
+        'Try
         Try
-            Try
-                GridView1.UpdateCurrentRow()
-            Catch ex As Exception
-            End Try
-            DA.Update(tbt)
-        Catch e As System.Data.DBConcurrencyException
-            MsgBox("Изменения не были сохранены!", MsgBoxStyle.Critical, "Внимание")
-        Catch e As Exception
-            MsgBox("С обновлением БД все плохо(")
+            GridView1.UpdateCurrentRow()
+        Catch ex As Exception
         End Try
+        'ДатаМонет, ДатаДенег, [Вид операции], ВидУчастника, Отделение, [Каталожный номер], Монета,
+        'Количество, Цена, Спецификация, Распоряжение, Заявка, ВхНДС, Состояние, Дефекты, Комиссия,
+        'РасшифрПодр, МестоХранения
+        DA.Update(tbt)
+        'Catch e As System.Data.DBConcurrencyException
+        'MsgBox("Изменения не были сохранены!", MsgBoxStyle.Critical, "Внимание")
+        'Catch e As Exception
+        'MsgBox("С обновлением БД все плохо(")
+        'End Try
     End Sub
 
     Private Sub Clear_Form()
@@ -300,6 +303,10 @@ Public Class MainForm
                         End Try
                 End Select
         End Select
+    End Sub
+
+    Private Sub GridControl1_DoubleClick(sender As Object, e As EventArgs) Handles GridControl1.DoubleClick
+        MsgBox("yeah")
     End Sub
 
     Private Sub GridControl1_Click(sender As Object, e As EventArgs) Handles GridControl1.Click
@@ -1307,7 +1314,7 @@ WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаД
         DA.DeleteCommand = delCommand
         DA.DeleteCommand.Parameters.Add("1", OleDb.OleDbType.Date, -1, "ДатаМонет")
         DA.DeleteCommand.Parameters.Add("2", OleDb.OleDbType.Date, -1, "ДатаДенег")
-        DA.DeleteCommand.Parameters.Add("3", OleDb.OleDbType.VarChar, 41, "Конртагент")
+        DA.DeleteCommand.Parameters.Add("3", OleDb.OleDbType.VarChar, 41, "Контрагент")
         DA.DeleteCommand.Parameters.Add("4", OleDb.OleDbType.VarChar, 9, "Каталожный номер")
         DA.DeleteCommand.Parameters.Add("5", OleDb.OleDbType.Integer, -1, "Количество")
         DA.DeleteCommand.Parameters.Add("6", OleDb.OleDbType.Double, -1, "Цена")
@@ -1320,11 +1327,11 @@ WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаД
         DA.DeleteCommand.Parameters.AddWithValue("13", IIf(RadioButton1.Checked, "продажа", "покупка"))
 
         updCommand = New OleDb.OleDbCommand("UPDATE Операции
-SET  ДатаМонет = ?, ДатаДенег = ?, [Вид операции] = ?, ВидУчастника = ?, Отделение = ?, [Каталожный номер] = ?, Монета = ?, Количество = ?, Цена = ?, Спецификация = ?, Распоряжение = ?, Заявка = ?, 
-     ВхНДС = ?, Состояние = ?, Дефекты = ?, Комиссия = ?, РасшифрПодр = ?, МестоХранения = ?
-WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаДенег = ?) OR ДатаДенег IS NULL) AND ((Отделение = ?) OR Отделение IS NULL) AND (([Каталожный номер] = ?) OR [Каталожный номер] IS NULL) AND ((Количество = ?) OR Количество IS NULL) AND ((Цена = ?) OR Цена IS NULL) AND 
-       ((Спецификация = ?) OR Спецификация IS NULL) AND ((Заявка = ?) OR Заявка IS NULL) AND ((ВхНДС = ?) OR ВхНДС IS NULL) AND ((Состояние = ?) OR Состояние IS NULL) AND ((Дефекты = ?) OR Дефекты IS NULL) AND 
-       ((МестоХранения = ?) OR МестоХранения IS NULL) AND (([Вид операции] = ?) OR [Вид операции] IS NULL)", Con)
+        SET  ДатаМонет = ?, ДатаДенег = ?, [Вид операции] = ?, ВидУчастника = ?, Отделение = ?, [Каталожный номер] = ?, Монета = ?, Количество = ?, Цена = ?, Спецификация = ?, Распоряжение = ?, Заявка = ?, 
+             ВхНДС = ?, Состояние = ?, Дефекты = ?, Комиссия = ?, РасшифрПодр = ?, МестоХранения = ?
+        WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаДенег = ?) OR ДатаДенег IS NULL) AND ((Отделение = ?) OR Отделение IS NULL) AND (([Каталожный номер] = ?) OR [Каталожный номер] IS NULL) AND ((Количество = ?) OR Количество IS NULL) AND ((Цена = ?) OR Цена IS NULL) AND 
+               ((Спецификация = ?) OR Спецификация IS NULL) AND ((Заявка = ?) OR Заявка IS NULL) AND ((ВхНДС = ?) OR ВхНДС IS NULL) AND ((Состояние = ?) OR Состояние IS NULL) AND ((Дефекты = ?) OR Дефекты IS NULL) AND 
+               ((МестоХранения = ?) OR МестоХранения IS NULL) AND (([Вид операции] = ?) OR [Вид операции] IS NULL)", Con)
         DA.UpdateCommand = updCommand
         DA.UpdateCommand.Parameters.Add("s1", OleDb.OleDbType.Date, -1, "ДатаМонет") '0
         DA.UpdateCommand.Parameters.Add("s2", OleDb.OleDbType.Date, -1, "ДатаДенег") '1
@@ -1336,20 +1343,20 @@ WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаД
         DA.UpdateCommand.Parameters.Add("s8", OleDb.OleDbType.Integer, -1, "Количество") '7
         DA.UpdateCommand.Parameters.Add("s9", OleDb.OleDbType.Double, -1, "Цена") '8
         DA.UpdateCommand.Parameters.Add("s10", OleDb.OleDbType.VarChar, 7, "Спецификация") '9
-        DA.UpdateCommand.Parameters.AddWithValue("s11", "") '10
+        DA.UpdateCommand.Parameters.AddWithValue("s11", vbEmpty) '10
         DA.UpdateCommand.Parameters.Add("s12", OleDb.OleDbType.VarChar, 50, "Основание") '11
         DA.UpdateCommand.Parameters.Add("s13", OleDb.OleDbType.VarChar, 12, "НДС") '12
         DA.UpdateCommand.Parameters.Add("s14", OleDb.OleDbType.VarChar, 5, "Состояние") '13
         DA.UpdateCommand.Parameters.Add("s15", OleDb.OleDbType.VarChar, 60, "Дефекты") '14
         DA.UpdateCommand.Parameters.AddWithValue("s16", False) '15
-        DA.UpdateCommand.Parameters.AddWithValue("13", "") '16
+        DA.UpdateCommand.Parameters.AddWithValue("13", vbEmpty) '16
         DA.UpdateCommand.Parameters.Add("s18", OleDb.OleDbType.VarChar, 5, "МестоХранения") '17
 
         DA.UpdateCommand.Parameters.Add("1", OleDb.OleDbType.Date, -1, "ДатаМонет")
         DA.UpdateCommand.Parameters.Item(18).SourceVersion = DataRowVersion.Original
         DA.UpdateCommand.Parameters.Add("2", OleDb.OleDbType.Date, -1, "ДатаДенег")
         DA.UpdateCommand.Parameters.Item(19).SourceVersion = DataRowVersion.Original
-        DA.UpdateCommand.Parameters.Add("3", OleDb.OleDbType.VarChar, 41, "Конртагент")
+        DA.UpdateCommand.Parameters.Add("3", OleDb.OleDbType.VarChar, 41, "Контрагент")
         DA.UpdateCommand.Parameters.Item(20).SourceVersion = DataRowVersion.Original
         DA.UpdateCommand.Parameters.Add("4", OleDb.OleDbType.VarChar, 9, "Каталожный номер")
         DA.UpdateCommand.Parameters.Item(21).SourceVersion = DataRowVersion.Original
@@ -1387,13 +1394,13 @@ WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаД
         DA.InsertCommand.Parameters.Add("s8", OleDb.OleDbType.Integer, -1, "Количество") '7
         DA.InsertCommand.Parameters.Add("s9", OleDb.OleDbType.Double, -1, "Цена") '8
         DA.InsertCommand.Parameters.Add("s10", OleDb.OleDbType.VarChar, 7, "Спецификация") '9
-        DA.InsertCommand.Parameters.AddWithValue("s11", "") '10
+        DA.InsertCommand.Parameters.AddWithValue("s11", vbEmpty) '10
         DA.InsertCommand.Parameters.Add("s12", OleDb.OleDbType.VarChar, 50, "Основание") '11
         DA.InsertCommand.Parameters.Add("s13", OleDb.OleDbType.VarChar, 12, "НДС") '12
         DA.InsertCommand.Parameters.Add("s14", OleDb.OleDbType.VarChar, 5, "Состояние") '13
         DA.InsertCommand.Parameters.Add("s15", OleDb.OleDbType.VarChar, 60, "Дефекты") '14
         DA.InsertCommand.Parameters.AddWithValue("s16", False) '15
-        DA.InsertCommand.Parameters.AddWithValue("13", "") '16
+        DA.InsertCommand.Parameters.AddWithValue("s17", vbEmpty) '16
         DA.InsertCommand.Parameters.Add("s18", OleDb.OleDbType.VarChar, 5, "МестоХранения") '17
 
         DA.Fill(tbt)

@@ -27,6 +27,8 @@ Partial Class Dialog3
         Me.Cancel_Button = New System.Windows.Forms.Button()
         Me.GridControl1 = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -78,7 +80,7 @@ Partial Class Dialog3
         Me.GridControl1.Location = New System.Drawing.Point(3, 3)
         Me.GridControl1.MainView = Me.GridView1
         Me.GridControl1.Name = "GridControl1"
-        Me.GridControl1.Size = New System.Drawing.Size(406, 207)
+        Me.GridControl1.Size = New System.Drawing.Size(406, 179)
         Me.GridControl1.TabIndex = 1
         Me.GridControl1.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
@@ -88,6 +90,22 @@ Partial Class Dialog3
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsView.ShowGroupPanel = False
         '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(203, 188)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(108, 22)
+        Me.TextBox1.TabIndex = 2
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(71, 191)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(126, 17)
+        Me.Label1.TabIndex = 3
+        Me.Label1.Text = "Другое значение:"
+        '
         'Dialog3
         '
         Me.AcceptButton = Me.OK_Button
@@ -96,6 +114,8 @@ Partial Class Dialog3
         Me.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.CancelButton = Me.Cancel_Button
         Me.ClientSize = New System.Drawing.Size(411, 258)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.GridControl1)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -110,6 +130,7 @@ Partial Class Dialog3
         CType(Me.GridControl1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
@@ -117,4 +138,6 @@ Partial Class Dialog3
     Friend WithEvents Cancel_Button As System.Windows.Forms.Button
     Friend WithEvents GridControl1 As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Label1 As Label
 End Class

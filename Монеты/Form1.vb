@@ -1,6 +1,7 @@
 ﻿Imports DevExpress.XtraGrid.Views.Base
 Imports System.Xml.Serialization
 Imports Монеты.MainSettings
+Imports System.ComponentModel
 
 Public Class MainForm
     Private FirstOpen As Boolean = True
@@ -305,11 +306,8 @@ Public Class MainForm
         End Select
     End Sub
 
-    Private Sub GridControl1_DoubleClick(sender As Object, e As EventArgs) Handles GridControl1.DoubleClick
-        MsgBox("yeah")
-    End Sub
-
     Private Sub GridControl1_Click(sender As Object, e As EventArgs) Handles GridControl1.Click
+        Dim a As Date
         Try
             Select Case TabNum
                 Case 4
@@ -377,6 +375,24 @@ Public Class MainForm
                         Class1.PutCat(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(5)))
                         Class1.setDate(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(1)), GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(1)))
                         Class1.setPriceType(3)
+
+                        Try
+                            a = GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(1))
+                            a = GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(2))
+                        Catch ex As Exception
+                            a = Nothing
+                        End Try
+
+                        If a <> Nothing Then
+                            Class1.setPriceType(3)
+                        Else
+                            If Not RadioButton1.Checked Then
+                                Class1.setPriceType(3)
+                            Else
+                                Class1.setPriceType(4)
+                            End If
+                        End If
+
                         Class1.setStoragePlace(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(0)))
                         Class1.setFullPrice(CheckBox2.Checked)
                         Try
@@ -385,13 +401,17 @@ Public Class MainForm
                             Class1.setState("")
                         End Try
                         If Dialog3.ShowDialog() = DialogResult.OK Then
-                            tbtPrices.Dispose()
-                            tbtPrices = New DataTable
-                            tbtPrices = Module1.GetTablePricesForOperations(Class1.GetCat, Class1.getDate(1), Class1.getStoragePlace, Class1.getFullPrice(), Class1.getState())
-                            GridView1.SetFocusedRowCellValue(GridView1.Columns(8), tbtPrices.Rows(Class1.getSelectedIndex)(0))
-                            GridView1.SetFocusedRowCellValue(GridView1.Columns(9), tbtPrices.Rows(Class1.getSelectedIndex)(2))
-                            GridView1.SetFocusedRowCellValue(GridView1.Columns(10), tbtPrices.Rows(Class1.getSelectedIndex)(3))
-                            GridView1.SetFocusedRowCellValue(GridView1.Columns(11), tbtPrices.Rows(Class1.getSelectedIndex)(4))
+                            If Class1.getPrice() <> Nothing Then
+                                GridView1.SetFocusedRowCellValue(GridView1.Columns(8), Class1.getPrice())
+                            Else
+                                tbtPrices.Dispose()
+                                tbtPrices = New DataTable
+                                tbtPrices = Module1.GetTablePricesForOperations(Class1.GetCat, Class1.getDate(1), Class1.getStoragePlace, Class1.getFullPrice(), Class1.getState())
+                                GridView1.SetFocusedRowCellValue(GridView1.Columns(8), tbtPrices.Rows(Class1.getSelectedIndex)(0))
+                                GridView1.SetFocusedRowCellValue(GridView1.Columns(9), tbtPrices.Rows(Class1.getSelectedIndex)(2))
+                                GridView1.SetFocusedRowCellValue(GridView1.Columns(10), tbtPrices.Rows(Class1.getSelectedIndex)(3))
+                                GridView1.SetFocusedRowCellValue(GridView1.Columns(11), tbtPrices.Rows(Class1.getSelectedIndex)(4))
+                            End If
                         End If
                     Else
                         Return
@@ -436,6 +456,7 @@ Public Class MainForm
         TabNum = 4
         Clear_Form()
         GridView1.Columns.Clear()
+        GridView1.OptionsBehavior.ReadOnly = False
         ToolStripButton5.Checked = True
 
         TableMoveCoinsMake()
@@ -506,6 +527,37 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
                 MsgBox("Данное действие еще не реализовано!", MsgBoxStyle.Critical, "Ошибка")
             Case 7, 8, 9
                 ToolStripButton1_Click(sender, e)
+            Case 2, 3
+                'Искать повторы
+                tbt2.Dispose()
+                tbt2 = New DataTable
+                DA2.Dispose()
+                DA2 = New OleDb.OleDbDataAdapter
+                SqlCom = New OleDb.OleDbCommand("SELECT * FROM [Проверка повторов в операциях]", Con)
+                DA2.SelectCommand = SqlCom
+
+                DA2.Fill(tbt2)
+                If tbt2.Rows.Count = 0 Then
+                    MsgBox("Повторов не найдено",, "Поиск повторяющихся строк")
+                Else
+                    MsgBox("Повторы найдены!", MsgBoxStyle.Exclamation, "Поиск повторяющихся строк")
+                    GridView1.Columns.Clear()
+                    GridControl1.DataSource = tbt2
+                    GridView1.OptionsBehavior.ReadOnly = True
+
+                    TabNum = IIf(TabNum = 2, 10, 11)
+                    Panel1.Enabled = False
+                    Panel2.Visible = False
+                    Button2.Enabled = False
+                    Button3.Enabled = False
+                    Button4.Enabled = False
+                    Button1.Text = "Назад"
+                    GridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None
+                End If
+            Case 10
+                ToolStripButton3_Click(sender, e)
+            Case 11
+                ToolStripButton4_Click(sender, e)
         End Select
     End Sub
 
@@ -520,6 +572,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         TabNum = 5
         Clear_Form()
         GridView1.Columns.Clear()
+        GridView1.OptionsBehavior.ReadOnly = False
         ToolStripButton6.Checked = True
 
         TableCoinsConditionMake()
@@ -541,6 +594,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         TabNum = 6
         Clear_Form()
         GridView1.Columns.Clear()
+        GridView1.OptionsBehavior.ReadOnly = False
         ToolStripButton10.Checked = True
 
         TableCoinsPurchaseMake()
@@ -563,6 +617,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
 
         Clear_Form() 'отмена выделения пункта меню
         GridView1.Columns.Clear()
+        GridView1.OptionsBehavior.ReadOnly = False
         TabNum = 1 'номер текущей таблицы
         ToolStripButton1.Checked = True 'выделяем текущий пункт меню
 
@@ -608,6 +663,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         TabNum = 2 'номер текущей таблицы
         Clear_Form() 'отмена выделения пункта меню
         GridView1.Columns.Clear()
+        GridView1.OptionsBehavior.ReadOnly = False
 
         ToolStripButton3.Checked = True 'выделяем текущий пункт меню
 
@@ -649,6 +705,7 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         TabNum = 3 'номер текущей таблицы
         Clear_Form() 'отмена выделения пункта меню
         GridView1.Columns.Clear()
+        GridView1.OptionsBehavior.ReadOnly = False
 
         ToolStripButton4.Checked = True 'выделяем текущий пункт меню
 
@@ -834,7 +891,10 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
     End Sub
 
     Private Function MaxNumSpec() As Integer
-        tbt2.Reset()
+        tbt2.Dispose()
+        tbt2 = New DataTable
+        DA2.Dispose()
+        DA2 = New OleDb.OleDbDataAdapter
         SqlCom = New OleDb.OleDbCommand("SELECT ДатаДенег, Спецификация FROM Операции", Con)
         DA2.SelectCommand = SqlCom
         DA2.Fill(tbt2)
@@ -859,7 +919,10 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
         Select Case TabNum
             Case 1
                 'Искать повторы
-                tbt2.Reset()
+                tbt2.Dispose()
+                tbt2 = New DataTable
+                DA2.Dispose()
+                DA2 = New OleDb.OleDbDataAdapter
                 SqlCom = New OleDb.OleDbCommand("SELECT * FROM [Проверка повторов в заявках]", Con)
                 DA2.SelectCommand = SqlCom
 
@@ -891,7 +954,6 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
 
     Private Sub MainForm_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         Module1.Del_Tmp()
-
     End Sub
 
     Private Sub ToolStripButton11_Click(sender As Object, e As EventArgs) Handles ToolStripButton11.Click

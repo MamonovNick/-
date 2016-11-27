@@ -9,6 +9,15 @@
     Private Shared StoragePlace As String = ""
     Private Shared FullPrice As Boolean
     Private Shared State As String = ""
+    Private Shared Price As Double
+
+    Public Shared Sub setPrice(Pr As Double)
+        Price = Pr
+    End Sub
+
+    Public Shared Function getPrice()
+        Return Price
+    End Function
 
     Public Shared Sub setState(St As String)
         State = St

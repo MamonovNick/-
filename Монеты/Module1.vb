@@ -283,4 +283,18 @@ ORDER BY [Остатки по ценам (для ввода)].Цена DESC;", C
 
         Return table
     End Function
+
+    Function GetTableCurrency()
+        Dim SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
+        Dim DAh As New OleDb.OleDbDataAdapter
+        Dim table As New DataTable() ' таблица с монетами
+        Dim Con As New OleDb.OleDbConnection(MainSettings.AppS.ConnStr) ' Переменная для подключения базы
+
+        SqlCom = New OleDb.OleDbCommand("SELECT [Список валют].[Валюта] FROM [Список валют] ORDER BY [Список валют].[Валюта]", Con) ' Указываем строку запроса и привязываем к соединению
+
+        DAh.SelectCommand = SqlCom
+        DAh.Fill(table) ' Заполняем таблицу результатми
+
+        Return table
+    End Function
 End Module

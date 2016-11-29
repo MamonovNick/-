@@ -144,6 +144,12 @@
     <Compile Include="Dialog3.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Dialog4.Designer.vb">
+      <DependentUpon>Dialog4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog4.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -272,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog3.resx">
       <DependentUpon>Dialog3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog4.resx">
+      <DependentUpon>Dialog4.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>

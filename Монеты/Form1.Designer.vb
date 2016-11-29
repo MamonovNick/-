@@ -56,7 +56,6 @@ Partial Class MainForm
         Me.ToolStripButton12 = New System.Windows.Forms.ToolStripButton()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.RadioButton1 = New System.Windows.Forms.RadioButton()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
@@ -70,11 +69,13 @@ Partial Class MainForm
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Button5 = New System.Windows.Forms.Button()
         Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.GridControl1 = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.SecDA = New Монеты.МонетыDataSetTableAdapters.SecDA()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
@@ -381,7 +382,6 @@ Partial Class MainForm
         '
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.CheckBox1)
-        Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Controls.Add(Me.RadioButton2)
         Me.Panel1.Controls.Add(Me.RadioButton1)
         Me.Panel1.Controls.Add(Me.DateTimePicker1)
@@ -405,16 +405,6 @@ Partial Class MainForm
         Me.CheckBox1.TabIndex = 5
         Me.CheckBox1.Text = "Показать только незакрытые позиции"
         Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(3, 60)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(51, 17)
-        Me.Label2.TabIndex = 7
-        Me.Label2.Text = "Label2"
-        Me.Label2.Visible = False
         '
         'RadioButton2
         '
@@ -488,6 +478,7 @@ Partial Class MainForm
         Me.FlowLayoutPanel1.Controls.Add(Me.Button2)
         Me.FlowLayoutPanel1.Controls.Add(Me.Button3)
         Me.FlowLayoutPanel1.Controls.Add(Me.Button4)
+        Me.FlowLayoutPanel1.Controls.Add(Me.TextBox1)
         Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(576, 546)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
@@ -537,6 +528,7 @@ Partial Class MainForm
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.Button5)
         Me.Panel2.Controls.Add(Me.CheckBox3)
         Me.Panel2.Controls.Add(Me.CheckBox2)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
@@ -544,6 +536,18 @@ Partial Class MainForm
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(619, 40)
         Me.Panel2.TabIndex = 8
+        '
+        'Button5
+        '
+        Me.Button5.AutoSize = True
+        Me.Button5.Location = New System.Drawing.Point(402, 10)
+        Me.Button5.Name = "Button5"
+        Me.Button5.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.Button5.Size = New System.Drawing.Size(214, 27)
+        Me.Button5.TabIndex = 2
+        Me.Button5.Text = "Обновить исполнение заявок"
+        Me.Button5.UseVisualStyleBackColor = True
+        Me.Button5.Visible = False
         '
         'CheckBox3
         '
@@ -589,6 +593,15 @@ Partial Class MainForm
         'SecDA
         '
         Me.SecDA.ClearBeforeFill = True
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.TextBox1.Location = New System.Drawing.Point(18, 5)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(70, 22)
+        Me.TextBox1.TabIndex = 0
+        Me.TextBox1.Visible = False
         '
         'MainForm
         '
@@ -671,10 +684,11 @@ Partial Class MainForm
     Friend WithEvents Panel2 As Panel
     Friend WithEvents CheckBox2 As CheckBox
     Friend WithEvents CheckBox3 As CheckBox
-    Friend WithEvents Label2 As Label
     Friend WithEvents GridControl1 As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents ComboBoxEdit1 As DevExpress.XtraEditors.LookUpEdit
     Friend WithEvents ПодразделенияBindingSource As BindingSource
     Friend WithEvents SecDA As МонетыDataSetTableAdapters.SecDA
+    Friend WithEvents Button5 As Button
+    Friend WithEvents TextBox1 As TextBox
 End Class

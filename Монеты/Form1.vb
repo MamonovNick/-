@@ -38,25 +38,27 @@ Public Class MainForm
     Private Combo2Rep As New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
     Private Combo3Rep As New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
     Private Text1Rep As New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
-    'Private Text2Rep As New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
+    Private Text2Rep As New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
 
-    Private Sub Update_table()
+    Private Function Update_table() As Boolean
         'обновление БД в соответствии с внесенными изменениями
-        'Try
         Try
-            GridView1.UpdateCurrentRow()
-        Catch ex As Exception
+            Try
+                GridView1.UpdateCurrentRow()
+            Catch ex As Exception
+                Return False
+            End Try
+
+            DA.Update(tbt)
+        Catch e As System.Data.DBConcurrencyException
+            MsgBox("Изменения не были сохранены!", MsgBoxStyle.Critical, "Внимание")
+            Return False
+        Catch e As Exception
+            MsgBox("С обновлением БД все плохо, возможно наличие неверных записей!", MsgBoxStyle.Critical, "Внимание")
+            Return False
         End Try
-        'ДатаМонет, ДатаДенег, [Вид операции], ВидУчастника, Отделение, [Каталожный номер], Монета,
-        'Количество, Цена, Спецификация, Распоряжение, Заявка, ВхНДС, Состояние, Дефекты, Комиссия,
-        'РасшифрПодр, МестоХранения
-        DA.Update(tbt)
-        'Catch e As System.Data.DBConcurrencyException
-        'MsgBox("Изменения не были сохранены!", MsgBoxStyle.Critical, "Внимание")
-        'Catch e As Exception
-        'MsgBox("С обновлением БД все плохо(")
-        'End Try
-    End Sub
+        Return True
+    End Function
 
     Private Sub Clear_Form()
         'Отмена выделения пунктов меню
@@ -75,6 +77,7 @@ Public Class MainForm
         Button3.Visible = False
         Button4.Visible = False
         Panel1.Visible = False
+        TextBox1.Visible = False
     End Sub
 
     Private Sub МонетыToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles МонетыToolStripMenuItem.Click
@@ -350,7 +353,7 @@ Public Class MainForm
                     If (Not PriceNotEditable) And (GridView1.FocusedColumn.AbsoluteIndex = 9) Then
                         Class1.PutCat(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(6)))
                         Class1.setDate(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(0)), GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(0)))
-                        Class1.setPriceType(3)
+                        Class1.setPriceType(4)
                         Class1.setStoragePlace(GridView1.GetRowCellValue(GridView1.FocusedRowHandle, GridView1.Columns(2)))
                         Class1.setFullPrice(CheckBox2.Checked)
                         Try
@@ -448,7 +451,9 @@ Public Class MainForm
     Private Sub ToolStripButton5_Click(sender As Object, e As EventArgs) Handles ToolStripButton5.Click
         'Перемещение монет
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         Else
             FirstOpen = False
         End If
@@ -476,7 +481,10 @@ Public Class MainForm
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         'Закрытие формы: обновление БД
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                e.Cancel = True
+                Return
+            End If
         Else
             FirstOpen = False
         End If
@@ -484,7 +492,9 @@ Public Class MainForm
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         End If
 
         Select Case TabNum
@@ -564,7 +574,9 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
     Private Sub ToolStripButton6_Click(sender As Object, e As EventArgs) Handles ToolStripButton6.Click
         'Состояние монет
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         Else
             FirstOpen = False
         End If
@@ -586,7 +598,9 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
     Private Sub ToolStripButton10_Click(sender As Object, e As EventArgs) Handles ToolStripButton10.Click
         'Приобретение монет ТБ в ЦБ
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         Else
             FirstOpen = False
         End If
@@ -609,16 +623,19 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         'Обработка пункта меню "Заявки"
         'Обновление предыдущей таблицы, в случае если она была
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         Else
             FirstOpen = False
         End If
         PrevTabNum = TabNum 'пока не используется
 
+        TabNum = 1 'номер текущей таблицы
         Clear_Form() 'отмена выделения пункта меню
         GridView1.Columns.Clear()
         GridView1.OptionsBehavior.ReadOnly = False
-        TabNum = 1 'номер текущей таблицы
+        'TabNum = 1 'номер текущей таблицы
         ToolStripButton1.Checked = True 'выделяем текущий пункт меню
 
         TableOrdersMake() ' Заполнение адаптера и таблицы и грида
@@ -632,18 +649,23 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         Button3.Enabled = True
         Button4.Visible = True
         Button4.Enabled = True
+        Button5.Visible = True
+        Button5.Enabled = True
         Button1.Text = """Cвод для ""хвостов"
         Button2.Text = "Свод для новых"
         Button3.Text = "Закрыть заявки"
         Button4.Text = "Искать повторы"
+        Button5.Text = "Обновить исполнение заявок"
+
+        CheckBox2.Visible = False
+        CheckBox3.Visible = False
 
         Panel1.Visible = True
         Panel1.Enabled = True
-        Panel2.Visible = False
+        Panel2.Visible = True
         FlowLayoutPanel1.Visible = True
 
         Label1.Text = "Показать заявки с"
-        Label2.Visible = False
         CheckBox1.Visible = True
         CheckBox1.Text = "Показать только незакрытые позиции"
         RadioButton1.Text = "Все"
@@ -654,7 +676,9 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         'Обработка пункта меню "Внутрисистемные операции"
         'Обновление предыдущей таблицы, в случае если она была
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         Else
             FirstOpen = False
         End If
@@ -676,9 +700,13 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         Button3.Visible = True
         Button3.Enabled = True
         Button4.Visible = False
+        Button5.Visible = False
         Button1.Text = "Искать повторы"
         Button2.Text = "Импорт из Excel"
         Button3.Text = "Рассчитать номер спецификации"
+
+        CheckBox2.Visible = True
+        CheckBox3.Visible = True
 
         Panel1.Visible = True
         Panel1.Enabled = True
@@ -696,7 +724,9 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         'Обработка пункта меню "Внешние операции"
         'Обновление предыдущей таблицы, в случае если она была
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         Else
             FirstOpen = False
         End If
@@ -717,8 +747,12 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
         Button3.Visible = True
         Button3.Enabled = True
         Button4.Visible = False
+        Button5.Visible = False
         Button1.Text = "Искать повторы"
         Button3.Text = "Рассчитать номер спецификации"
+
+        CheckBox2.Visible = True
+        CheckBox3.Visible = True
 
         Panel1.Visible = True
         Panel1.Enabled = True
@@ -771,7 +805,9 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
 
     Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker1.ValueChanged
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         End If
         Select Case TabNum
             Case 1
@@ -785,7 +821,9 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         End If
 
         If RadioButton1.Checked Then
@@ -804,21 +842,27 @@ PIVOT IIf([ВидУчастника]=""терр. банк"","" ""+[Подраз�
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxEdit1.EditValueChanged
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         End If
         TableOrdersMake()
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         End If
         TableOrdersMake()
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         End If
 
         Select Case TabNum
@@ -860,7 +904,9 @@ PIVOT [Монета]+"", ""+[Состояние];", Con)
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         End If
 
         Select Case TabNum
@@ -885,8 +931,8 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
                     ToolStripButton1_Click(sender, e)
                 End If
             Case 2
-                Label2.Text = "Следующий номер спецификации: " + CStr(MaxNumSpec())
-                Label2.Visible = True
+                TextBox1.Text = CStr(MaxNumSpec())
+                TextBox1.Visible = True
         End Select
     End Sub
 
@@ -902,18 +948,20 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
         Dim maxSpec As Integer = 0
         For i = 0 To tbt2.Rows.Count
             Try
-                If (CInt(Strings.Left(tbt2.Rows(i)(1), InStr(tbt2.Rows(i)(1), "-") - 1)) > maxSpec) And (Year(tbt2.Rows(i)(0)) = Year(Date.Now())) Then
+                If (Year(tbt2.Rows(i)(0)) = Year(Date.Now())) And (CInt(Strings.Left(tbt2.Rows(i)(1), InStr(tbt2.Rows(i)(1), "-") - 1)) > maxSpec) Then
                     maxSpec = CInt(Strings.Left(tbt2.Rows(i)(1), InStr(tbt2.Rows(i)(1), "-") - 1))
                 End If
             Catch e As Exception
             End Try
         Next i
-        Return maxSpec
+        Return maxSpec + 1
     End Function
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         End If
 
         Select Case TabNum
@@ -986,6 +1034,18 @@ WHERE ((Закрыто = False) AND (Дата Between ? AND ?))", Con)
                     LookUp1Rep.DataSource = tbtMonets
                 End If
         End Select
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Class1.setUpdateType(IIf(RadioButton2.Checked, 1, 0))
+        Class1.setDate(DateTimePicker1.Value, DateTimePicker1.Value)
+        If RadioButton2.Checked Then
+            Class1.setStoragePlace(ComboBoxEdit1.Text)
+            Class1.setUpdateType(1)
+        Else
+            Class1.setUpdateType(0)
+        End If
+        Dialog4.ShowDialog()
     End Sub
 
     'Запоолнение таблиц для каждого пункта меню--------------
@@ -1338,6 +1398,9 @@ WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаД
         GridView1.Columns(12).OptionsColumn.AllowEdit = False 'запрет редактирования Дефектов
         GridView1.Columns(14).OptionsColumn.AllowEdit = False 'запрет редактирования Заявок
 
+        Text2Rep.NullText = "-"
+        GridView1.Columns(13).ColumnEdit = Text2Rep
+
         If RadioButton1.Checked Then
             Text1Rep.NullText = "выдача"
         Else
@@ -1512,6 +1575,9 @@ WHERE  ((ДатаМонет = ?) OR ДатаМонет IS NULL) AND ((ДатаД
         Combo2Rep.AutoComplete = True
         Combo2Rep.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         GridView1.Columns(10).ColumnEdit = Combo2Rep
+
+        Text2Rep.NullText = "-"
+        GridView1.Columns(4).ColumnEdit = Text2Rep
 
         GridView1.Columns(8).OptionsColumn.AllowEdit = False 'запрет редактирования цены, обработка по клику
 

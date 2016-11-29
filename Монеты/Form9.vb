@@ -1,4 +1,5 @@
 ﻿Imports Access = Microsoft.Office.Interop.Access
+Imports Монеты.MainSettings
 Public Class Form9
     Private SelectItem As Int16 = 1
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -15,7 +16,7 @@ Public Class Form9
 
         oAccess = New Access.Application()
         Try
-            oAccess.OpenCurrentDatabase(filepath:="D:\Монеты-Access\Монеты.mdb", Exclusive:=True)
+            oAccess.OpenCurrentDatabase(filepath:=AppS.FileDBPath, Exclusive:=True)
             oAccess.Visible = False
         Catch ex As Exception
             MsgBox("Can't open database file!", MsgBoxStyle.Critical, "Error")

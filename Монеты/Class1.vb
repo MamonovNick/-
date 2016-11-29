@@ -10,6 +10,15 @@
     Private Shared FullPrice As Boolean
     Private Shared State As String = ""
     Private Shared Price As Double
+    Private Shared UpdateType As Int16
+
+    Public Shared Sub setUpdateType(UT As Int16)
+        UpdateType = UT
+    End Sub
+
+    Public Shared Function getUpdateType()
+        Return UpdateType
+    End Function
 
     Public Shared Sub setPrice(Pr As Double)
         Price = Pr

@@ -2,7 +2,6 @@
 Imports Монеты.MainSettings
 Public Class Form13
     Private oAccess As Access.Application
-    'Private ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
     Private Con As New OleDb.OleDbConnection(AppS.ConnStr) ' Переменная для подключения базы
     Private SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
 
@@ -19,7 +18,7 @@ Public Class Form13
         'Открытие базы данных
         oAccess = New Access.Application()
         Try
-            oAccess.OpenCurrentDatabase(filepath:="D:\Монеты-Access\Монеты.mdb", Exclusive:=False)
+            oAccess.OpenCurrentDatabase(filepath:=AppS.FileDBPath, Exclusive:=False)
             oAccess.Visible = False
         Catch ex As Exception
             MsgBox("Can't open database file!", MsgBoxStyle.Critical, "Error")

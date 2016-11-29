@@ -1,8 +1,8 @@
 ﻿Imports System.Windows.Forms
+Imports Монеты.MainSettings
 
 Public Class Dialog1
-    Private ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
-    Private Con As New OleDb.OleDbConnection(ConnString) ' Переменная для подключения базы
+    Private Con As New OleDb.OleDbConnection(AppS.ConnStr) ' Переменная для подключения базы
     Private SqlComForCmb As OleDb.OleDbCommand ' Переменная для Sql запросов
     Private DAforCmb As New OleDb.OleDbDataAdapter() ' Адаптер для заполнения таблицы после запроса
     Private tableForCmb As DataTable = New DataTable()

@@ -1,8 +1,8 @@
-﻿Imports Монеты.MainSettings
+﻿Imports System.ComponentModel
+Imports Монеты.MainSettings
 Public Class Form3
-    Private Pic_location As String = "D:\Монеты-Access\Фотографии монет\" 'расположение фотографий монет
+    Private Pic_location As String = AppS.PicPath 'расположение фотографий монет
     Private FirstOpen As Boolean = True
-    'Private ConnString As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Монеты-Access\\Монеты.mdb"
     Private Con As New OleDb.OleDbConnection(AppS.ConnStr) ' Переменная для подключения базы
     Private SqlCom As OleDb.OleDbCommand ' Переменная для Sql запросов
     Private SqlComForCmb As OleDb.OleDbCommand ' Переменная для Sql запросов
@@ -21,9 +21,15 @@ Public Class Form3
     Private rus_forein As String
     Private state As Boolean = False
 
-    Private Sub Update_table()
-        DAt.Update(tbt)
-    End Sub
+    Private Function Update_table() As Boolean
+        Try
+            DAt.Update(tbt)
+        Catch ex As Exception
+            MsgBox("Изменения не были сохранены! Возможно наличие неверных записей!", MsgBoxStyle.Critical, "Внимание")
+            Return False
+        End Try
+        Return True
+    End Function
 
     Private Sub Form3_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         G_coins.Show()
@@ -147,7 +153,9 @@ ORDER BY IIf([Монеты].[Валюта]='российск. рубль',2,1), 
         If FirstOpen Then
             FirstOpen = False
         Else
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         End If
 
         'заполнение таблицы
@@ -272,6 +280,15 @@ FROM [Проверка наполнения наборов]", Con)
                      tableForCmb2.Rows(ComboBox2.SelectedIndex)(13),
                      tableForCmb2.Rows(ComboBox2.SelectedIndex)(14),
                      tableForCmb2.Rows(ComboBox2.SelectedIndex)(15))
+            End If
+        End If
+    End Sub
+
+    Private Sub Form3_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        If Not FirstOpen Then
+            If Not Update_table() Then
+                e.Cancel = True
+                Return
             End If
         End If
     End Sub

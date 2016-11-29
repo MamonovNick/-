@@ -54,7 +54,7 @@ Public Class MainForm
             MsgBox("Изменения не были сохранены!", MsgBoxStyle.Critical, "Внимание")
             Return False
         Catch e As Exception
-            MsgBox("С обновлением БД все плохо, возможно наличие неверных записей!", MsgBoxStyle.Critical, "Внимание")
+            MsgBox("Изменения не были сохранены! Возможно наличие неверных записей!", MsgBoxStyle.Critical, "Внимание")
             Return False
         End Try
         Return True

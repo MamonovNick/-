@@ -27,7 +27,7 @@ Public Class G_coins
     Private Combo3Rep As New DevExpress.XtraEditors.Repository.RepositoryItemComboBox
     Private WithEvents Text1Rep As New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
 
-    Private Sub Update_table()
+    Private Function Update_table() As Boolean
         Try
             GridView1.UpdateCurrentRow()
         Catch ex As Exception
@@ -39,8 +39,10 @@ Public Class G_coins
             End Select
         Catch ex As Exception
             MsgBox("Неуспешное обновление")
+            Return False
         End Try
-    End Sub
+        Return True
+    End Function
 
     Private Sub G_coins_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         FirstOpen = True
@@ -48,12 +50,17 @@ Public Class G_coins
     End Sub
 
     Private Sub G_coins_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Update_table()
+        If Not Update_table() Then
+            e.Cancel = True
+            Return
+        End If
     End Sub
 
     Private Sub Coins_guide_Click(sender As Object, e As EventArgs) Handles Coins_guide.Click
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         Else
             FirstOpen = False
         End If
@@ -68,7 +75,9 @@ Public Class G_coins
 
     Private Sub Addition_Click(sender As Object, e As EventArgs) Handles Addition.Click
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         Else
             FirstOpen = False
         End If
@@ -81,13 +90,11 @@ Public Class G_coins
         TableLastAddMake()
     End Sub
 
-    Private Sub G_coins_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        Update_table()
-    End Sub
-
     Private Sub Catalog_Click(sender As Object, e As EventArgs) Handles Catalog.Click
         If Not FirstOpen Then
-            Update_table()
+            If Not Update_table() Then
+                Return
+            End If
         Else
             FirstOpen = False
         End If

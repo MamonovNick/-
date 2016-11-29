@@ -1,7 +1,4 @@
 ﻿Public Class Form14
-    Private Sub Form14_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-
-    End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         'Выбор файла базы данных

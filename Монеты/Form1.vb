@@ -1,6 +1,7 @@
 ﻿Imports DevExpress.XtraGrid.Views.Base
 Imports System.Xml.Serialization
 Imports Монеты.MainSettings
+Imports Access = Microsoft.Office.Interop.Access
 Imports System.ComponentModel
 
 Public Class MainForm
@@ -899,6 +900,34 @@ PIVOT [Монета]+"", ""+[Состояние];", Con)
                 Button4.Enabled = False
                 Button1.Text = "Назад"
                 GridView1.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.None
+            Case 2
+                'Импорт из Excel через MS Access
+                If OpenFileDialog1.ShowDialog() = True Then
+                    Cursor.Current = Cursors.WaitCursor
+                    Dim oAccess As Access.Application
+                    Dim strdate As String = ""
+
+                    oAccess = New Access.Application()
+                    Try
+                        oAccess.OpenCurrentDatabase(filepath:=AppS.FileDBPath, Exclusive:=True)
+                        oAccess.Visible = False
+                    Catch ex As Exception
+                        MsgBox("Can't open database file!", MsgBoxStyle.Critical, "Error")
+                        Return
+                    End Try
+                    Try
+                        strdate = Date.Now.ToString()
+                        oAccess.Run("ImportFromExcel", OpenFileDialog1.FileName, Application.StartupPath + "\TempReports\Report" + strdate + ".txt")
+                        Dim f As FileIO.TextFieldParser
+                        Dim s As String
+                        f = FileIO.FileSystem.OpenTextFieldParser(Application.StartupPath + "\TempReports\Report" + strdate + ".txt", "/n")
+                        s = f.ReadLine()
+                        MsgBox(s, MsgBoxStyle.Information, "Импорт из Excel")
+                    Catch ex As Exception
+                        MsgBox("Database error!", MsgBoxStyle.Critical, "Error")
+                        oAccess.DoCmd.Quit()
+                    End Try
+                End If
         End Select
     End Sub
 

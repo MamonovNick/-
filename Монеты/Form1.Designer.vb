@@ -68,6 +68,7 @@ Partial Class MainForm
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.CheckBox3 = New System.Windows.Forms.CheckBox()
@@ -75,7 +76,7 @@ Partial Class MainForm
         Me.GridControl1 = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.SecDA = New Монеты.МонетыDataSetTableAdapters.SecDA()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.MenuStrip1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
@@ -526,6 +527,15 @@ Partial Class MainForm
         Me.Button4.Text = "4"
         Me.Button4.UseVisualStyleBackColor = True
         '
+        'TextBox1
+        '
+        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.TextBox1.Location = New System.Drawing.Point(18, 5)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(70, 22)
+        Me.TextBox1.TabIndex = 0
+        Me.TextBox1.Visible = False
+        '
         'Panel2
         '
         Me.Panel2.Controls.Add(Me.Button5)
@@ -594,14 +604,11 @@ Partial Class MainForm
         '
         Me.SecDA.ClearBeforeFill = True
         '
-        'TextBox1
+        'OpenFileDialog1
         '
-        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.TextBox1.Location = New System.Drawing.Point(18, 5)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(70, 22)
-        Me.TextBox1.TabIndex = 0
-        Me.TextBox1.Visible = False
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        Me.OpenFileDialog1.Filter = "Файлы MS Excel| *.xls; *.xlsx"
+        Me.OpenFileDialog1.Title = "Выберите файл распрделения"
         '
         'MainForm
         '
@@ -691,4 +698,5 @@ Partial Class MainForm
     Friend WithEvents SecDA As МонетыDataSetTableAdapters.SecDA
     Friend WithEvents Button5 As Button
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
 End Class
